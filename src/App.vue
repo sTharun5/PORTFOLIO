@@ -6,7 +6,6 @@ import {
 } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import TiltCard from './components/TiltCard.vue';
-import AntiGravity from './components/AntiGravity.vue';
 
 const mobileMenuOpen = ref(false);
 
@@ -101,11 +100,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative min-h-screen text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900">
-    <!-- Base Background Layer -->
-    <div class="fixed inset-0 bg-slate-50 -z-20"></div>
-    
-    <AntiGravity />
+  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900">
     
     <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
     
