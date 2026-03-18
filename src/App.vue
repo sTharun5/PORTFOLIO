@@ -6,7 +6,7 @@ import {
 } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import TiltCard from './components/TiltCard.vue';
-import MagneticCursor from './components/MagneticCursor.vue';
+import AntiGravity from './components/AntiGravity.vue';
 
 const mobileMenuOpen = ref(false);
 
@@ -154,15 +154,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900">
+  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900 cursor-none">
     
-    <MagneticCursor />
+    <AntiGravity />
     
     <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
     
-    <!-- Antigravity Physics Background Swarm -->
-    <vue-particles id="tsparticles" :options="particlesOptions" class="fixed inset-0 z-0 opacity-100" />
-
     <!-- Ambient glowing nebulas (Light Theme Gradients) -->
     <div class="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
