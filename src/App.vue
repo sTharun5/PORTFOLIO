@@ -46,7 +46,7 @@ const PROJECTS = [
     url: 'https://automation-nu-dusky.vercel.app',
     github: 'https://github.com/sTharun5/Automation',
     description: 'Zero-touch PDF parsing OCR engine with an intelligent fraud detection pipeline.',
-    stack: ['Jav', 'Node.js', 'PostgreSQL', 'Prisma']
+    stack: ['react.js', 'Node.js', 'PostgreSQL', 'Prisma']
   },
   {
     title: 'WhiffAndWrap Architecture',
@@ -62,6 +62,14 @@ const PROJECTS = [
     github: 'https://github.com/sTharun5/currency-converter',
     description: 'Live continuous external API sync supporting major global currencies.',
     stack: ['JavaScript', 'REST API']
+  },
+  {
+    title: 'Tic-Tac-Toe AI',
+    tagline: 'Minimax Algorithm',
+    url: 'https://stharun5.github.io/Tic-Tac-Toe/',
+    github: 'https://github.com/sTharun5/Tic-Tac-Toe',
+    description: 'Advanced game logic with an unbeatable AI opponent using the Minimax recursive algorithm.',
+    stack: ['HTML', 'CSS', 'JavaScript']
   }
 ];
 
@@ -179,10 +187,10 @@ onUnmounted(() => {
       </transition>
     </header>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-20 flex flex-col gap-32">
+    <main class="relative z-10 max-w-7xl mx-auto px-6 py-4 lg:py-8 flex flex-col gap-32">
       
       <!-- MASSIVE HERO SHOWCASE -->
-      <section id="hero" class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-8">
+      <section id="hero" class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-4">
         <!-- Identity Text -->
         <div class="lg:col-span-7 flex flex-col" v-motion="{ initial: { opacity: 0, x: -50 }, enter: { opacity: 1, x: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
           <div class="flex items-center gap-3 mb-6">
