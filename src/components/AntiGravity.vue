@@ -14,37 +14,32 @@ let particles = []
 const PARTICLE_COUNT = 650
 const COLORS = ['#6366f1', '#0ea5e9', '#f43f5e', '#8b5cf6', '#c7d2fe']
 
-// Interaction & Physics State
+// Interaction & Viscous State
 const mouse = { x: 0, y: 0 }
 const sphereCenter = { x: 0, y: 0, vx: 0, vy: 0 }
 const rotation = { x: 0, y: 0 }
 let time = 0
 let isInitialized = false
 
-class JellyCapsule {
+class EtherealCapsule {
   constructor(index) {
     this.index = index
-    // 1. Structural Fibonacci Mapping (The "Anchor")
     const phi = Math.acos(1 - 2 * (index + 0.5) / PARTICLE_COUNT)
     const theta = Math.PI * (1 + Math.sqrt(5)) * (index + 0.5)
     
-    this.baseRadius = 550 
+    this.baseRadius = 550 // Large structural shell
     
-    // Relative coordinates (Local Space)
     this.lx = this.baseRadius * Math.sin(phi) * Math.cos(theta)
     this.ly = this.baseRadius * Math.sin(phi) * Math.sin(theta)
     this.lz = this.baseRadius * Math.cos(phi)
     
-    // Aligned to sphere surface
     this.tiltY = theta
     
-    // 2. Physics Property (Jelly state)
+    // Physics State
     this.x = this.lx
     this.y = this.ly
     this.z = this.lz
-    this.vx = 0
-    this.vy = 0
-    this.vz = 0
+    this.vx = 0; this.vy = 0; this.vz = 0;
     
     this.color = COLORS[index % COLORS.length]
     this.w = 18
@@ -53,30 +48,28 @@ class JellyCapsule {
   }
 
   update(rx, ry, stretchX, stretchY) {
-    // 3. 3D Rotation for the TARGET Anchor
+    // 1. Slow-Motion Anchors
     const cosY = Math.cos(ry)
     const sinY = Math.sin(ry)
     const cosX = Math.cos(rx)
     const sinX = Math.sin(rx)
 
-    // Breathing pulse
-    const pulse = 1 + Math.sin(time * 0.5 + this.index * 0.05) * 0.02
+    // Cinematic breathing
+    const pulse = 1 + Math.sin(time * 0.3 + this.index * 0.05) * 0.03
     
-    // Calculate rotated target position
     let x1 = this.lx * cosY - this.lz * sinY
     let z1 = this.lx * sinY + this.lz * cosY
     let ty = this.ly * cosX - z1 * sinX
     let tz = this.ly * sinX + z1 * cosX
     let tx = x1
     
-    // 4. Global Jelly Deformation (Stretch based on sphere movement)
-    tx *= (1 + stretchX * 0.2) * pulse
-    ty *= (1 + stretchY * 0.2) * pulse
+    tx *= (1 + stretchX * 0.15) * pulse
+    ty *= (1 + stretchY * 0.15) * pulse
     tz *= pulse
 
-    // 5. Soft-Body Spring Physics (individual lag)
-    const spring = 0.06
-    const friction = 0.85
+    // 2. High Viscosity Spring Physics (Atmospheric Slow-Mo)
+    const spring = 0.025 // Very soft
+    const friction = 0.94 // High viscosity
     
     this.vx += (tx - this.x) * spring
     this.vy += (ty - this.y) * spring
@@ -90,25 +83,32 @@ class JellyCapsule {
     this.y += this.vy
     this.z += this.vz
     
-    // Projection variables
-    this.z_final = this.z
     const focalLength = 1200
-    this.scale = focalLength / (focalLength + this.z_final)
+    this.scale = focalLength / (focalLength + this.z)
     
     this.px = this.x * this.scale + sphereCenter.x
     this.py = this.y * this.scale + sphereCenter.y
   }
 
   draw(ry) {
-    // Frontal culling (No capsules behind center)
-    if (this.z_final > 0) return
+    // 3. HARD DEPTH CULLING (No particles behind cursor)
+    if (this.z > 0) return
 
-    if (this.px < -150 || this.px > W+150 || this.py < -150 || this.py > H+150) return
+    if (this.px < -200 || this.px > W+200 || this.py < -200 || this.py > H+200) return
 
-    const alpha = Math.min(1, Math.max(0.05, (-this.z_final) / this.baseRadius)) * 0.9
-    const shimmer = 0.8 + 0.2 * Math.sin(Date.now() * 0.003 + this.shimmerOffset)
+    // 4. RADIAL FADE-OUT (The "Disappearing" effect)
+    // Distance from center of sphere (local x,y,z)
+    const dist = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z)
+    const fadeLimit = this.baseRadius * 0.8
+    // If we are near the edges of our sphere volume, fade out
+    const radialAlpha = Math.max(0, 1 - (dist - fadeLimit) / (this.baseRadius - fadeLimit))
     
-    ctx.globalAlpha = alpha * shimmer
+    // Depth Alpha (frontal focused)
+    const depthAlpha = Math.min(1, Math.max(0, (-this.z) / this.baseRadius))
+    
+    const shimmer = 0.8 + 0.2 * Math.sin(Date.now() * 0.0015 + this.shimmerOffset)
+    
+    ctx.globalAlpha = depthAlpha * radialAlpha * shimmer * 0.85
     ctx.fillStyle = this.color
     
     ctx.save()
@@ -118,7 +118,6 @@ class JellyCapsule {
     const rw = this.w * this.scale
     const rh = this.h * this.scale
     
-    // Capsule Shape
     ctx.beginPath()
     const r = rh / 2
     ctx.moveTo(-rw/2 + r, -rh/2)
@@ -148,7 +147,7 @@ function handleResize() {
 function init() {
   handleResize()
   ctx = canvasRef.value.getContext('2d', { alpha: true })
-  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => new JellyCapsule(i))
+  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => new EtherealCapsule(i))
   isInitialized = true
 }
 
@@ -160,27 +159,25 @@ function loop() {
   ctx.clearRect(0, 0, W, H)
   time += 0.016
   
-  // 1. Sphere Center Elasticity & Momentum (The "Weight")
+  // 5. Viscous Center Movement
   const dx = mouse.x - sphereCenter.x
   const dy = mouse.y - sphereCenter.y
   
-  sphereCenter.vx += dx * 0.05
-  sphereCenter.vy += dy * 0.05
-  sphereCenter.vx *= 0.82
-  sphereCenter.vy *= 0.82
+  sphereCenter.vx += dx * 0.04
+  sphereCenter.vy += dy * 0.04
+  sphereCenter.vx *= 0.8 // High viscous drag on the center too
+  sphereCenter.vy *= 0.8
   
   sphereCenter.x += sphereCenter.vx
   sphereCenter.y += sphereCenter.vy
   
-  // 2. Deformation amounts (Stretch X/Y)
   const stretchX = sphereCenter.vx * 0.01
   const stretchY = sphereCenter.vy * 0.01
   
-  // High-Speed Rotation
-  rotation.y += 0.005
-  rotation.x += 0.002
+  // 6. Reduced Rotation Speed (Cinematic Atmosphere)
+  rotation.y += 0.002
+  rotation.x += 0.001
   
-  // Update and Draw
   particles.forEach(p => {
     p.update(rotation.x, rotation.y, stretchX, stretchY)
     p.draw(rotation.y)
