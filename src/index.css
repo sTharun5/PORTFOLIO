@@ -1,23 +1,108 @@
 @import "tailwindcss";
 
 @theme {
+  --color-background: #02040a; /* Extreme deep space black */
+  --color-card: #0a0d14; /* Deep hollow gray for cards */
+  --color-primary: #8b5cf6; /* Violet 500 */
+  --color-secondary: #0ea5e9; /* Sky 500 */
+  --color-accent: #f43f5e; /* Rose 500 */
+  --color-leetcode: #ffa116; /* LeetCode Orange */
+  
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
 }
 
 @layer base {
   body {
-    background-color: #f8fafc; /* Tailwind slate-50 */
-    color: #0f172a; /* Tailwind slate-900 */
+    background-color: var(--color-background);
+    color: #e2e8f0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 
 @layer utilities {
+  .bg-glass {
+    background: rgba(10, 13, 20, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  }
+
+  .text-glow-leetcode {
+    text-shadow: 0 0 20px rgba(255, 161, 22, 0.6);
+  }
+
+  /* 3D Core Setup */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Zero-G Floating Animations */
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .animate-float-medium {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-fast {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(0.5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  /* Glare effect for 3D cards */
+  .glare-mask {
+    background: radial-gradient(
+      circle at var(--x, 50%) var(--y, 50%),
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+    pointer-events: none;
+    transition: background 0.1s ease;
+  }
+
+  .neon-border {
+    position: relative;
+  }
+  
+  .neon-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      to bottom right,
+      rgba(139, 92, 246, 0.4),
+      rgba(14, 165, 233, 0.4),
+      transparent
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
