@@ -11,117 +11,61 @@ const canvasRef = ref(null)
 
 let ctx, W, H, rafId
 let particles = []
-const PARTICLE_COUNT = 350
+const PARTICLE_COUNT = 450
 const COLORS = ['#4285F4', '#EA4335', '#FBBC05', '#34A853']
-const mouse = { x: -1000, y: -1000 }
+const mouse = { x: 0, y: 0 }
+const sphereCenter = { x: 0, y: 0, tx: 0, ty: 0 }
+const rotation = { x: 0, y: 0 }
 
-class GeometricParticle3D {
-  constructor() {
-    this.reset()
-  }
-
-  reset() {
-    // Spread sphere: distribute horizontally wider
-    const phi = Math.acos(Math.random() * 2 - 1)
-    const theta = Math.random() * Math.PI * 2
-    const radius = 350 + Math.random() * 100 // Wider spread
+class Capsule3D {
+  constructor(index) {
+    // 1. Fibonacci Sphere Distribution (Equal Distance)
+    const phi = Math.acos(1 - 2 * (index + 0.5) / PARTICLE_COUNT)
+    const theta = Math.PI * (1 + Math.sqrt(5)) * (index + 0.5)
+    const radius = 240 // Fixed sphere radius
     
-    // Origin in 3D
-    this.ox = radius * Math.sin(phi) * Math.cos(theta)
-    this.oy = radius * Math.sin(phi) * Math.sin(theta)
-    this.oz = radius * Math.cos(phi)
+    this.x = radius * Math.sin(phi) * Math.cos(theta)
+    this.y = radius * Math.sin(phi) * Math.sin(theta)
+    this.z = radius * Math.cos(phi)
     
-    // Current positions
-    this.x = this.ox
-    this.y = this.oy
-    this.z = this.oz
-    
-    this.vx = 0
-    this.vy = 0
-    this.vz = 0
-    
-    this.color = COLORS[Math.floor(Math.random() * COLORS.length)]
-    this.size = Math.random() * 4 + 2
+    this.color = COLORS[index % COLORS.length]
+    this.w = 8 // Capsule length
+    this.h = 4 // Capsule width
     this.rotation = Math.random() * Math.PI * 2
-    this.rotationSpeed = (Math.random() - 0.5) * 0.05
-    
-    // Unique float phase
-    this.phase = Math.random() * Math.PI * 2
-    this.phaseSpeed = Math.random() * 0.01 + 0.005
-  }
-
-  update(rx, ry) {
-    this.phase += this.phaseSpeed
-    
-    // 1. Ambient Float (Drift around target)
-    const targetX = this.ox + Math.sin(this.phase) * 20
-    const targetY = this.oy + Math.cos(this.phase * 0.8) * 20
-    const targetZ = this.oz + Math.sin(this.phase * 1.2) * 20
-
-    // 2. Mouse Attraction (Transform mouse to 3D roughly or just use 2D screen proximity)
-    // For 3D attraction, we need to know where the mouse is in 3D. 
-    // We'll approximate: project our 2D screen pos and compare with mouse.
-    const focalLength = 500
-    const scale = focalLength / (focalLength + this.z)
-    const px = this.x * scale + W / 2
-    const py = this.y * scale + H / 2
-    
-    const dx = mouse.x - px
-    const dy = mouse.y - py
-    const dist = Math.sqrt(dx * dx + dy * dy)
-    
-    if (dist < 400) {
-      const force = (400 - dist) / 400
-      // Pull towards mouse (invert projection to 3D roughly)
-      this.vx += (dx / scale) * force * 0.02
-      this.vy += (dy / scale) * force * 0.02
-    }
-
-    // Spring back to target
-    this.vx += (targetX - this.x) * 0.01
-    this.vy += (targetY - this.y) * 0.01
-    this.vz += (targetZ - this.z) * 0.01
-
-    // Damping
-    this.vx *= 0.95
-    this.vy *= 0.95
-    this.vz *= 0.95
-    
-    this.x += this.vx
-    this.y += this.vy
-    this.z += this.vz
-    
-    this.rotation += this.rotationSpeed
   }
 
   draw(rx, ry) {
-    // 3D Rotation on Y/X axes for the cloud
+    // 2. 3D Rotation
     let x1 = this.x * Math.cos(ry) - this.z * Math.sin(ry)
     let z1 = this.x * Math.sin(ry) + this.z * Math.cos(ry)
     let y2 = this.y * Math.cos(rx) - z1 * Math.sin(rx)
     let z2 = this.y * Math.sin(rx) + z1 * Math.cos(rx)
     
+    // 3. Perspective Projection
     const focalLength = 500
     const scale = focalLength / (focalLength + z2)
-    const px = x1 * scale + W / 2
-    const py = y2 * scale + H / 2
     
+    // 4. Center Follows Mouse (sphereCenter logic)
+    const px = x1 * scale + W / 2 + sphereCenter.x
+    const py = y2 * scale + H / 2 + sphereCenter.y
+    
+    // Culling
     if (px < -50 || px > W+50 || py < -50 || py > H+50) return
 
-    const alpha = Math.min(1, Math.max(0.1, (z2 + 400) / 800)) * 0.7
+    // 5. Build Gradient/Transparency for Depth
+    const alpha = Math.min(1, Math.max(0.1, (z2 + 240) / 480)) * 0.8
     ctx.globalAlpha = alpha
     ctx.fillStyle = this.color
     
-    // Draw TRIANGLE
+    // 6. Draw Capsule (Pill Shape)
     ctx.save()
     ctx.translate(px, py)
-    ctx.rotate(this.rotation)
+    ctx.rotate(this.rotation + ry) // Sync some rotation with globe
+    
     ctx.beginPath()
-    const s = this.size * scale
-    ctx.moveTo(0, -s)
-    ctx.lineTo(s * 0.86, s * 0.5)
-    ctx.lineTo(-s * 0.86, s * 0.5)
-    ctx.closePath()
+    const rw = this.w * scale
+    const rh = this.h * scale
+    ctx.roundRect(-rw/2, -rh/2, rw, rh, rh/2)
     ctx.fill()
     ctx.restore()
     
@@ -135,21 +79,31 @@ function init() {
   W = canvas.width = window.innerWidth
   H = canvas.height = window.innerHeight
   ctx = canvas.getContext('2d')
-  particles = Array.from({ length: PARTICLE_COUNT }, () => new GeometricParticle3D())
+  
+  // Initial center in middle
+  sphereCenter.x = 0
+  sphereCenter.y = 0
+  
+  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => new Capsule3D(i))
 }
 
-let time = 0
 function loop() {
-  time += 0.005
   ctx.clearRect(0, 0, W, H)
   
-  // Base subtle rotation
-  const rx = Math.sin(time * 0.5) * 0.2
-  const ry = time * 0.3
+  // 7. Sphere Center Follows Mouse with Elastic Spring
+  // Translate mouse pos into screen offset from center
+  const targetX = (mouse.x - W / 2) * 0.5
+  const targetY = (mouse.y - H / 2) * 0.5
+  
+  sphereCenter.x += (targetX - sphereCenter.x) * 0.08
+  sphereCenter.y += (targetY - sphereCenter.y) * 0.08
+  
+  // 8. Globe Rotation
+  rotation.y += 0.005
+  rotation.x += 0.001
   
   particles.forEach(p => {
-    p.update()
-    p.draw(rx, ry)
+    p.draw(rotation.x, rotation.y)
   })
   
   rafId = requestAnimationFrame(loop)
@@ -188,7 +142,5 @@ onBeforeUnmount(() => {
 }
 .canvas {
   display: block;
-  width: 100%;
-  height: 100%;
 }
 </style>
