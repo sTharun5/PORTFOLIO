@@ -159,7 +159,7 @@ onUnmounted(() => {
     <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
     
     <!-- Antigravity Physics Background (Light Theme Variants) -->
-    <vue-particles id="tsparticles" :options="particlesOptions" class="absolute inset-0 z-0 opacity-30 pointer-events-none" />
+    <vue-particles id="tsparticles" :options="particlesOptions" class="absolute inset-0 z-0 opacity-80" />
 
     <!-- Ambient glowing nebulas (Light Theme Gradients) -->
     <div class="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
