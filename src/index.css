@@ -1,58 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Google Sans", "Inter", sans-serif;
-  --font-sans: "Roboto", "Inter", sans-serif;
-  
-  --color-google-blue: #4285F4;
-  --color-google-red: #EA4335;
-  --color-google-yellow: #FBBC05;
-  --color-google-green: #34A853;
-  
-  --color-google-gray: #5f6368;
-  --color-google-surface: #ffffff;
-  --color-google-bg: #f8f9fa;
-  --color-google-border: #dadce0;
-  --color-google-text: #202124;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
 }
 
 @layer base {
   body {
-    background-color: var(--color-google-bg);
-    color: var(--color-google-text);
+    background-color: #f8fafc; /* Tailwind slate-50 */
+    color: #0f172a; /* Tailwind slate-900 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: var(--font-sans);
   }
 }
 
 @layer utilities {
-  .google-card {
-    background-color: var(--color-google-surface);
-    border: 1px solid var(--color-google-border);
-    border-radius: 1.5rem; /* 24px standard for prominent Material cards */
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .google-card:hover {
-    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
-    transform: translateY(-2px);
-  }
-
-  .google-card-flat {
-    background-color: var(--color-google-surface);
-    border: 1px solid var(--color-google-border);
-    border-radius: 1rem;
-    box-shadow: none;
-    transition: background-color 0.2s ease;
-  }
-
-  .google-card-flat:hover {
-    background-color: var(--color-google-bg);
-  }
-
-  /* Remove scrollbars for clean horizontal scrolling */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
