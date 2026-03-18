@@ -47,6 +47,20 @@ const PROJECTS = [
     github: 'https://github.com/sTharun5/Tic-Tac-Toe',
     description: 'Competitive two-player strategy game powered by an unbeatable Minimax AI algorithm.',
     stack: ['HTML', 'CSS', 'JavaScript']
+  },
+  {
+    title: 'Virtual AI Mouse',
+    tagline: 'Gesture-Driven Interaction',
+    github: 'https://github.com/sTharun5',
+    description: 'A touchless computing interface using computer vision to track hand landmarks for real-time cursor control and gesture commands.',
+    stack: ['Python', 'OpenCV', 'MediaPipe']
+  },
+  {
+    title: 'Number Plate Detection',
+    tagline: 'Automated Traffic Vision',
+    github: 'https://github.com/sTharun5',
+    description: 'Intelligent surveillance system utilizing deep learning for automatic license plate recognition (ALPR) and character extraction.',
+    stack: ['Python', 'YOLOv8', 'EasyOCR']
   }
 ];
 
