@@ -69,7 +69,7 @@ const PROJECTS = [
     tagline: 'Minimax Algorithm',
     url: 'https://stharun5.github.io/Tic-Tac-Toe/',
     github: 'https://github.com/sTharun5/Tic-Tac-Toe',
-    description: 'Two player game',
+    description: 'Competitive two-player strategy game powered by an unbeatable Minimax AI algorithm.',
     stack: ['HTML', 'CSS', 'JavaScript']
   }
 ];
@@ -164,7 +164,7 @@ onUnmounted(() => {
           <a href="https://linkedin.com/in/tharuntech" target="_blank" class="text-slate-400 hover:text-indigo-600 transition-colors">
             <Linkedin :size="20" />
           </a>
-          <a href="mailto:stharun612@gmail.com" class="px-7 py-3 rounded-2xl bg-slate-900 hover:bg-indigo-600 text-white text-sm font-black shadow-lg hover:shadow-indigo-500/20 transition-all hover:-translate-y-1">
+          <a href="mailto:stharun612@gmail.com" class="px-7 py-3 rounded-2xl bg-slate-900 hover:bg-indigo-600 text-white text-sm font-black shadow-lg hover:shadow-indigo-500/20 transition-all hover:-translate-y-1 magnetic-trigger">
             Contact Me
           </a>
         </div>
@@ -301,7 +301,7 @@ onUnmounted(() => {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <TiltCard v-for="(project, i) in PROJECTS" :key="project.title" 
                      v-motion="{ initial: { opacity: 0, y: 30 }, visibleOnce: { opacity: 1, y: 0, transition: { delay: i * 100 } } }"
-                     class="flex flex-col group justify-between hover:border-indigo-200 transition-all duration-500 !p-0 border-slate-100 shadow-sm"
+                     class="flex flex-col group justify-between hover:border-indigo-200 transition-all duration-500 !p-0 border-slate-100 shadow-sm magnetic-trigger"
                      padding="p-10">
             <div class="relative">
               <div class="flex items-center justify-between mb-6">
