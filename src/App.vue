@@ -6,6 +6,7 @@ import {
 } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import TiltCard from './components/TiltCard.vue';
+import MagneticCursor from './components/MagneticCursor.vue';
 
 const mobileMenuOpen = ref(false);
 
@@ -64,11 +65,11 @@ const PROJECTS = [
     stack: ['JavaScript', 'REST API']
   },
   {
-    title: 'Tic-Tac-Toe AI',
+    title: 'Tic-Tac-Toe',
     tagline: 'Minimax Algorithm',
     url: 'https://stharun5.github.io/Tic-Tac-Toe/',
     github: 'https://github.com/sTharun5/Tic-Tac-Toe',
-    description: 'Advanced game logic with an unbeatable AI opponent using the Minimax recursive algorithm.',
+    description: 'Two player game',
     stack: ['HTML', 'CSS', 'JavaScript']
   }
 ];
@@ -123,7 +124,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900">
+  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900 cursor-none">
+    
+    <MagneticCursor />
     
     <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
     
