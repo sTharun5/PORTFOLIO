@@ -232,9 +232,9 @@ onUnmounted(() => {
           <div class="lg:col-span-8 flex flex-col h-full">
             <div class="flex items-center gap-4 mb-10">
               <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600">
-                <Database :size="24" />
+                <Code2 :size="24" />
               </div>
-              <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Backend Arsenal</h2>
+              <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Technical Skills</h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow">
               <TiltCard v-for="(skill, i) in ['Problem Solving', 'Node.js', 'Express', 'SQL', 'Java', 'C', 'JavaScript']" :key="skill" 
@@ -268,7 +268,7 @@ onUnmounted(() => {
           <div class="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-500">
             <Rocket :size="24" />
           </div>
-          <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Advanced Architectures</h2>
+          <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Engineering Projects</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <TiltCard v-for="(project, i) in PROJECTS" :key="project.title" 
