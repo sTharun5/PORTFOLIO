@@ -57,12 +57,12 @@ const PROJECTS = [
 ];
 
 const SKILL_RADAR_DATA = [
-  { subject: 'Frontend', proficiency: 90 },
-  { subject: 'Backend', proficiency: 85 },
-  { subject: 'Database', proficiency: 80 },
-  { subject: 'APIs', proficiency: 85 },
+  { subject: 'Backend Logic', proficiency: 95 },
+  { subject: 'SQL & RDBMS', proficiency: 90 },
+  { subject: 'API Design', proficiency: 85 },
+  { subject: 'Database Schema', proficiency: 88 },
   { subject: 'Problem Solving', proficiency: 95 },
-  { subject: 'System Design', proficiency: 75 },
+  { subject: 'Server Arch', proficiency: 80 },
 ];
 
 const NAV_ITEMS = [
@@ -136,7 +136,7 @@ const App = () => {
             </div>
           </div>
           <h2 className="text-xl font-bold text-white font-display tracking-wider">THARUN S</h2>
-          <p className="text-xs text-primary font-bold uppercase tracking-widest mt-1">Full Stack Dev</p>
+          <p className="text-xs text-secondary font-bold uppercase tracking-widest mt-1">Backend Developer</p>
         </div>
 
         {/* Nav Links */}
@@ -181,7 +181,7 @@ const App = () => {
           </div>
           <div>
             <h2 className="text-sm font-bold text-white font-display leading-tight">THARUN S</h2>
-            <p className="text-[10px] text-primary font-bold uppercase tracking-widest">Full Stack Dev</p>
+            <p className="text-[10px] text-secondary font-bold uppercase tracking-widest">Backend Dev</p>
           </div>
         </div>
       </header>
@@ -212,7 +212,7 @@ const App = () => {
             </h1>
             
             <p className="text-slate-400 text-sm md:text-base max-w-2xl leading-relaxed mb-8">
-              Student at <strong className="text-white">BIT</strong>. Building scalable web ecosystems and solving complex algorithmic challenges. Specializing in the MERN stack with a focus on premium UI/UX.
+              Student at <strong className="text-white">BIT</strong>. Architecting robust server-side ecosystems, optimizing complex SQL queries, and building scalable RESTful APIs. Specializing in high-performance backend infrastructure and data modeling.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -301,20 +301,20 @@ const App = () => {
              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Ecosystem</h3>
              <div className="space-y-6">
                 <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Frontend</span> <span className="text-primary">React 19, Vite, Tailwind</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-primary w-[90%] rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div></div>
+                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Server-Side</span> <span className="text-primary">Node.js, Express, Java</span></div>
+                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-primary w-[95%] rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div></div>
                 </div>
                 <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Backend</span> <span className="text-secondary">Node.js, Prisma, JWT</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-secondary w-[85%] rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div></div>
+                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Relational DBs (SQL)</span> <span className="text-secondary">PostgreSQL, MySQL</span></div>
+                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-secondary w-[90%] rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div></div>
                 </div>
                 <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Database</span> <span className="text-accent">PostgreSQL, MongoDB</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-accent w-[80%] rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div>
+                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">NoSQL & ORMs</span> <span className="text-accent">MongoDB, Prisma</span></div>
+                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-accent w-[85%] rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div>
                 </div>
              </div>
              <div className="mt-6 flex flex-wrap gap-2">
-               {['Framer Motion', 'Recharts', 'Leaflet', 'Git', 'Brevo API'].map(tool => (
+               {['REST APIs', 'JWT Auth', 'Data Modeling', 'Git', 'Brevo API'].map(tool => (
                  <span key={tool} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-bold text-slate-500">{tool}</span>
                ))}
              </div>
