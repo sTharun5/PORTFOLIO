@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { Github, Linkedin, ExternalLink, Code2, Database, Rocket, Trophy, Menu, X, ChevronRight, GraduationCap } from 'lucide-vue-next';
+import { 
+  Github, Linkedin, ExternalLink, Code2, Database, Rocket, Trophy, 
+  Menu, X, ChevronRight, GraduationCap, Cpu, Layers, Workflow, 
+  Binary, FileCode, Server, Terminal, Braces 
+} from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import TiltCard from './components/TiltCard.vue';
 
@@ -29,6 +33,12 @@ const particlesOptions = {
   detectRetina: true
 };
 
+const NAV_ITEMS = [
+  { label: 'Expertise', id: 'expertise' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Credentials', id: 'credentials' },
+];
+
 const PROJECTS = [
   {
     title: 'Smart OD Portal',
@@ -36,7 +46,7 @@ const PROJECTS = [
     url: 'https://automation-nu-dusky.vercel.app',
     github: 'https://github.com/sTharun5/Automation',
     description: 'Zero-touch PDF parsing OCR engine with an intelligent fraud detection pipeline.',
-    stack: ['Vue 3', 'Node.js', 'PostgreSQL', 'Prisma']
+    stack: ['Jav', 'Node.js', 'PostgreSQL', 'Prisma']
   },
   {
     title: 'WhiffAndWrap Architecture',
@@ -68,10 +78,15 @@ const CERTS = [
   }
 ];
 
-const NAV_ITEMS = [
-  { label: 'Expertise', id: 'expertise' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Credentials', id: 'credentials' },
+const PRO_SKILLS = [
+  { name: 'Problem Solving', icon: Workflow },
+  { name: 'Node.js', icon: Server },
+  { name: 'Express.js', icon: Braces },
+  { name: 'SQL / DB', icon: Database },
+  { name: 'Java Core', icon: FileCode },
+  { name: 'C Language', icon: Binary },
+  { name: 'JavaScript', icon: Cpu },
+  { name: 'TypeScript', icon: Terminal },
 ];
 
 const scrollToSection = (id: string) => {
@@ -227,35 +242,37 @@ onUnmounted(() => {
       </section>
 
       <!-- EXPERTISE -->
-      <section id="expertise" class="max-w-7xl mx-auto" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+      <section id="expertise" class="max-w-7xl mx-auto py-12" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-stretch">
           <div class="lg:col-span-8 flex flex-col h-full">
-            <div class="flex items-center gap-4 mb-10">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600">
-                <Code2 :size="24" />
-              </div>
-              <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Technical Skills</h2>
+            <div class="flex flex-col gap-2 mb-12">
+              <span class="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-2">Capabilities</span>
+              <h2 class="text-5xl font-display font-black text-slate-900 tracking-tighter">Technical Expertise</h2>
             </div>
+            
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow">
-              <TiltCard v-for="(skill, i) in ['Problem Solving', 'Node.js', 'Express', 'SQL', 'Java', 'C', 'JavaScript']" :key="skill" 
+              <TiltCard v-for="(skill, i) in PRO_SKILLS" :key="skill.name" 
                          v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 50 } } }"
-                         class="!px-4 !py-8 text-center justify-center border-slate-100 flex flex-col items-center group">
-                <span class="font-black text-slate-900 text-lg group-hover:text-indigo-600 transition-colors">{{ skill }}</span>
+                         class="!p-0 border-slate-100/60 flex flex-col items-center justify-center group overflow-visible"
+                         padding="p-8">
+                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 mb-5 shadow-inner">
+                  <component :is="skill.icon" :size="22" />
+                </div>
+                <span class="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors tracking-tight">{{ skill.name }}</span>
               </TiltCard>
             </div>
           </div>
           
           <!-- LEETCODE COMPONENT LIGHT THEME -->
-          <a href="https://leetcode.com/u/user3651Q/" target="_blank" class="lg:col-span-4 block h-full group" v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: 200 } } }">
-            <TiltCard class="flex flex-col items-center justify-center text-center p-10 border-orange-100 bg-gradient-to-b from-white to-orange-50/30">
-              <div class="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center mb-8 shadow-sm group-hover:shadow-orange-200 transition-all group-hover:scale-110">
-                <Code2 class="text-orange-500" :size="36" />
+          <a href="https://leetcode.com/u/user3651Q/" target="_blank" class="lg:col-span-4 block h-full group" v-motion="{ initial: { opacity: 0, x: 50 }, visibleOnce: { opacity: 1, x: 0, transition: { duration: 1000, type: 'spring', damping: 20 } } }">
+            <TiltCard class="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20" padding="p-10">
+              <div class="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-8 shadow-2xl shadow-orange-200 group-hover:scale-110 transition-transform duration-700">
+                <Code2 class="text-white" :size="48" />
               </div>
-              <h2 class="text-6xl font-display font-black text-slate-900 mb-2 tracking-tighter">{{`300+`}}</h2>
-              <p class="text-orange-600 font-black uppercase tracking-widest text-xs mb-6">Problems Solved</p>
-              <p class="text-slate-500 text-sm leading-relaxed font-medium">Consistent algorithmic problem solving in database logic and data structures on LeetCode.</p>
-              <div class="mt-8 flex items-center gap-3 text-orange-600 font-black text-xs uppercase tracking-widest bg-orange-100/50 px-6 py-3 rounded-2xl border border-orange-200 group-hover:bg-orange-600 group-hover:text-white transition-all text-center">
-                View Profile <ExternalLink :size="14" />
+              <h2 class="text-7xl font-display font-black text-slate-900 mb-2 tracking-tighter">{{`300+`}}</h2>
+              <p class="text-orange-600 font-black uppercase tracking-[0.2em] text-[10px] mb-6">Problems Solved</p>
+              <div class="mt-8 flex items-center gap-3 text-orange-600 font-black text-[10px] uppercase tracking-widest bg-white shadow-xl shadow-orange-100/50 px-8 py-4 rounded-2xl border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                LeetCode Profile <ExternalLink :size="14" />
               </div>
             </TiltCard>
           </a>
@@ -270,28 +287,32 @@ onUnmounted(() => {
           </div>
           <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Engineering Projects</h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <TiltCard v-for="(project, i) in PROJECTS" :key="project.title" 
                      v-motion="{ initial: { opacity: 0, y: 30 }, visibleOnce: { opacity: 1, y: 0, transition: { delay: i * 100 } } }"
-                     class="flex flex-col group justify-between hover:border-indigo-100 transition-colors duration-500 !p-8">
-            <div>
-              <p class="text-sky-500 text-[10px] font-black uppercase tracking-widest mb-3">{{ project.tagline }}</p>
-              <h3 class="text-2xl font-black font-display text-slate-900 mb-4 tracking-tighter">{{ project.title }}</h3>
-              <p class="text-base text-slate-500 mb-8 leading-relaxed font-medium">{{ project.description }}</p>
+                     class="flex flex-col group justify-between hover:border-indigo-200 transition-all duration-500 !p-0 border-slate-100 shadow-sm"
+                     padding="p-10">
+            <div class="relative">
+              <div class="flex items-center justify-between mb-6">
+                <span class="text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] bg-indigo-50 px-3 py-1 rounded-lg">{{ project.tagline }}</span>
+                <div class="flex gap-3">
+                  <a :href="project.github" target="_blank" class="text-slate-400 hover:text-slate-900 transition-colors">
+                    <Github :size="18" />
+                  </a>
+                  <a v-if="project.url" :href="project.url" target="_blank" class="text-slate-400 hover:text-indigo-600 transition-colors">
+                    <ExternalLink :size="18" />
+                  </a>
+                </div>
+              </div>
+              <h3 class="text-3xl font-black font-display text-slate-900 mb-5 tracking-tighter group-hover:text-indigo-600 transition-colors">{{ project.title }}</h3>
+              <p class="text-base text-slate-500 mb-10 leading-relaxed font-medium line-clamp-2 md:line-clamp-none">{{ project.description }}</p>
             </div>
+            
             <div class="mt-auto">
-              <div class="flex flex-wrap gap-2 mb-8">
-                <span v-for="tech in project.stack" :key="tech" class="px-3 py-1 bg-slate-50 rounded-lg text-xs font-black text-slate-500 border border-slate-100">
+              <div class="flex flex-wrap gap-2.5 mb-2">
+                <span v-for="tech in project.stack" :key="tech" class="px-4 py-1.5 bg-slate-50 rounded-xl text-[10px] font-bold text-slate-500 border border-slate-100 uppercase tracking-wider">
                   {{ tech }}
                 </span>
-              </div>
-              <div class="flex gap-4 border-t border-slate-50 pt-6">
-                <a :href="project.url || project.github" target="_blank" class="text-xs font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-800 flex items-center gap-2 transition">
-                  Live App <ExternalLink :size="14" />
-                </a>
-                <a :href="project.github" target="_blank" class="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 flex items-center gap-2 transition ml-auto">
-                  Code <Github :size="14" />
-                </a>
               </div>
             </div>
           </TiltCard>
