@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Github, Linkedin, Mail, ExternalLink, Award, Code2, Terminal, Star, Cpu, Globe, 
-  LayoutDashboard, FolderGit2, GraduationCap, Send, UserCheck, Database
+  Github, Linkedin, ExternalLink, Award, Code2, Terminal, Star, Cpu, Globe, 
+  Menu, X, ChevronRight, GraduationCap, Database
 } from 'lucide-react';
 
 // --- DATA ---
 const HERO_STATS = [
-  { label: 'NPTEL Java - Elite Gold', value: 97, unit: '%', icon: <Award className="text-yellow-400" /> },
-  { label: 'LeetCode Problems', value: 300, unit: '+', icon: <Code2 className="text-blue-400" /> },
-  { label: 'GitHub Flagship Stars', value: 9, unit: '★', icon: <Star className="text-violet-400" /> },
+  { label: 'NPTEL Java (Elite Gold)', value: '97%', icon: <Award className="text-google-yellow" /> },
+  { label: 'LeetCode Solved', value: '300+', icon: <Code2 className="text-google-blue" /> },
+  { label: 'Flagship GitHub Stars', value: '9', icon: <Star className="text-google-red" /> },
 ];
 
 const PROJECTS = [
@@ -55,416 +55,332 @@ const PROJECTS = [
   }
 ];
 
-// Removed SKILL_RADAR_DATA
-
 const NAV_ITEMS = [
-  { label: 'Dashboard', icon: <LayoutDashboard size={20} />, id: 'dashboard' },
-  { label: 'Profile', icon: <UserCheck size={20} />, id: 'profile' },
-  { label: 'Projects', icon: <FolderGit2 size={20} />, id: 'projects' },
-  { label: 'Certifications', icon: <GraduationCap size={20} />, id: 'certifications' },
-  { label: 'Contact', icon: <Send size={20} />, id: 'contact' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Expertise', id: 'expertise' },
+  { label: 'Certifications', id: 'certifications' },
 ];
 
-// --- COMPONENTS ---
-
-interface CounterProps {
-  value: number | string;
-  unit: string;
-  duration?: number;
-}
-
-const Counter = ({ value, unit, duration = 2 }: CounterProps) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let start = 0;
-    const end = typeof value === 'string' ? parseInt(value) : value;
-    if (start === end) return;
-
-    const totalMilisecondsStep = Math.max((duration * 1000) / end, 1);
-    const timer = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start === end) clearInterval(timer);
-    }, totalMilisecondsStep);
-
-    return () => clearInterval(timer);
-  }, [value, duration]);
-
-  return <span>{count}{unit}</span>;
-};
-
-// --- MAIN APP ---
+// --- APP COMPONENT ---
 
 const App = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
-    setActiveSection(id);
+    setMobileMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
+  const springConfig = { type: "spring", stiffness: 100, damping: 20 } as const;
+
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background text-slate-300 selection:bg-primary/30 font-sans">
-      {/* Background Glows */}
-      <div className="fixed top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/10 blur-[120px] rounded-full"></div>
-      </div>
-
-      {/* SIDEBAR (Desktop) / BOTTOM NAV (Mobile) */}
-      <nav className="fixed md:sticky top-0 bottom-0 md:bottom-auto md:h-screen w-full md:w-64 bg-card/80 backdrop-blur-xl border-t md:border-t-0 md:border-r border-white/10 z-50 flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start px-4 md:px-6 py-3 md:py-8 shadow-2xl md:shadow-none order-last md:order-first">
-        
-        {/* Brand/Avatar (Hidden on mobile bottom nav, managed in top header) */}
-        <div className="hidden md:flex flex-col items-center w-full mb-10">
-          <div className="relative mb-4">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-primary to-secondary p-1 animate-pulse-slow">
-              <div className="w-full h-full rounded-full bg-card overflow-hidden">
-                <img src="/IMG_6954.jpg" alt="Tharun S" className="w-full h-full object-cover" />
-              </div>
-            </div>
-          </div>
-          <h2 className="text-xl font-bold text-white font-display tracking-wider">THARUN S</h2>
-          <p className="text-xs text-secondary font-bold uppercase tracking-widest mt-1">Backend Developer</p>
-        </div>
-
-        {/* Nav Links */}
-        <div className="flex flex-row md:flex-col w-full gap-2 md:gap-3 justify-around md:justify-start overflow-x-auto no-scrollbar">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl transition-all font-medium text-xs md:text-sm w-full md:w-auto md:justify-start ${
-                activeSection === item.id 
-                  ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(139,92,246,0.1)]' 
-                  : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
-              }`}
-            >
-              {item.icon}
-              <span className="md:inline-block">{item.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Social Links (Desktop bottom) */}
-        <div className="hidden md:flex flex-wrap justify-center gap-3 w-full mt-auto pt-8 border-t border-white/5">
-          <a href="https://github.com/sTharun5" target="_blank" className="p-2.5 bg-background border border-white/5 hover:border-white/20 hover:text-white rounded-lg transition-all text-slate-400">
-            <Github size={18} />
-          </a>
-          <a href="https://linkedin.com/in/tharuntech" target="_blank" className="p-2.5 bg-background border border-white/5 hover:border-secondary/50 hover:text-secondary rounded-lg transition-all text-slate-400">
-            <Linkedin size={18} />
-          </a>
-          <a href="mailto:stharun612@gmail.com" className="p-2.5 bg-background border border-white/5 hover:border-primary/50 hover:text-primary rounded-lg transition-all text-slate-400">
-            <Mail size={18} />
-          </a>
-        </div>
-      </nav>
-
-      {/* MOBILE HEADER */}
-      <header className="md:hidden sticky top-0 bg-card/80 backdrop-blur-xl border-b border-white/10 z-40 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-[2px]">
-            <div className="w-full h-full rounded-full bg-card overflow-hidden">
+    <div className="min-h-screen bg-google-bg text-google-text font-sans pb-24 selection:bg-google-blue/20">
+      
+      {/* APP BAR */}
+      <header className="sticky top-0 w-full bg-white/90 backdrop-blur-md border-b border-google-border z-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          
+          {/* Logo / Brand */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-google-border shadow-sm">
               <img src="/IMG_6954.jpg" alt="Tharun S" className="w-full h-full object-cover" />
             </div>
+            <span className="text-xl font-display font-bold tracking-tight text-google-text">
+              Tharun <span className="text-google-blue">S</span>
+            </span>
           </div>
-          <div>
-            <h2 className="text-sm font-bold text-white font-display leading-tight">THARUN S</h2>
-            <p className="text-[10px] text-secondary font-bold uppercase tracking-widest">Backend Dev</p>
-          </div>
-        </div>
-      </header>
 
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 p-4 md:p-8 lg:p-10 container mx-auto mb-20 md:mb-0 relative z-10 overflow-x-hidden">
-        
-        {/* DASHBOARD GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 auto-rows-max">
-
-          {/* HERO WIDGET (Spans 2 columns on desktop, 4 on XL) */}
-          <motion.section 
-            id="dashboard"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:col-span-2 xl:col-span-4 bg-glass p-8 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-3xl rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
-            
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary mb-6">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-              Available for Opportunities
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">
-              Innovating through <br className="hidden md:block"/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary to-accent animate-gradient bg-[length:200%_auto]">Code & Design.</span>
-            </h1>
-            
-            <p className="text-slate-400 text-sm md:text-base max-w-2xl leading-relaxed mb-8">
-              Student at <strong className="text-white">BIT</strong>. Architecting robust server-side ecosystems, optimizing complex SQL queries, and building scalable RESTful APIs. Specializing in high-performance backend infrastructure and data modeling.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => scrollToSection('projects')} className="px-6 py-3 bg-primary hover:bg-primary/80 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] flex items-center gap-2 text-sm text-glow">
-                View Projects <ExternalLink size={16} />
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-6">
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="text-sm font-medium text-google-gray hover:text-google-blue transition-colors"
+              >
+                {item.label}
               </button>
-            </div>
-          </motion.section>
-
-          {/* STATS WIDGETS */}
-          {HERO_STATS.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 * (i + 1) }}
-              className="bg-card/40 backdrop-blur-md p-6 rounded-3xl border border-white/5 hover:border-white/10 transition-all flex flex-col justify-center relative overflow-hidden"
+            ))}
+            <a 
+              href="mailto:stharun612@gmail.com" 
+              className="ml-4 px-5 py-2 rounded-full bg-google-blue hover:bg-blue-600 text-white text-sm font-bold shadow-sm transition-colors"
             >
-              <div className="absolute -right-4 -top-4 opacity-5 pointer-events-none transform scale-150">
-                {stat.icon}
-              </div>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-white/5 rounded-lg border border-white/10">
-                  {stat.icon}
-                </div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight">
-                  {stat.label.split(' - ')[0]}<br/>
-                  <span className="text-primary">{stat.label.split(' - ')[1]}</span>
-                </div>
-              </div>
-              <div className="text-4xl font-black text-white font-mono tracking-tighter">
-                <Counter value={stat.value} unit={stat.unit} />
+              Contact
+            </a>
+          </nav>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden p-2 -mr-2 text-google-gray hover:bg-google-bg rounded-full transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Nav Dropdown */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden border-t border-google-border bg-white overflow-hidden"
+            >
+              <div className="flex flex-col p-4 gap-2">
+                {NAV_ITEMS.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-left w-full px-4 py-3 text-sm font-medium text-google-gray hover:bg-google-bg rounded-xl"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+                <a 
+                  href="mailto:stharun612@gmail.com" 
+                  className="mt-2 w-full px-4 py-3 text-center rounded-xl bg-google-blue text-white text-sm font-bold"
+                >
+                  Contact Me
+                </a>
               </div>
             </motion.div>
-          ))}
+          )}
+        </AnimatePresence>
+      </header>
 
-          {/* FILLER WIDGET OR LOCATION (To complete the 4-col grid top section) */}
-           <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="md:col-span-1 bg-card/40 backdrop-blur-md p-6 rounded-3xl border border-white/5 hover:border-secondary/30 transition-all flex flex-col justify-center items-center text-center relative overflow-hidden group"
-            >
-             <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-             <Globe className="text-secondary opacity-50 mb-3" size={32} />
-             <h3 className="text-white font-bold text-lg">Based in India</h3>
-             <p className="text-xs text-slate-400 mt-1">Ready to work globally</p>
-          </motion.div>
+      {/* MAIN CONTENT CONTAINER */}
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 md:pt-20 space-y-12 md:space-y-20">
+        
+        {/* HERO SECTION */}
+        <motion.section 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={springConfig}
+          className="text-center md:text-left flex flex-col items-center md:items-start"
+        >
+          <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-lg mb-8 border-4 border-white bg-white">
+             <img src="/IMG_6954.jpg" alt="Tharun S" className="w-full h-full object-cover" />
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-display font-black leading-tight tracking-tight mb-4">
+            Architecting <span className="text-google-blue">Data</span>.<br/>
+            Optimizing <span className="text-google-green">Logic</span>.
+          </h1>
+          
+          <p className="text-lg md:text-xl text-google-gray max-w-2xl leading-relaxed mb-8">
+            I'm <strong className="text-google-text">Tharun</strong>, a Backend & SQL Developer focused on designing resilient algorithms, high-performance relational databases, and scalable RESTful APIs.
+          </p>
 
+          <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-10">
+            <a href="https://github.com/sTharun5" target="_blank" className="flex items-center gap-2 px-6 py-3 rounded-full bg-google-bg hover:bg-gray-200 border border-google-border text-sm font-bold transition-colors">
+              <Github size={18} /> GitHub
+            </a>
+            <a href="https://linkedin.com/in/tharuntech" target="_blank" className="flex items-center gap-2 px-6 py-3 rounded-full bg-google-bg hover:bg-gray-200 border border-google-border text-sm font-bold transition-colors">
+              <Linkedin size={18} /> LinkedIn
+            </a>
+          </div>
 
-          {/* PROFILE IMAGE & PHILOSOPHY WIDGET (Spans 4 columns) */}
-           <motion.section 
-            id="profile"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="md:col-span-2 xl:col-span-4 bg-glass p-8 md:p-12 rounded-3xl border border-white/10 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/5 blur-3xl rounded-full group-hover:bg-secondary/10 transition-all duration-700 pointer-events-none"></div>
-            
-            {/* Image Container */}
-            <div className="relative w-48 h-48 md:w-64 md:h-64 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-secondary/40 transition-all p-1.5 bg-card/50 shadow-2xl relative z-10">
-              <div className="w-full h-full rounded-[1.5rem] overflow-hidden bg-background relative flex items-center justify-center group/img">
-                 <img 
-                    src="/IMG_6954.jpg" 
-                    alt="Tharun S" 
-                    className="w-full h-full object-cover grayscale opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-700" 
-                    onError={(e) => { 
-                      e.currentTarget.src = 'https://ui-avatars.com/api/?name=Tharun+S&size=512&background=0f172a&color=06b6d4&font-size=0.33&bold=true'; 
-                      e.currentTarget.className="w-full h-full object-cover opacity-60 mix-blend-screen"; 
-                    }} 
-                 />
-                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[1.5rem] pointer-events-none"></div>
-              </div>
-            </div>
+          {/* Intro Stats Bar */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {HERO_STATS.map((stat, i) => (
+              <motion.div 
+                key={stat.label}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, ...springConfig }}
+                className="google-card-flat p-4 flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-xs font-bold text-google-gray uppercase tracking-wider mb-1">{stat.label}</div>
+                  <div className="text-xl font-black text-google-text">{stat.value}</div>
+                </div>
+                <div className="p-2 bg-google-bg rounded-full">
+                  {stat.icon}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
-            {/* Content */}
-            <div className="flex-1 text-center md:text-left z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary/10 border border-secondary/20 rounded-xl text-[10px] font-bold uppercase tracking-widest text-secondary mb-4">
-                <Database size={12} /> Data & Logic Over Everything
-              </div>
-              <h2 className="text-3xl font-black text-white mb-4">Architecting the Backend</h2>
-              
-              <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-8 max-w-2xl">
-                My passion lies in designing resilient algorithms, high-performance database architectures, and building scalable RESTful APIs that power complex frontends. From optimizing heavy execution logic to deploying secure Node.js microservices, I ensure the data layer is always fast, secure, and rock-solid.
-              </p>
-              
-              <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs font-bold text-slate-300">
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-secondary"></div> Node.js / Express</div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-accent"></div> Relational DBs (SQL)</div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-primary"></div> JWT Auth & Security</div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-yellow-400"></div> Prisma ORM</div>
-              </div>
-            </div>
-          </motion.section>
+        {/* EXPERTISE SECTION */}
+        <motion.section 
+          id="expertise"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={springConfig}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <Database className="text-google-blue" size={28} />
+            <h2 className="text-2xl md:text-3xl font-display font-black">Core Expertise</h2>
+          </div>
 
-
-          {/* PROJECTS SECTION (Spans full width) */}
-          <section id="projects" className="md:col-span-2 xl:col-span-4 mt-8">
-            <div className="flex items-center gap-3 mb-6 px-2">
-              <div className="p-2 bg-white/10 text-white rounded-xl"><FolderGit2 size={24} /></div>
-              <h2 className="text-2xl font-black text-white">Featured Projects</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {PROJECTS.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * i }}
-                  className={`group flex flex-col bg-card/60 backdrop-blur-xl p-6 rounded-3xl border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(139,92,246,0.1)] hover:-translate-y-1 ${project.featured ? 'md:col-span-2 relative overflow-hidden' : ''}`}
-                >
-                  {project.featured && (
-                    <div className="absolute top-0 right-0 py-1.5 px-4 bg-primary text-[10px] font-bold uppercase tracking-widest text-white rounded-bl-2xl shadow-lg">
-                      Flagship Initiative
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-start mb-5 h-10">
-                    <div className={`p-2.5 rounded-xl ${project.id === 1 ? 'bg-primary/20 text-primary' : 'bg-white/5 text-slate-400'}`}>
-                      {project.id === 1 ? <Cpu size={20} /> : project.id === 4 ? <Globe size={20} /> : <Terminal size={20} />}
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-yellow-400/10 border border-yellow-400/20 text-yellow-500 text-[10px] font-bold rounded-full">
-                      <Star size={10} fill="currentColor" /> {project.stars}
-                    </div>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-white mb-1.5 line-clamp-1">{project.title}</h3>
-                  <p className="text-primary text-[10px] font-bold mb-3 uppercase tracking-wider">{project.tagline}</p>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-6 flex-grow line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {project.stack.slice(0, 4).map(tech => (
-                      <span key={tech} className="px-2 py-1 bg-white/5 border border-white/5 rounded-md text-[9px] uppercase font-bold tracking-wider text-slate-500">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.stack.length > 4 && <span className="px-2 py-1 bg-white/5 border border-white/5 rounded-md text-[9px] uppercase font-bold tracking-wider text-slate-500">+{project.stack.length - 4}</span>}
-                  </div>
-
-                  <div className="flex gap-2 w-full mt-auto">
-                    {project.live && (
-                      <a href={project.live} target="_blank" className="flex-1 py-2.5 bg-secondary/10 hover:bg-secondary border border-secondary/20 hover:border-secondary text-secondary hover:text-background font-bold rounded-xl text-center text-xs transition-all flex items-center justify-center gap-1.5">
-                        Live Demo
-                      </a>
-                    )}
-                    <a href={project.github} target="_blank" className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-xl text-center text-xs transition-all flex items-center justify-center gap-1.5">
-                      <Github size={14} /> Code
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-
-          {/* CERTIFICATIONS (Spans full width) */}
-          <section id="certifications" className="md:col-span-2 xl:col-span-4 mt-8">
-            <div className="flex items-center gap-3 mb-6 px-2">
-              <div className="p-2 bg-yellow-400/10 text-yellow-400 rounded-xl"><GraduationCap size={24} /></div>
-              <h2 className="text-2xl font-black text-white">Verified Credentials</h2>
-            </div>
+          <div className="google-card p-6 md:p-8">
+            <p className="text-google-gray mb-8 leading-relaxed">
+              My core philosophy lies in treating the backend as the foundation of any successful application. I build strict data models, optimize heavy SQL queries, and deploy secure Node.js microservices.
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               {/* NPTEL Cert */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-card/60 backdrop-blur-xl p-8 rounded-3xl border border-yellow-400/20 hover:border-yellow-400/50 transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6 relative overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 blur-3xl rounded-full group-hover:bg-yellow-400/20 transition-all"></div>
-                
-                <div className="w-16 h-16 shrink-0 bg-yellow-400/10 border border-yellow-400/30 rounded-2xl flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
-                  <Award size={32} />
+              <div className="flex gap-4">
+                <div className="w-2 h-2 mt-2 rounded-full bg-google-blue shrink-0"></div>
+                <div>
+                  <h3 className="font-bold text-google-text mb-1">Server-Side Logic</h3>
+                  <p className="text-sm text-google-gray">Node.js, Express.js, and Java backend architectural patterns.</p>
                 </div>
-                
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-white mb-1">Programming in Java</h3>
-                  <p className="text-xs text-slate-400 mb-4 uppercase tracking-widest font-bold">NPTEL (IIT professors — Govt of India)</p>
-                  
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-                    <span className="px-3 py-1 bg-yellow-400/20 text-yellow-500 text-xs font-black rounded-lg border border-yellow-400/20">Scored 97/100</span>
-                    <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-bold rounded-lg border border-primary/20">Elite Gold</span>
-                  </div>
-
-                  <a 
-                    href="https://archive.nptel.ac.in/content/noc/NOC25/SEM1/Ecertificates/106/noc25-cs57/Course/NPTEL25CS57S114900069304436474.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex py-2 px-4 bg-white/5 border border-white/10 hover:bg-yellow-400/10 hover:border-yellow-400/30 hover:text-yellow-400 rounded-xl text-xs font-bold text-slate-300 transition-all w-full md:w-auto justify-center"
-                  >
-                    View Official PDF
-                  </a>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-2 h-2 mt-2 rounded-full bg-google-red shrink-0"></div>
+                <div>
+                  <h3 className="font-bold text-google-text mb-1">Relational Databases</h3>
+                  <p className="text-sm text-google-gray">PostgreSQL, MySQL, and complex query optimization.</p>
                 </div>
-              </motion.div>
-
-              {/* Udemy Cert */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-card/60 backdrop-blur-xl p-8 rounded-3xl border border-white/5 hover:border-secondary/50 transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6 relative overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl rounded-full group-hover:bg-secondary/10 transition-all"></div>
-                
-                <div className="w-16 h-16 shrink-0 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-secondary/10 group-hover:text-secondary group-hover:border-secondary/30 group-hover:scale-110 transition-all">
-                  <GraduationCap size={32} />
+              </div>
+              <div className="flex gap-4">
+                <div className="w-2 h-2 mt-2 rounded-full bg-google-green shrink-0"></div>
+                <div>
+                  <h3 className="font-bold text-google-text mb-1">API Development</h3>
+                  <p className="text-sm text-google-gray">RESTful principles, JWT stateless auth, and robust routing.</p>
                 </div>
-                
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-white mb-1">C Programming for Beginners</h3>
-                  <p className="text-xs text-slate-400 mb-4 uppercase tracking-widest font-bold">Udemy Academy</p>
-                  
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-                    <span className="px-3 py-1 bg-secondary/10 text-secondary text-xs font-black rounded-lg border border-secondary/20">Verified Credentials</span>
-                  </div>
-
-                  <a 
-                    href="https://udemy-certificate.s3.amazonaws.com/pdf/UC-bf46b573-0177-4003-abad-dd956cda72ab.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex py-2 px-4 bg-white/5 border border-white/10 hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary rounded-xl text-xs font-bold text-slate-300 transition-all w-full md:w-auto justify-center"
-                  >
-                    View Official PDF
-                  </a>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-2 h-2 mt-2 rounded-full bg-google-yellow shrink-0"></div>
+                <div>
+                  <h3 className="font-bold text-google-text mb-1">NoSQL & ORMs</h3>
+                  <p className="text-sm text-google-gray">Prisma object-relational mapping and MongoDB integrations.</p>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </section>
+          </div>
+        </motion.section>
 
-          {/* CONTACT WIDGET (Spans 2 columns on XL) */}
-          <motion.section 
-            id="contact"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="md:col-span-2 xl:col-span-4 bg-gradient-to-br from-card to-background p-8 md:p-12 rounded-3xl border border-white/10 mt-8 text-center relative overflow-hidden group"
-          >
-             <div className="absolute -inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
-             
-             <div className="relative z-10 max-w-xl mx-auto">
-               <div className="w-16 h-16 mx-auto bg-primary/20 text-primary border border-primary/30 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
-                 <Send size={28} />
-               </div>
-               <h2 className="text-3xl font-black text-white mb-4">Let's Build the Future</h2>
-               <p className="text-slate-400 text-sm mb-8">Looking to collaborate on innovative solutions or have a technical role in mind? My inbox is always responsive.</p>
-               
-               <a href="mailto:stharun612@gmail.com" className="inline-flex px-8 py-4 bg-white text-background hover:bg-slate-200 font-black rounded-2xl transition-all shadow-[0_10px_40px_rgba(255,255,255,0.2)] hover:scale-105">
-                 stharun612@gmail.com
-               </a>
+        {/* PROJECTS SECTION */}
+        <motion.section 
+          id="projects"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={springConfig}
+        >
+          <div className="flex items-center gap-3 mb-6">
+             <Terminal className="text-google-red" size={28} />
+             <h2 className="text-2xl md:text-3xl font-display font-black">Featured Work</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {PROJECTS.map((project, i) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, ...springConfig }}
+                className={`google-card p-6 md:p-8 flex flex-col group ${project.featured ? 'md:col-span-2' : ''}`}
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <div className={`p-3 rounded-2xl ${project.id === 1 ? 'bg-blue-50 text-google-blue' : 'bg-gray-50 text-google-gray'}`}>
+                    {project.id === 1 ? <Cpu size={24} /> : project.id === 4 ? <Globe size={24} /> : <Terminal size={24} />}
+                  </div>
+                  {project.featured && (
+                    <span className="px-3 py-1 bg-green-50 text-google-green text-xs font-bold uppercase tracking-wider rounded-full">
+                      Flagship
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-xl font-bold text-google-text mb-1 group-hover:text-google-blue transition-colors">{project.title}</h3>
+                <p className="text-sm font-semibold text-google-gray mb-3">{project.tagline}</p>
+                
+                <p className="text-sm text-google-gray leading-relaxed mb-6 flex-grow">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.stack.map(tech => (
+                    <span key={tech} className="px-3 py-1 bg-google-bg border border-google-border rounded-lg text-xs font-medium text-google-gray">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-google-border">
+                  {project.live && (
+                    <a href={project.live} target="_blank" className="text-sm font-bold text-google-blue hover:text-blue-700 flex items-center gap-1 transition-colors">
+                      Live App <ExternalLink size={14} />
+                    </a>
+                  )}
+                  <a href={project.github} target="_blank" className="text-sm font-bold text-google-gray hover:text-google-text flex items-center gap-1 transition-colors ml-auto">
+                    <Github size={14} /> Source
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* CERTIFICATIONS SECTION */}
+        <motion.section 
+          id="certifications"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={springConfig}
+        >
+          <div className="flex items-center gap-3 mb-6">
+             <GraduationCap className="text-google-yellow" size={28} />
+             <h2 className="text-2xl md:text-3xl font-display font-black">Official Credentials</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+             {/* NPTEL */}
+             <div className="google-card p-6 border-l-4 border-l-google-yellow">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="font-bold text-google-text text-lg">Programming in Java</h3>
+                  <Award className="text-google-yellow" size={24} />
+                </div>
+                <p className="text-sm text-google-gray mb-4">NPTEL (IIT professors — Govt of India)</p>
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="px-3 py-1 bg-yellow-50 text-google-yellow text-xs font-bold rounded-full">Elite Gold (97/100)</span>
+                </div>
+                <a href="https://archive.nptel.ac.in/content/noc/NOC25/SEM1/Ecertificates/106/noc25-cs57/Course/NPTEL25CS57S114900069304436474.pdf" target="_blank" className="inline-flex items-center gap-1 text-sm font-bold text-google-blue hover:text-blue-700 group">
+                  View PDF Certificate <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
              </div>
-          </motion.section>
 
-        </div> {/* END GRID */}
+             {/* Udemy */}
+             <div className="google-card p-6 border-l-4 border-l-google-green">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="font-bold text-google-text text-lg">C Programming for Beginners</h3>
+                  <GraduationCap className="text-google-green" size={24} />
+                </div>
+                <p className="text-sm text-google-gray mb-4">Udemy Academy</p>
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="px-3 py-1 bg-green-50 text-google-green text-xs font-bold rounded-full">Verified Completion</span>
+                </div>
+                <a href="https://udemy-certificate.s3.amazonaws.com/pdf/UC-bf46b573-0177-4003-abad-dd956cda72ab.pdf" target="_blank" className="inline-flex items-center gap-1 text-sm font-bold text-google-blue hover:text-blue-700 group">
+                  View PDF Certificate <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+             </div>
+          </div>
+        </motion.section>
+
       </main>
+
+      {/* FOOTER */}
+      <footer className="mt-20 border-t border-google-border bg-white py-8">
+         <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <span className="text-xl font-display font-bold tracking-tight text-google-text">
+              Tharun <span className="text-google-blue">S</span>
+            </span>
+            <p className="text-sm text-google-gray">
+              Built with React, Vite & Tailwind CSS. Designed with Material principles.
+            </p>
+         </div>
+      </footer>
     </div>
   );
 };

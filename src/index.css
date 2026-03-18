@@ -1,48 +1,63 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #020617;
-  --color-card: #0f172a;
-  --color-primary: #8b5cf6; /* Violet */
-  --color-secondary: #06b6d4; /* Cyan/Neon Blue */
-  --color-accent: #f43f5e; /* Rose */
-  --color-glow: rgba(139, 92, 246, 0.5);
-  --color-glow-secondary: rgba(6, 182, 212, 0.5);
+  --font-display: "Google Sans", "Inter", sans-serif;
+  --font-sans: "Roboto", "Inter", sans-serif;
   
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Outfit", system-ui, sans-serif;
-
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --color-google-blue: #4285F4;
+  --color-google-red: #EA4335;
+  --color-google-yellow: #FBBC05;
+  --color-google-green: #34A853;
+  
+  --color-google-gray: #5f6368;
+  --color-google-surface: #ffffff;
+  --color-google-bg: #f8f9fa;
+  --color-google-border: #dadce0;
+  --color-google-text: #202124;
 }
 
 @layer base {
   body {
-    @apply bg-background text-slate-300 font-sans selection:bg-primary/30;
-  }
-  
-  h1, h2, h3, h4 {
-    @apply font-display text-white tracking-tight;
+    background-color: var(--color-google-bg);
+    color: var(--color-google-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans);
   }
 }
 
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 10px var(--color-glow);
+  .google-card {
+    background-color: var(--color-google-surface);
+    border: 1px solid var(--color-google-border);
+    border-radius: 1.5rem; /* 24px standard for prominent Material cards */
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .text-glow-secondary {
-    text-shadow: 0 0 10px var(--color-glow-secondary);
+  
+  .google-card:hover {
+    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+    transform: translateY(-2px);
   }
-  .border-glow {
-    box-shadow: 0 0 15px var(--color-glow);
-  }
-  .bg-glass {
-    @apply bg-card/50 backdrop-blur-md border border-white/10;
-  }
-  .neon-border {
-    @apply border border-primary/50 shadow-[0_0_10px_rgba(139,92,246,0.2)];
-  }
-}
 
-html {
-  scroll-behavior: smooth;
+  .google-card-flat {
+    background-color: var(--color-google-surface);
+    border: 1px solid var(--color-google-border);
+    border-radius: 1rem;
+    box-shadow: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .google-card-flat:hover {
+    background-color: var(--color-google-bg);
+  }
+
+  /* Remove scrollbars for clean horizontal scrolling */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
