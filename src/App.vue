@@ -321,45 +321,52 @@ onUnmounted(() => {
 
       <!-- ACADEMICS -->
       <section id="education" class="mt-12" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
-        <div class="flex items-center gap-4 mb-10">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600">
-            <GraduationCap :size="24" />
-          </div>
+        <div class="flex flex-col gap-2 mb-10">
+          <span class="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-2">History</span>
           <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Academic Journey</h2>
         </div>
-        <TiltCard class="border-slate-100 group transition-all duration-500 relative overflow-hidden !p-10">
-          <div class="absolute -top-10 -right-10 w-48 h-48 bg-indigo-50/50 rounded-full blur-3xl z-0 group-hover:scale-125 transition-transform duration-1000"></div>
-          <div class="flex flex-col md:flex-row gap-10 md:items-center justify-between relative z-10 w-full">
+        <TiltCard class="border-slate-100 group transition-all duration-700 relative overflow-visible !p-0" padding="p-12">
+          <div class="absolute -top-20 -right-20 w-64 h-64 bg-indigo-50/40 rounded-full blur-[100px] z-0 group-hover:bg-indigo-100/40 transition-colors"></div>
+          <div class="flex flex-col md:flex-row gap-12 md:items-center justify-between relative z-10 w-full">
             <div class="flex-1">
-              <h3 class="text-3xl font-black font-display text-slate-900 mb-3 tracking-tighter">B.Tech Artificial Intelligence & Data Science</h3>
-              <p class="text-indigo-600 text-sm font-black uppercase tracking-widest mb-4">Bannari Amman Institute of Technology</p>
-              <p class="text-slate-500 font-medium leading-relaxed text-lg max-w-3xl">Currently in <span class="text-slate-900 font-bold underline decoration-indigo-200 decoration-4">Final Year (Semester 8)</span>. Specializing in advanced algorithmic efficiency, machine learning architectures, and scalable cloud-based data systems.</p>
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl">
+                  <GraduationCap :size="24" />
+                </div>
+                <h3 class="text-3xl font-black font-display text-slate-900 tracking-tighter">B.Tech Artificial Intelligence & Data Science</h3>
+              </div>
+              <p class="text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] mb-6">Bannari Amman Institute of Technology</p>
+              <p class="text-slate-500 font-medium leading-relaxed text-lg max-w-3xl">Active candidate in <span class="text-slate-900 font-bold underline decoration-indigo-200 decoration-4">Semester 8 (Final Year)</span>. Focused on high-performance algorithmic logic, scalable data architectures, and efficient backend systems.</p>
             </div>
-            <div class="px-8 py-6 bg-slate-900 rounded-3xl text-center shrink-0 shadow-2xl shadow-indigo-200 group-hover:-translate-y-2 transition-transform">
-              <span class="block text-4xl font-black text-white tracking-tighter">2026</span>
-              <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Expected Graduation</span>
+            <div class="px-10 py-8 bg-white rounded-[2rem] text-center shrink-0 shadow-2xl shadow-indigo-100/50 border border-slate-50 group-hover:-translate-y-2 transition-transform duration-500">
+              <span class="block text-5xl font-black text-slate-900 tracking-tighter mb-1">2026</span>
+              <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Expected Graduation</span>
             </div>
           </div>
         </TiltCard>
       </section>
 
       <!-- CERTIFICATIONS -->
-      <section id="credentials" class="mt-12 mb-24" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
-        <div class="flex items-center gap-4 mb-10">
-          <div class="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500">
-            <Trophy :size="24" />
-          </div>
+      <section id="credentials" class="mt-12 mb-32" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="flex flex-col gap-2 mb-10">
+          <span class="text-rose-600 text-xs font-black uppercase tracking-[0.3em] mb-2">Verified</span>
           <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Official Credentials</h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <TiltCard v-for="(cert, i) in CERTS" :key="cert.title" 
                      v-motion="{ initial: { opacity: 0, scale: 0.95 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 150 } } }"
-                     class="border-rose-100/50 group hover:border-rose-200 transition-colors duration-500 !p-10">
-            <h3 class="text-2xl font-black font-display text-slate-900 mb-3 tracking-tighter">{{ cert.title }}</h3>
-            <p class="text-rose-500 text-xs font-black uppercase tracking-widest mb-8">{{ cert.issuer }}</p>
-            <a :href="cert.url" target="_blank" class="mt-auto inline-flex self-start items-center gap-3 px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all group-hover:shadow-lg">
-              View Detailed PDF <ChevronRight :size="14" class="group-hover:translate-x-1 transition-transform" />
-            </a>
+                     class="border-slate-100 group hover:border-rose-100 transition-all duration-500 !p-0"
+                     padding="p-10">
+            <div class="flex items-start justify-between mb-8">
+              <div class="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-500">
+                <Trophy :size="24" />
+              </div>
+              <a :href="cert.url" target="_blank" class="p-3 bg-slate-50 rounded-xl text-slate-400 hover:text-rose-500 transition-colors">
+                <ExternalLink :size="18" />
+              </a>
+            </div>
+            <h3 class="text-2xl font-black font-display text-slate-900 mb-3 tracking-tighter group-hover:text-rose-600 transition-colors">{{ cert.title }}</h3>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">{{ cert.issuer }}</p>
           </TiltCard>
         </div>
       </section>
