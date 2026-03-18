@@ -354,51 +354,78 @@ const App = () => {
           Key <span className="text-yellow-400">Certification</span>
         </SectionHeading>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative max-w-3xl mx-auto p-12 bg-glass rounded-[2rem] neon-border text-center overflow-hidden"
-        >
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/5 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full"></div>
-
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="inline-block p-4 bg-yellow-400/10 rounded-full mb-8"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {/* NPTEL Java Certification */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative p-10 bg-glass rounded-[2rem] neon-border text-center overflow-hidden flex flex-col items-center"
           >
-            <Award size={64} className="text-yellow-400" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/5 blur-3xl rounded-full"></div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="inline-block p-4 bg-yellow-400/10 rounded-full mb-6"
+            >
+              <Award size={48} className="text-yellow-400" />
+            </motion.div>
+            <h3 className="text-2xl font-black text-white mb-2">Programming in Java</h3>
+            <p className="text-md text-slate-400 mb-6 font-medium">NPTEL (IIT professors — Govt of India)</p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className="px-5 py-2 bg-yellow-400/20 text-yellow-400 font-black text-xl rounded-xl border border-yellow-400/30 text-glow">
+                97 / 100
+              </div>
+              <div className="px-5 py-2 bg-primary/20 text-primary font-bold text-md rounded-xl border border-primary/30 flex items-center gap-2 uppercase tracking-tight">
+                Elite Gold
+              </div>
+            </div>
+            <div className="mt-auto">
+              <a 
+                href="https://archive.nptel.ac.in/content/noc/NOC25/SEM1/Ecertificates/106/noc25-cs57/Course/NPTEL25CS57S114900069304436474.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 hover:border-yellow-400/50 hover:bg-yellow-400/5 transition-all rounded-xl font-bold text-white text-sm"
+              >
+                View Certificate <ExternalLink size={16} className="text-yellow-400" />
+              </a>
+            </div>
           </motion.div>
 
-          <h3 className="text-3xl font-black text-white mb-4">Programming in Java</h3>
-          <p className="text-lg text-slate-400 mb-8">NPTEL (IIT professors — Government of India initiative)</p>
-          
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            <div className="px-6 py-3 bg-yellow-400/20 text-yellow-400 font-black text-2xl rounded-2xl border border-yellow-400/30 text-glow">
-              97 / 100
+          {/* Udemy C Programming Certification */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="relative p-10 bg-glass rounded-[2rem] border border-white/5 hover:border-secondary/50 text-center overflow-hidden flex flex-col items-center"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl rounded-full"></div>
+            <div className="inline-block p-4 bg-secondary/10 rounded-full mb-6">
+              <Award size={48} className="text-secondary" />
             </div>
-            <div className="px-6 py-3 bg-primary/20 text-primary font-bold text-lg rounded-2xl border border-primary/30 flex items-center gap-2 uppercase tracking-tight">
-              Elite Gold
+            <h3 className="text-2xl font-black text-white mb-2">C Programming for Beginners</h3>
+            <p className="text-md text-slate-400 mb-6 font-medium">Udemy (UC-bf46b573-0177-4003-abad-dd956cda72ab)</p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className="px-5 py-2 bg-secondary/20 text-secondary font-black text-xl rounded-xl border border-secondary/30 text-glow-secondary">
+                Verified
+              </div>
+              <div className="px-5 py-2 bg-white/5 text-slate-300 font-bold text-md rounded-xl border border-white/10 flex items-center gap-2 uppercase tracking-tight">
+                Foundational
+              </div>
             </div>
-          </div>
-          
-          <div className="mb-10">
-            <a 
-              href="https://archive.nptel.ac.in/content/noc/NOC25/SEM1/Ecertificates/106/noc25-cs57/Course/NPTEL25CS57S114900069304436474.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-glass border-white/10 hover:border-yellow-400/50 hover:bg-yellow-400/5 transition-all rounded-xl font-bold text-white shadow-lg"
-            >
-              View Official Certificate <ExternalLink size={18} className="text-yellow-400" />
-            </a>
-          </div>
-          
-          <p className="text-slate-500 text-sm max-w-md mx-auto italic">
-            "Recognized among the top performers nationally for outstanding proficiency in Java programming and problem-solving."
-          </p>
-        </motion.div>
+            <div className="mt-auto">
+              <a 
+                href="https://udemy-certificate.s3.amazonaws.com/pdf/UC-bf46b573-0177-4003-abad-dd956cda72ab.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 hover:border-secondary/50 hover:bg-secondary/5 transition-all rounded-xl font-bold text-white text-sm"
+              >
+                View Certificate <ExternalLink size={16} className="text-secondary" />
+              </a>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Contact Section */}
