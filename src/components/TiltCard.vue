@@ -29,12 +29,12 @@ const glareStyle = computed(() => {
 <template>
   <div 
     ref="target" 
-    class="relative w-full h-full rounded-3xl bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden preserve-3d transition-transform duration-200 ease-out z-10"
+    class="relative w-full h-full rounded-2xl bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden preserve-3d transition-transform duration-200 ease-out z-10"
     :style="{ transform: cardTransform }"
   >
     <!-- Dynamic glare mask calculated from mouse position (Light Theme variant) -->
     <div 
-      class="absolute inset-0 z-50 pointer-events-none glare-mask-light mix-blend-overlay rounded-3xl" 
+      class="absolute inset-0 z-50 pointer-events-none glare-mask-light mix-blend-soft-light rounded-2xl" 
       :style="glareStyle"
     ></div>
     

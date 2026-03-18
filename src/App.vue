@@ -77,47 +77,68 @@ const NAV_ITEMS = [
 const scrollToSection = (id: string) => {
   mobileMenuOpen.value = false;
   const el = document.getElementById(id);
-  // Account for sticky header
-  const yOffset = -100; 
+  const yOffset = -80; 
   if (el) {
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({top: y, behavior: 'smooth'});
   }
 };
+
+const scrollProgress = ref(0);
+const updateScrollProgress = () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  scrollProgress.value = (winScroll / height) * 100;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', updateScrollProgress);
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollProgress);
+});
 </script>
 
 <template>
-  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans">
+  <div class="relative min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans selection:bg-indigo-100 selection:text-indigo-900">
+    
+    <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
     
     <!-- Antigravity Physics Background (Light Theme Variants) -->
-    <vue-particles id="tsparticles" :options="particlesOptions" class="absolute inset-0 z-0 opacity-40 pointer-events-auto" />
+    <vue-particles id="tsparticles" :options="particlesOptions" class="absolute inset-0 z-0 opacity-30 pointer-events-none" />
 
     <!-- Ambient glowing nebulas (Light Theme Gradients) -->
-    <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-200/40 rounded-full blur-[120px] pointer-events-none z-0"></div>
-    <div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-sky-200/40 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
     <!-- PROMINENT HEADER -->
-    <header class="sticky top-0 w-full bg-white/70 backdrop-blur-xl border-b border-white/50 shadow-sm z-50">
+    <header class="sticky top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100/50 z-50 transition-all duration-300">
       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl font-display font-black tracking-tight text-slate-900 border-l-4 border-indigo-600 pl-3">
-            Tharun S
+        <div class="flex items-center gap-2 group cursor-pointer" @click="scrollToSection('hero')">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-110 transition-transform">
+            T
+          </div>
+          <span class="text-xl font-display font-black tracking-tighter text-slate-900 lg:block hidden">
+            Tharun <span class="text-indigo-600">S</span>
           </span>
         </div>
 
-        <nav class="hidden md:flex items-center justify-center flex-1 gap-8 ml-8">
+        <nav class="hidden md:flex items-center justify-center flex-1 gap-10">
           <button
             v-for="item in NAV_ITEMS"
             :key="item.id"
             @click="scrollToSection(item.id)"
-            class="text-sm font-bold tracking-wide uppercase text-slate-500 hover:text-indigo-600 transition-colors"
+            class="text-xs font-black tracking-widest uppercase text-slate-400 hover:text-indigo-600 transition-all hover:scale-105"
           >
             {{ item.label }}
           </button>
         </nav>
 
-        <div class="hidden md:flex items-center gap-4">
-          <a href="mailto:stharun612@gmail.com" class="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-indigo-600 text-white text-sm font-bold shadow-md hover:shadow-xl transition-all hover:-translate-y-0.5">
+        <div class="hidden md:flex items-center gap-6">
+          <a href="https://linkedin.com/in/tharuntech" target="_blank" class="text-slate-400 hover:text-indigo-600 transition-colors">
+            <Linkedin :size="20" />
+          </a>
+          <a href="mailto:stharun612@gmail.com" class="px-7 py-3 rounded-2xl bg-slate-900 hover:bg-indigo-600 text-white text-sm font-black shadow-lg hover:shadow-indigo-500/20 transition-all hover:-translate-y-1">
             Contact Me
           </a>
         </div>
@@ -143,98 +164,133 @@ const scrollToSection = (id: string) => {
       </transition>
     </header>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-24 flex flex-col gap-24">
+    <main class="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-20 flex flex-col gap-32">
       
       <!-- MASSIVE HERO SHOWCASE -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center animate-float-slow">
+      <section id="hero" class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-8">
         <!-- Identity Text -->
-        <div class="lg:col-span-7 flex flex-col">
-          <p class="text-indigo-600 font-bold tracking-widest uppercase mb-4 text-sm mix-blend-multiply">Backend Engineer</p>
-          <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-black tracking-tight mb-6 leading-[1.05] text-slate-900">
-            Architecting <br/>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-sky-500">Data.</span>
-            Optimizing <br/>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-teal-400">Logic.</span>
+        <div class="lg:col-span-7 flex flex-col" v-motion="{ initial: { opacity: 0, x: -50 }, enter: { opacity: 1, x: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-black uppercase tracking-widest border border-indigo-100 shadow-sm">
+              Backend Architect
+            </span>
+            <span class="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-black uppercase tracking-widest border border-emerald-100 shadow-sm animate-pulse">
+              Available for Hire
+            </span>
+          </div>
+          
+          <h1 class="text-6xl md:text-8xl lg:text-[6.5rem] font-display font-black tracking-tighter mb-8 leading-[0.9] text-slate-900">
+            Building <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">Robust</span>
+            Logic <br/>
+            at <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-sky-400">Scale.</span>
           </h1>
-          <p class="text-xl md:text-2xl text-slate-500 max-w-2xl leading-relaxed mb-10">
-            I build highly resilient data pipelines and zero-downtime microservices using advanced tech stacks.
+          
+          <p class="text-xl md:text-2xl text-slate-500 max-w-2xl leading-relaxed mb-12 font-medium">
+            I'm <strong class="text-slate-900">Tharun S</strong>, a Final Year AI & DS student specialized in designing resilient server architectures and high-performance data pipelines.
           </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="https://github.com/sTharun5" target="_blank" class="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 hover:border-slate-300 text-slate-900 shadow-sm hover:shadow-md transition text-sm font-bold">
-              <Github :size="18" /> GitHub Profile
+          
+          <div class="flex flex-wrap gap-5">
+            <a href="mailto:stharun612@gmail.com" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-xl shadow-indigo-200 transition-all hover:-translate-y-1 font-black text-sm uppercase tracking-widest">
+              Get in Touch
             </a>
-            <a href="https://linkedin.com/in/tharuntech" target="_blank" class="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 hover:border-slate-300 text-slate-900 shadow-sm hover:shadow-md transition text-sm font-bold">
-              <Linkedin :size="18" /> LinkedIn Profile
+            <a href="https://linkedin.com/in/tharuntech" target="_blank" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 text-slate-900 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 font-black text-sm uppercase tracking-widest">
+              <Linkedin :size="20" class="text-indigo-600" /> LinkedIn
             </a>
           </div>
         </div>
 
         <!-- Float Picture Showcase -->
-        <div class="lg:col-span-5 h-[450px] md:h-[550px] animate-float-medium group perspective-1000 w-full relative">
-          <!-- Background decorative glow -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-indigo-300/30 to-sky-300/30 rounded-[2.5rem] blur-2xl transform group-hover:scale-105 transition-transform duration-700"></div>
-          
-          <TiltCard class="!p-0 border-0 shadow-[0_30px_60px_rgba(0,0,0,0.12)] rounded-[2.5rem]">
-            <img src="/IMG_6954.jpg" alt="Tharun S" class="w-full h-full object-cover rounded-[2.5rem]" />
-          </TiltCard>
-        </div>
-      </section>
-
-      <!-- EXPERTISE (With LeetCode Integration in Light Mode) -->
-      <section id="expertise" class="animate-float-medium mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        <div class="lg:col-span-8 flex flex-col h-full">
-          <div class="flex items-center gap-3 mb-8">
-            <Database class="text-indigo-600" :size="32" />
-            <h2 class="text-4xl font-display font-black text-slate-900">Backend Arsenal</h2>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 flex-grow">
-            <TiltCard v-for="skill in ['Node.js', 'PostgreSQL', 'Prisma ORM', 'Express', 'MongoDB', 'Vue 3', 'TypeScript', 'Java']" :key="skill" class="!px-4 !py-6 text-center justify-center border-slate-100/50 flex flex-col items-center">
-              <span class="font-bold text-slate-900 text-lg">{{ skill }}</span>
+        <div class="lg:col-span-5 flex justify-center lg:justify-end" v-motion="{ initial: { opacity: 0, scale: 0.8 }, enter: { opacity: 1, scale: 1, transition: { duration: 1000, type: 'spring', damping: 20, delay: 200 } } }">
+          <div class="relative w-full max-w-[450px] aspect-[4/5] animate-float-slow group">
+            <!-- Background decorative glow -->
+            <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-400/20 to-sky-400/20 rounded-[3rem] blur-3xl transform group-hover:scale-110 transition-transform duration-700"></div>
+            
+            <TiltCard class="!p-0 border-0 shadow-[0_40px_80px_rgba(0,0,0,0.08)] rounded-[3rem]">
+              <img src="/IMG_6954.jpg" alt="Tharun S" class="w-full h-full object-cover rounded-[3rem]" />
+              
+              <!-- Floating Badge -->
+              <div class="absolute bottom-8 -left-8 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-2xl border border-white/50 animate-float-fast max-w-[180px]">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                    <GraduationCap :size="20" />
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-black uppercase tracking-tighter text-slate-400 leading-none mb-1">Status</p>
+                    <p class="text-xs font-black text-slate-900 leading-none">Final Year AI & DS</p>
+                  </div>
+                </div>
+              </div>
             </TiltCard>
           </div>
         </div>
-        
-        <!-- LEETCODE COMPONENT LIGHT THEME -->
-        <a href="https://leetcode.com/u/user3651Q/" target="_blank" class="lg:col-span-4 block h-full animate-float-fast group">
-          <TiltCard class="flex flex-col items-center justify-center text-center p-8 border-orange-100 bg-gradient-to-b from-white to-orange-50/50">
-            <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mb-6 shadow-sm group-hover:shadow-md transition-shadow">
-              <Code2 class="text-orange-500" :size="32" />
+      </section>
+
+      <!-- EXPERTISE -->
+      <section id="expertise" class="max-w-7xl mx-auto" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+          <div class="lg:col-span-8 flex flex-col h-full">
+            <div class="flex items-center gap-4 mb-10">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600">
+                <Database :size="24" />
+              </div>
+              <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Backend Arsenal</h2>
             </div>
-            <h2 class="text-5xl font-display font-black text-slate-900 mb-2">{{`300+`}}</h2>
-            <p class="text-orange-600 font-bold uppercase tracking-widest text-sm mb-4">Problems Solved</p>
-            <p class="text-slate-500 text-sm leading-relaxed">Consistent algorithmic problem solving in database logic and data structures on LeetCode.</p>
-            <div class="mt-6 flex items-center gap-2 text-orange-600 font-bold text-sm bg-orange-100/50 px-5 py-2.5 rounded-full border border-orange-200 group-hover:bg-orange-100 transition-colors">
-              View Profile <ExternalLink :size="16" />
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow">
+              <TiltCard v-for="(skill, i) in ['Node.js', 'PostgreSQL', 'Prisma ORM', 'Express', 'MongoDB', 'Vue 3', 'TypeScript', 'Java']" :key="skill" 
+                         v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 50 } } }"
+                         class="!px-4 !py-8 text-center justify-center border-slate-100 flex flex-col items-center group">
+                <span class="font-black text-slate-900 text-lg group-hover:text-indigo-600 transition-colors">{{ skill }}</span>
+              </TiltCard>
             </div>
-          </TiltCard>
-        </a>
+          </div>
+          
+          <!-- LEETCODE COMPONENT LIGHT THEME -->
+          <a href="https://leetcode.com/u/user3651Q/" target="_blank" class="lg:col-span-4 block h-full group" v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: 200 } } }">
+            <TiltCard class="flex flex-col items-center justify-center text-center p-10 border-orange-100 bg-gradient-to-b from-white to-orange-50/30">
+              <div class="w-20 h-20 rounded-3xl bg-orange-100 flex items-center justify-center mb-8 shadow-sm group-hover:shadow-orange-200 transition-all group-hover:scale-110">
+                <Code2 class="text-orange-500" :size="36" />
+              </div>
+              <h2 class="text-6xl font-display font-black text-slate-900 mb-2 tracking-tighter">{{`300+`}}</h2>
+              <p class="text-orange-600 font-black uppercase tracking-widest text-xs mb-6">Problems Solved</p>
+              <p class="text-slate-500 text-sm leading-relaxed font-medium">Consistent algorithmic problem solving in database logic and data structures on LeetCode.</p>
+              <div class="mt-8 flex items-center gap-3 text-orange-600 font-black text-xs uppercase tracking-widest bg-orange-100/50 px-6 py-3 rounded-2xl border border-orange-200 group-hover:bg-orange-600 group-hover:text-white transition-all text-center">
+                View Profile <ExternalLink :size="14" />
+              </div>
+            </TiltCard>
+          </a>
+        </div>
       </section>
 
       <!-- PROJECTS -->
-      <section id="projects" class="animate-float-slow transition-all delay-150 mt-12">
-        <div class="flex items-center gap-3 mb-8">
-          <Rocket class="text-sky-500" :size="32" />
-          <h2 class="text-4xl font-display font-black text-slate-900">Advanced Architectures</h2>
+      <section id="projects" class="mt-12" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-500">
+            <Rocket :size="24" />
+          </div>
+          <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Advanced Architectures</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <TiltCard v-for="project in PROJECTS" :key="project.title" class="flex flex-col group justify-between hover:border-indigo-100 transition-colors duration-500">
+          <TiltCard v-for="(project, i) in PROJECTS" :key="project.title" 
+                     v-motion="{ initial: { opacity: 0, y: 30 }, visibleOnce: { opacity: 1, y: 0, transition: { delay: i * 100 } } }"
+                     class="flex flex-col group justify-between hover:border-indigo-100 transition-colors duration-500 !p-8">
             <div>
-              <p class="text-sky-500 text-xs font-bold uppercase tracking-widest mb-3">{{ project.tagline }}</p>
-              <h3 class="text-2xl font-black font-display text-slate-900 mb-4">{{ project.title }}</h3>
-              <p class="text-base text-slate-500 mb-8 leading-relaxed">{{ project.description }}</p>
+              <p class="text-sky-500 text-[10px] font-black uppercase tracking-widest mb-3">{{ project.tagline }}</p>
+              <h3 class="text-2xl font-black font-display text-slate-900 mb-4 tracking-tighter">{{ project.title }}</h3>
+              <p class="text-base text-slate-500 mb-8 leading-relaxed font-medium">{{ project.description }}</p>
             </div>
             <div class="mt-auto">
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in project.stack" :key="tech" class="px-3 py-1 bg-slate-100 rounded-lg text-xs font-bold text-slate-600 border border-slate-200/50">
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span v-for="tech in project.stack" :key="tech" class="px-3 py-1 bg-slate-50 rounded-lg text-xs font-black text-slate-500 border border-slate-100">
                   {{ tech }}
                 </span>
               </div>
-              <div class="flex gap-4 border-t border-slate-100 pt-6 mt-6">
-                <a :href="project.url || project.github" target="_blank" class="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition">
-                  <ExternalLink :size="16" /> Live App
+              <div class="flex gap-4 border-t border-slate-50 pt-6">
+                <a :href="project.url || project.github" target="_blank" class="text-xs font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-800 flex items-center gap-2 transition">
+                  Live App <ExternalLink :size="14" />
                 </a>
-                <a :href="project.github" target="_blank" class="text-sm font-bold text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition ml-auto">
-                  <Github :size="16" /> Source Code
+                <a :href="project.github" target="_blank" class="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 flex items-center gap-2 transition ml-auto">
+                  Code <Github :size="14" />
                 </a>
               </div>
             </div>
@@ -243,39 +299,45 @@ const scrollToSection = (id: string) => {
       </section>
 
       <!-- ACADEMICS -->
-      <section id="education" class="animate-float-slow transition-all delay-200 mt-12">
-        <div class="flex items-center gap-3 mb-8">
-          <GraduationCap class="text-indigo-600" :size="32" />
-          <h2 class="text-4xl font-display font-black text-slate-900">Academic Background</h2>
+      <section id="education" class="mt-12" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600">
+            <GraduationCap :size="24" />
+          </div>
+          <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Academic Journey</h2>
         </div>
-        <TiltCard class="border-indigo-100/50 group hover:border-indigo-200 transition-colors duration-500 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-bl-full z-0 group-hover:scale-110 transition-transform"></div>
-          <div class="flex flex-col md:flex-row gap-6 md:items-center justify-between relative z-10 w-full">
-            <div>
-              <h3 class="text-2xl font-black font-display text-slate-900 mb-2">B.Tech in Artificial Intelligence & Data Science</h3>
-              <p class="text-indigo-600 text-sm font-bold uppercase tracking-widest mb-3">Bannari Amman Institute of Technology</p>
-              <p class="text-slate-500 font-medium leading-relaxed">Currently in Final Year (Semester 8). Concentrating on algorithmic efficiency, machine learning models, and scalable backend data infrastructure.</p>
+        <TiltCard class="border-slate-100 group transition-all duration-500 relative overflow-hidden !p-10">
+          <div class="absolute -top-10 -right-10 w-48 h-48 bg-indigo-50/50 rounded-full blur-3xl z-0 group-hover:scale-125 transition-transform duration-1000"></div>
+          <div class="flex flex-col md:flex-row gap-10 md:items-center justify-between relative z-10 w-full">
+            <div class="flex-1">
+              <h3 class="text-3xl font-black font-display text-slate-900 mb-3 tracking-tighter">B.Tech Artificial Intelligence & Data Science</h3>
+              <p class="text-indigo-600 text-sm font-black uppercase tracking-widest mb-4">Bannari Amman Institute of Technology</p>
+              <p class="text-slate-500 font-medium leading-relaxed text-lg max-w-3xl">Currently in <span class="text-slate-900 font-bold underline decoration-indigo-200 decoration-4">Final Year (Semester 8)</span>. Specializing in advanced algorithmic efficiency, machine learning architectures, and scalable cloud-based data systems.</p>
             </div>
-            <div class="px-6 py-4 bg-indigo-50/80 rounded-2xl border border-indigo-100/50 text-center shrink-0">
-              <span class="block text-3xl font-black text-indigo-600">2026</span>
-              <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Expected</span>
+            <div class="px-8 py-6 bg-slate-900 rounded-3xl text-center shrink-0 shadow-2xl shadow-indigo-200 group-hover:-translate-y-2 transition-transform">
+              <span class="block text-4xl font-black text-white tracking-tighter">2026</span>
+              <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Expected Graduation</span>
             </div>
           </div>
         </TiltCard>
       </section>
 
       <!-- CERTIFICATIONS -->
-      <section id="credentials" class="animate-float-fast transition-all delay-300 mt-12 mb-20">
-        <div class="flex items-center gap-3 mb-8">
-          <Trophy class="text-rose-500" :size="32" />
-          <h2 class="text-4xl font-display font-black text-slate-900">Official Credentials</h2>
+      <section id="credentials" class="mt-12 mb-24" v-motion="{ initial: { opacity: 0, y: 50 }, visibleOnce: { opacity: 1, y: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+            <Trophy :size="24" />
+          </div>
+          <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Official Credentials</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <TiltCard v-for="cert in CERTS" :key="cert.title" class="border-rose-100/50 group hover:border-rose-200 transition-colors duration-500">
-            <h3 class="text-2xl font-black font-display text-slate-900 mb-3">{{ cert.title }}</h3>
-            <p class="text-rose-500 text-sm font-bold uppercase tracking-widest mb-8">{{ cert.issuer }}</p>
-            <a :href="cert.url" target="_blank" class="mt-auto inline-flex self-start items-center gap-2 px-5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold hover:bg-slate-100 text-slate-900 transition-colors">
-              View Original PDF <ChevronRight :size="16" class="translate-y-px group-hover:translate-x-1 transition-transform" />
+          <TiltCard v-for="(cert, i) in CERTS" :key="cert.title" 
+                     v-motion="{ initial: { opacity: 0, scale: 0.95 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 150 } } }"
+                     class="border-rose-100/50 group hover:border-rose-200 transition-colors duration-500 !p-10">
+            <h3 class="text-2xl font-black font-display text-slate-900 mb-3 tracking-tighter">{{ cert.title }}</h3>
+            <p class="text-rose-500 text-xs font-black uppercase tracking-widest mb-8">{{ cert.issuer }}</p>
+            <a :href="cert.url" target="_blank" class="mt-auto inline-flex self-start items-center gap-3 px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all group-hover:shadow-lg">
+              View Detailed PDF <ChevronRight :size="14" class="group-hover:translate-x-1 transition-transform" />
             </a>
           </TiltCard>
         </div>

@@ -47,9 +47,19 @@
     animation: float 4s ease-in-out infinite;
   }
 
+  .scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(to right, #4f46e5, #0ea5e9);
+    z-index: 100;
+    transition: width 0.1s ease-out;
+  }
+
   @keyframes float {
     0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(0.5deg); }
+    50% { transform: translateY(-8px) rotate(0.3deg); }
     100% { transform: translateY(0px) rotate(0deg); }
   }
 
