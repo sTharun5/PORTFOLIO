@@ -14,71 +14,76 @@ let particles = []
 const PARTICLE_COUNT = 600
 const COLORS = ['#6366f1', '#0ea5e9', '#f43f5e', '#8b5cf6', '#a5b4fc']
 
-// Global States
+// Interaction State
 const mouse = { x: 0, y: 0 }
 const sphereCenter = { x: 0, y: 0 }
 const rotation = { x: 0, y: 0 }
 let isInitialized = false
 
-class StructuralCapsule {
+class FocalCapsule {
   constructor(index) {
     this.index = index
-    // 1. Strict Fibonacci Sphere Math (Arranged Structurally)
+    // 1. Structural Fibonacci Mapping
     const phi = Math.acos(1 - 2 * (index + 0.5) / PARTICLE_COUNT)
     const theta = Math.PI * (1 + Math.sqrt(5)) * (index + 0.5)
-    const radius = 450 // Large structural radius to cover whole site
     
-    this.x = radius * Math.sin(phi) * Math.cos(theta)
-    this.y = radius * Math.sin(phi) * Math.sin(theta)
-    this.z = radius * Math.cos(phi)
+    // Radius of the focused "bubble" around cursor
+    this.radius = 280 
     
-    // 2. Tangential Rotation (Align with sphere surface)
+    this.ox = this.radius * Math.sin(phi) * Math.cos(theta)
+    this.oy = this.radius * Math.sin(phi) * Math.sin(theta)
+    this.oz = this.radius * Math.cos(phi)
+    
+    // Aligned to sphere surface
     this.tiltX = phi
     this.tiltY = theta
     
     this.color = COLORS[index % COLORS.length]
-    this.w = 16 // Distinct capsule width
-    this.h = 5  // Distinct capsule height
+    this.w = 16
+    this.h = 5
     
     this.shimmerOffset = Math.random() * Math.PI * 2
   }
 
   draw(rx, ry) {
-    // 3. 3D Rotation for the Globe
+    // 2. 3D Rotation
     const cosY = Math.cos(ry)
     const sinY = Math.sin(ry)
     const cosX = Math.cos(rx)
     const sinX = Math.sin(rx)
 
-    let x1 = this.x * cosY - this.z * sinY
-    let z1 = this.x * sinY + this.z * cosY
-    let y2 = this.y * cosX - z1 * sinX
-    let z2 = this.y * sinX + z1 * cosX
+    let x1 = this.ox * cosY - this.oz * sinY
+    let z1 = this.ox * sinY + this.oz * cosY
+    let y2 = this.oy * cosX - z1 * sinX
+    let z2 = this.oy * sinX + z1 * cosX
     
     const focalLength = 1000
-    const scale = focalLength / (focalLength + z2)
+    let scale = focalLength / (focalLength + z2)
     
-    const px = x1 * scale + (W / 2) + sphereCenter.x
-    const py = y2 * scale + (H / 2) + sphereCenter.y
+    // 3. Anchor to Mouse Position (offset from center)
+    const px = x1 * scale + mouse.x
+    const py = y2 * scale + mouse.y
     
-    if (px < -100 || px > W+100 || py < -100 || py > H+100) return
+    if (px < -150 || px > W+150 || py < -150 || py > H+150) return
 
-    // Depth and Shimmering
-    const shimmer = 0.7 + 0.3 * Math.sin(Date.now() * 0.002 + this.shimmerOffset)
-    const alpha = Math.min(1, Math.max(0.05, (z2 + 450) / 900)) * shimmer
+    // 4. "FOCUS" Effect: Proximity to Center (the cursor itself)
+    // Particles "front" of the mouse get bigger/brighter
+    const focusIntensity = Math.min(1.5, Math.max(0.5, (z2 + this.radius) / (this.radius * 2)))
+    const shimmer = 0.8 + 0.2 * Math.sin(Date.now() * 0.003 + this.shimmerOffset)
     
+    const alpha = Math.min(1, Math.max(0.1, (z2 + this.radius) / (this.radius * 2))) * shimmer
     ctx.globalAlpha = alpha
     ctx.fillStyle = this.color
     
     ctx.save()
     ctx.translate(px, py)
-    // Align with sphere surface rotation
     ctx.rotate(this.tiltY + ry)
     
-    const rw = this.w * scale
-    const rh = this.h * scale
+    // Apply Focus Scale
+    const rw = this.w * scale * focusIntensity
+    const rh = this.h * scale * focusIntensity
     
-    // Drawing a clear Capsule (Pill)
+    // High-Compatibility Capsule (Pill)
     ctx.beginPath()
     const r = rh / 2
     ctx.moveTo(-rw/2 + r, -rh/2)
@@ -98,14 +103,17 @@ function handleResize() {
   if (!canvasRef.value) return
   W = canvasRef.value.width = window.innerWidth
   H = canvasRef.value.height = window.innerHeight
-  mouse.x = W / 2
-  mouse.y = H / 2
+  // Start mouse at center
+  if (!isInitialized) {
+    mouse.x = W / 2
+    mouse.y = H / 2
+  }
 }
 
 function init() {
   handleResize()
   ctx = canvasRef.value.getContext('2d')
-  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => new StructuralCapsule(i))
+  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => new FocalCapsule(i))
   isInitialized = true
 }
 
@@ -117,13 +125,8 @@ function loop() {
 
   ctx.clearRect(0, 0, W, H)
   
-  // Entire sphere follows mouse with elastic delay
-  const targetX = (mouse.x - W / 2) * 0.4
-  const targetY = (mouse.y - H / 2) * 0.4
-  sphereCenter.x += (targetX - sphereCenter.x) * 0.08
-  sphereCenter.y += (targetY - sphereCenter.y) * 0.08
-  
-  rotation.y += 0.005
+  // High-Speed Rotation
+  rotation.y += 0.006
   rotation.x += 0.002
   
   particles.forEach(p => p.draw(rotation.x, rotation.y))
@@ -136,6 +139,7 @@ onMounted(async () => {
   init()
   loop()
   window.addEventListener('mousemove', (e) => {
+    // Direct anchoring for the "focused on cursor" feel
     mouse.x = e.clientX
     mouse.y = e.clientY
   })
