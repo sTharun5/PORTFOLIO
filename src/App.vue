@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Github, Linkedin, ExternalLink, Code2, Database, Rocket, Trophy, Menu, X, ChevronRight } from 'lucide-vue-next';
+import { Github, Linkedin, ExternalLink, Code2, Database, Rocket, Trophy, Menu, X, ChevronRight, GraduationCap } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import TiltCard from './components/TiltCard.vue';
 
@@ -240,6 +240,28 @@ const scrollToSection = (id: string) => {
             </div>
           </TiltCard>
         </div>
+      </section>
+
+      <!-- ACADEMICS -->
+      <section id="education" class="animate-float-slow transition-all delay-200 mt-12">
+        <div class="flex items-center gap-3 mb-8">
+          <GraduationCap class="text-indigo-600" :size="32" />
+          <h2 class="text-4xl font-display font-black text-slate-900">Academic Background</h2>
+        </div>
+        <TiltCard class="border-indigo-100/50 group hover:border-indigo-200 transition-colors duration-500 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-bl-full z-0 group-hover:scale-110 transition-transform"></div>
+          <div class="flex flex-col md:flex-row gap-6 md:items-center justify-between relative z-10 w-full">
+            <div>
+              <h3 class="text-2xl font-black font-display text-slate-900 mb-2">B.Tech in Artificial Intelligence & Data Science</h3>
+              <p class="text-indigo-600 text-sm font-bold uppercase tracking-widest mb-3">Bannari Amman Institute of Technology</p>
+              <p class="text-slate-500 font-medium leading-relaxed">Currently in Final Year (Semester 8). Concentrating on algorithmic efficiency, machine learning models, and scalable backend data infrastructure.</p>
+            </div>
+            <div class="px-6 py-4 bg-indigo-50/80 rounded-2xl border border-indigo-100/50 text-center shrink-0">
+              <span class="block text-3xl font-black text-indigo-600">2026</span>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Expected</span>
+            </div>
+          </div>
+        </TiltCard>
       </section>
 
       <!-- CERTIFICATIONS -->
