@@ -10,59 +10,6 @@ import AntiGravity from './components/AntiGravity.vue';
 
 const mobileMenuOpen = ref(false);
 
-const particlesOptions = {
-  background: { color: { value: "transparent" } },
-  fpsLimit: 120,
-  interactivity: {
-    events: {
-      onHover: { enable: true, mode: "attract" },
-      onClick: { enable: true, mode: "push" },
-      resize: true
-    },
-    modes: {
-      attract: { distance: 400, duration: 2, speed: 2 },
-      push: { quantity: 15 }
-    }
-  },
-  particles: {
-    color: { 
-      value: ["#6366f1", "#f43f5e", "#f59e0b", "#0ea5e9", "#8b5cf6"]
-    },
-    links: { 
-      color: "random", 
-      distance: 100, 
-      enable: true, 
-      opacity: 0.3, 
-      width: 0.5 
-    },
-    move: { 
-      direction: "none", 
-      enable: true, 
-      outModes: { default: "out" }, 
-      random: true, 
-      speed: { min: 0.5, max: 1.5 }, 
-      straight: false,
-      attract: { enable: true, rotateX: 600, rotateY: 1200 }
-    },
-    number: { 
-      density: { enable: true, area: 800 }, 
-      value: 160
-    },
-    opacity: { 
-      value: { min: 0.3, max: 0.7 },
-      animation: { enable: true, speed: 1, sync: false }
-    },
-    shape: { 
-      type: ["circle", "triangle"]
-    },
-    size: { 
-      value: { min: 1, max: 4 } 
-    },
-    roll: { enable: true, speed: 5 },
-    tilt: { enable: true, direction: "random", speed: 5 }
-  },
-  detectRetina: true
-};
 
 const NAV_ITEMS = [
   { label: 'Expertise', id: 'expertise' },
