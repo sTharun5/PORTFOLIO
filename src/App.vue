@@ -12,24 +12,52 @@ const mobileMenuOpen = ref(false);
 
 const particlesOptions = {
   background: { color: { value: "transparent" } },
-  fpsLimit: 60,
+  fpsLimit: 120,
   interactivity: {
     events: {
-      onHover: { enable: true, mode: "repulse" },
+      onHover: { enable: true, mode: "attract" },
+      onClick: { enable: true, mode: "push" },
       resize: true
     },
     modes: {
-      repulse: { distance: 100, duration: 0.4 }
+      attract: { distance: 300, duration: 2, speed: 1.5 },
+      push: { quantity: 10 }
     }
   },
   particles: {
-    color: { value: ["#cbd5e1"] }, // Light theme slate-300 particles
-    links: { color: "#cbd5e1", distance: 150, enable: true, opacity: 0.5, width: 1 },
-    move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 0.5, straight: false },
-    number: { density: { enable: true, area: 800 }, value: 50 },
-    opacity: { value: 0.5 },
-    shape: { type: "circle" },
-    size: { value: { min: 1, max: 2 } }
+    color: { 
+      value: ["#6366f1", "#f43f5e", "#f59e0b", "#0ea5e9", "#8b5cf6"] // Multi-color rainbow palette
+    },
+    links: { 
+      color: "#cbd5e1", 
+      distance: 120, 
+      enable: true, 
+      opacity: 0.2, 
+      width: 0.5 
+    },
+    move: { 
+      direction: "none", 
+      enable: true, 
+      outModes: { default: "out" }, 
+      random: true, 
+      speed: 1, 
+      straight: false,
+      attract: { enable: true, rotateX: 600, rotateY: 1200 }
+    },
+    number: { 
+      density: { enable: true, area: 1000 }, 
+      value: 120 // Rich density
+    },
+    opacity: { 
+      value: { min: 0.2, max: 0.6 },
+      animation: { enable: true, speed: 1, sync: false }
+    },
+    shape: { 
+      type: ["circle", "triangle"] // Multi-shape as seen in reference
+    },
+    size: { 
+      value: { min: 1, max: 3 } 
+    }
   },
   detectRetina: true
 };
