@@ -2,6 +2,16 @@
 import { ref, computed } from 'vue';
 import { useMouseInElement } from '@vueuse/core';
 
+interface Props {
+  padding?: string;
+  isOverflowHidden?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  padding: 'p-6 md:p-8',
+  isOverflowHidden: true
+});
+
 const target = ref<HTMLElement | null>(null);
 const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(target);
 
@@ -29,16 +39,17 @@ const glareStyle = computed(() => {
 <template>
   <div 
     ref="target" 
-    class="relative w-full h-full rounded-2xl bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden preserve-3d transition-transform duration-200 ease-out z-10"
+    class="relative w-full h-full rounded-[2.5rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] preserve-3d transition-transform duration-200 ease-out z-10"
+    :class="[isOverflowHidden ? 'overflow-hidden' : '']"
     :style="{ transform: cardTransform }"
   >
     <!-- Dynamic glare mask calculated from mouse position (Light Theme variant) -->
     <div 
-      class="absolute inset-0 z-50 pointer-events-none glare-mask-light mix-blend-soft-light rounded-2xl" 
+      class="absolute inset-0 z-50 pointer-events-none glare-mask-light mix-blend-soft-light rounded-[2.5rem]" 
       :style="glareStyle"
     ></div>
     
-    <div class="relative z-10 p-6 md:p-8 h-full flex flex-col items-start translate-z-10 w-full">
+    <div class="relative z-10 h-full flex flex-col items-start translate-z-10 w-full" :class="padding">
       <slot />
     </div>
   </div>

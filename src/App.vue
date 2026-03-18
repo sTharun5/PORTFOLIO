@@ -206,11 +206,11 @@ onUnmounted(() => {
             <!-- Background decorative glow -->
             <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-400/20 to-sky-400/20 rounded-[3rem] blur-3xl transform group-hover:scale-110 transition-transform duration-700"></div>
             
-            <TiltCard class="!p-0 border-0 shadow-[0_40px_80px_rgba(0,0,0,0.08)] rounded-[3rem]">
-              <img src="/IMG_6954.jpg" alt="Tharun S" class="w-full h-full object-cover rounded-[3rem]" />
+            <TiltCard class="!p-0 border-0 shadow-[0_40px_80px_rgba(0,0,0,0.08)]" padding="p-0" :isOverflowHidden="false">
+              <img src="/IMG_6954.jpg" alt="Tharun S" class="w-full h-full object-cover rounded-[2.5rem]" />
               
-              <!-- Floating Badge -->
-              <div class="absolute bottom-8 -left-8 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-2xl border border-white/50 animate-float-fast max-w-[180px]">
+              <!-- Floating Badge - Now NOT clipped -->
+              <div class="absolute bottom-8 -left-8 bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-2xl border border-white/50 animate-float-fast max-w-[180px] z-[60]">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white">
                     <GraduationCap :size="20" />
