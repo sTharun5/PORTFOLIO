@@ -171,10 +171,10 @@ onUnmounted(() => {
         <!-- Identity Text -->
         <div class="lg:col-span-7 flex flex-col" v-motion="{ initial: { opacity: 0, x: -50 }, enter: { opacity: 1, x: 0, transition: { duration: 800, type: 'spring', damping: 25 } } }">
           <div class="flex items-center gap-3 mb-6">
-            <span class="px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-black uppercase tracking-widest border border-indigo-100 shadow-sm">
-              Backend Architect
+            <span class="px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest border border-indigo-100 shadow-sm">
+              Software Developer
             </span>
-            <span class="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-black uppercase tracking-widest border border-emerald-100 shadow-sm animate-pulse">
+            <span class="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest border border-emerald-100 shadow-sm animate-pulse">
               Available for Hire
             </span>
           </div>
@@ -237,7 +237,7 @@ onUnmounted(() => {
               <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Backend Arsenal</h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow">
-              <TiltCard v-for="(skill, i) in ['Node.js', 'PostgreSQL', 'Prisma ORM', 'Express', 'MongoDB', 'Vue 3', 'TypeScript', 'Java']" :key="skill" 
+              <TiltCard v-for="(skill, i) in ['Problem Solving', 'Node.js', 'Express', 'SQL', 'Java', 'C', 'JavaScript']" :key="skill" 
                          v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 50 } } }"
                          class="!px-4 !py-8 text-center justify-center border-slate-100 flex flex-col items-center group">
                 <span class="font-black text-slate-900 text-lg group-hover:text-indigo-600 transition-colors">{{ skill }}</span>
