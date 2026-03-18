@@ -11,64 +11,47 @@ const canvasRef = ref(null)
 
 let ctx, W, H, rafId
 let particles = []
-const PARTICLE_COUNT = 300
-// Official Google brand colors
-const COLORS = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#8AB4F8', '#F28B82', '#FDE293', '#81C995']
-const mouse = { x: -1000, y: -1000 }
+const PARTICLE_COUNT = 450
+const COLORS = ['#4285F4', '#EA4335', '#FBBC05', '#34A853']
+const mouse = { x: 0, y: 0, tx: 0, ty: 0 }
+const rotation = { x: 0, y: 0 }
 
-class Particle {
+class Particle3D {
   constructor() {
-    this.reset(true)
-  }
-
-  reset(initial = false) {
-    // Start mostly in the center for the "Iris" effect
-    this.x = initial ? Math.random() * W : W / 2 + (Math.random() - 0.5) * 100
-    this.y = initial ? Math.random() * H : H / 2 + (Math.random() - 0.5) * 100
-    this.vx = (Math.random() - 0.5) * 1.5
-    this.vy = (Math.random() - 0.5) * 1.5
+    // Distribute points on a sphere
+    const phi = Math.acos(Math.random() * 2 - 1)
+    const theta = Math.random() * Math.PI * 2
+    const radius = 220 // Sphere radius
+    
+    this.x = radius * Math.sin(phi) * Math.cos(theta)
+    this.y = radius * Math.sin(phi) * Math.sin(theta)
+    this.z = radius * Math.cos(phi)
+    
     this.color = COLORS[Math.floor(Math.random() * COLORS.length)]
-    this.size = Math.random() * 2.5 + 0.5
-    this.alpha = Math.random() * 0.4 + 0.2
+    this.size = Math.random() * 2 + 1
   }
 
-  update() {
-    // 1. Centripetal Pull (towards center of viewport)
-    const dxCenter = W / 2 - this.x
-    const dyCenter = H / 2 - this.y
-    const distCenter = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter)
+  project(rx, ry) {
+    // 3D Rotation on Y axis
+    let x1 = this.x * Math.cos(ry) - this.z * Math.sin(ry)
+    let z1 = this.x * Math.sin(ry) + this.z * Math.cos(ry)
     
-    this.vx += (dxCenter / distCenter) * 0.015
-    this.vy += (dyCenter / distCenter) * 0.015
-
-    // 2. Mouse Attraction (The "Antigravity" magnetic pull)
-    const dxMouse = this.x - mouse.x
-    const dyMouse = this.y - mouse.y
-    const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse)
+    // 3D Rotation on X axis
+    let y2 = this.y * Math.cos(rx) - z1 * Math.sin(rx)
+    let z2 = this.y * Math.sin(rx) + z1 * Math.cos(rx)
     
-    if (distMouse < 350) {
-      const force = (350 - distMouse) / 350
-      this.vx -= (dxMouse / distMouse) * force * 0.5
-      this.vy -= (dyMouse / distMouse) * force * 0.5
-    }
-
-    // 3. Apply Velocity & Damping (Liquid motion)
-    this.vx *= 0.98
-    this.vy *= 0.98
-    this.x += this.vx
-    this.y += this.vy
-
-    // 4. Boundary Logic: Wrap or Reset
-    if (this.x < -100 || this.x > W + 100 || this.y < -100 || this.y > H + 100) {
-      if (Math.random() > 0.95) this.reset()
-    }
-  }
-
-  draw() {
+    // Perspective Projection
+    const focalLength = 500
+    const scale = focalLength / (focalLength + z2)
+    const px = x1 * scale + W / 2
+    const py = y2 * scale + H / 2
+    
+    // Draw
+    const alpha = (z2 + 220) / 440 * 0.8 + 0.2 // Depth-based opacity
     ctx.beginPath()
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+    ctx.arc(px, py, this.size * scale, 0, Math.PI * 2)
     ctx.fillStyle = this.color
-    ctx.globalAlpha = this.alpha
+    ctx.globalAlpha = alpha
     ctx.fill()
     ctx.globalAlpha = 1
   }
@@ -80,40 +63,30 @@ function init() {
   W = canvas.width = window.innerWidth
   H = canvas.height = window.innerHeight
   ctx = canvas.getContext('2d')
-  particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle())
+  particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle3D())
 }
 
 function loop() {
   ctx.clearRect(0, 0, W, H)
   
-  // Draw Subtle Connection Lines (The Constellation Effect)
-  ctx.beginPath()
-  ctx.lineWidth = 0.5
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    for (let j = i + 1; j < PARTICLE_COUNT; j++) {
-      const dx = particles[i].x - particles[j].x
-      const dy = particles[i].y - particles[j].y
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      if (dist < 90) {
-        ctx.moveTo(particles[i].x, particles[i].y)
-        ctx.lineTo(particles[j].x, particles[j].y)
-        ctx.strokeStyle = `rgba(0, 0, 0, ${(1 - dist / 90) * 0.05})`
-        ctx.stroke()
-      }
-    }
-  }
-
+  // Smooth mouse-influenced rotation
+  mouse.tx += (rotation.y - mouse.tx) * 0.05
+  mouse.ty += (rotation.x - mouse.ty) * 0.05
+  
+  // Base rotation + mouse tilt
+  rotation.y += 0.003
+  
   particles.forEach(p => {
-    p.update()
-    p.draw()
+    p.project(mouse.ty, rotation.y + mouse.tx)
   })
   
   rafId = requestAnimationFrame(loop)
 }
 
 function onMouseMove(e) {
-  mouse.x = e.clientX
-  mouse.y = e.clientY
+  // Map mouse position to rotation offsets (-0.5 to 0.5)
+  rotation.y = (e.clientX / W - 0.5) * 1.5
+  rotation.x = -(e.clientY / H - 0.5) * 1.5
 }
 
 function onResize() {
@@ -144,7 +117,5 @@ onBeforeUnmount(() => {
 }
 .canvas {
   display: block;
-  width: 100%;
-  height: 100%;
 }
 </style>
