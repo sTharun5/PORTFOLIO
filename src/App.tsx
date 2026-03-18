@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Github, Linkedin, Mail, ExternalLink, Award, Code2, Terminal, Star, Cpu, Globe, 
-  LayoutDashboard, FolderGit2, Wrench, GraduationCap, Send
+  LayoutDashboard, FolderGit2, GraduationCap, Send, UserCheck, Database
 } from 'lucide-react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
 // --- DATA ---
 const HERO_STATS = [
@@ -56,19 +55,12 @@ const PROJECTS = [
   }
 ];
 
-const SKILL_RADAR_DATA = [
-  { subject: 'Backend Logic', proficiency: 95 },
-  { subject: 'SQL & RDBMS', proficiency: 90 },
-  { subject: 'API Design', proficiency: 85 },
-  { subject: 'Database Schema', proficiency: 88 },
-  { subject: 'Problem Solving', proficiency: 95 },
-  { subject: 'Server Arch', proficiency: 80 },
-];
+// Removed SKILL_RADAR_DATA
 
 const NAV_ITEMS = [
   { label: 'Dashboard', icon: <LayoutDashboard size={20} />, id: 'dashboard' },
+  { label: 'Profile', icon: <UserCheck size={20} />, id: 'profile' },
   { label: 'Projects', icon: <FolderGit2 size={20} />, id: 'projects' },
-  { label: 'Skills', icon: <Wrench size={20} />, id: 'skills' },
   { label: 'Certifications', icon: <GraduationCap size={20} />, id: 'certifications' },
   { label: 'Contact', icon: <Send size={20} />, id: 'contact' },
 ];
@@ -263,62 +255,52 @@ const App = () => {
           </motion.div>
 
 
-          {/* SKILLS CHART WIDGET (Spans 2 columns) */}
+          {/* PROFILE IMAGE & PHILOSOPHY WIDGET (Spans 4 columns) */}
            <motion.section 
-            id="skills"
+            id="profile"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 xl:col-span-2 bg-glass p-6 md:p-8 rounded-3xl border border-white/10 flex flex-col h-[400px]"
+            className="md:col-span-2 xl:col-span-4 bg-glass p-8 md:p-12 rounded-3xl border border-white/10 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-primary/10 text-primary rounded-xl"><Wrench size={20} /></div>
-              <h2 className="text-xl font-bold text-white">Technical Proficiency</h2>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/5 blur-3xl rounded-full group-hover:bg-secondary/10 transition-all duration-700 pointer-events-none"></div>
+            
+            {/* Image Container */}
+            <div className="relative w-48 h-48 md:w-64 md:h-64 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-secondary/40 transition-all p-1.5 bg-card/50 shadow-2xl relative z-10">
+              <div className="w-full h-full rounded-[1.5rem] overflow-hidden bg-background relative flex items-center justify-center group/img">
+                 {/* Replace the src with your actual image path, e.g., src="/tharun.jpg" */}
+                 <img 
+                    src="/profile.jpg" 
+                    alt="Tharun S" 
+                    className="w-full h-full object-cover grayscale opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-700" 
+                    onError={(e) => { 
+                      e.currentTarget.src = 'https://ui-avatars.com/api/?name=Tharun+S&size=512&background=0f172a&color=06b6d4&font-size=0.33&bold=true'; 
+                      e.currentTarget.className="w-full h-full object-cover opacity-60 mix-blend-screen"; 
+                    }} 
+                 />
+                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[1.5rem] pointer-events-none"></div>
+              </div>
             </div>
-            <div className="flex-1 w-full h-full min-h-0">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={SKILL_RADAR_DATA}>
-                  <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: '#9ca3af', fontSize: 10, fontFamily: 'Inter' }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', borderColor: 'rgba(139,92,246,0.3)', borderRadius: '12px', fontSize: '12px' }}
-                    itemStyle={{ color: '#8b5cf6', fontWeight: 'bold' }}
-                  />
-                  <Radar name="Proficiency" dataKey="proficiency" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.3} />
-                </RadarChart>
-              </ResponsiveContainer>
+
+            {/* Content */}
+            <div className="flex-1 text-center md:text-left z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary/10 border border-secondary/20 rounded-xl text-[10px] font-bold uppercase tracking-widest text-secondary mb-4">
+                <Database size={12} /> Data & Logic Over Everything
+              </div>
+              <h2 className="text-3xl font-black text-white mb-4">Architecting the Backend</h2>
+              
+              <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-8 max-w-2xl">
+                My passion lies in designing resilient algorithms, high-performance database architectures, and building scalable RESTful APIs that power complex frontends. From optimizing heavy execution logic to deploying secure Node.js microservices, I ensure the data layer is always fast, secure, and rock-solid.
+              </p>
+              
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs font-bold text-slate-300">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-secondary"></div> Node.js / Express</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-accent"></div> Relational DBs (SQL)</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-primary"></div> JWT Auth & Security</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl"><div className="w-2 h-2 rounded-full bg-yellow-400"></div> Prisma ORM</div>
+              </div>
             </div>
           </motion.section>
-
-          {/* TECH STACK LIST WIDGET (Spans 2 columns) */}
-           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="md:col-span-2 xl:col-span-2 bg-glass p-6 md:p-8 rounded-3xl border border-white/10"
-          >
-             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Ecosystem</h3>
-             <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Server-Side</span> <span className="text-primary">Node.js, Express, Java</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-primary w-[95%] rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div></div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">Relational DBs (SQL)</span> <span className="text-secondary">PostgreSQL, MySQL</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-secondary w-[90%] rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div></div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs font-bold mb-2"><span className="text-white">NoSQL & ORMs</span> <span className="text-accent">MongoDB, Prisma</span></div>
-                  <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-accent w-[85%] rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div>
-                </div>
-             </div>
-             <div className="mt-6 flex flex-wrap gap-2">
-               {['REST APIs', 'JWT Auth', 'Data Modeling', 'Git', 'Brevo API'].map(tool => (
-                 <span key={tool} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-bold text-slate-500">{tool}</span>
-               ))}
-             </div>
-          </motion.div>
 
 
           {/* PROJECTS SECTION (Spans full width) */}
