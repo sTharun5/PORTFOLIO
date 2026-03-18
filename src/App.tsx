@@ -122,8 +122,8 @@ const App = () => {
         <div className="hidden md:flex flex-col items-center w-full mb-10">
           <div className="relative mb-4">
             <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-primary to-secondary p-1 animate-pulse-slow">
-              <div className="w-full h-full rounded-full bg-card flex items-center justify-center text-3xl font-black text-white font-display uppercase tracking-widest">
-                TS
+              <div className="w-full h-full rounded-full bg-card overflow-hidden">
+                <img src="/IMG_6954.jpg" alt="Tharun S" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -167,8 +167,8 @@ const App = () => {
       <header className="md:hidden sticky top-0 bg-card/80 backdrop-blur-xl border-b border-white/10 z-40 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-[2px]">
-            <div className="w-full h-full rounded-full bg-card flex items-center justify-center text-sm font-black text-white font-display">
-              TS
+            <div className="w-full h-full rounded-full bg-card overflow-hidden">
+              <img src="/IMG_6954.jpg" alt="Tharun S" className="w-full h-full object-cover" />
             </div>
           </div>
           <div>
@@ -268,9 +268,8 @@ const App = () => {
             {/* Image Container */}
             <div className="relative w-48 h-48 md:w-64 md:h-64 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group-hover:border-secondary/40 transition-all p-1.5 bg-card/50 shadow-2xl relative z-10">
               <div className="w-full h-full rounded-[1.5rem] overflow-hidden bg-background relative flex items-center justify-center group/img">
-                 {/* Replace the src with your actual image path, e.g., src="/tharun.jpg" */}
                  <img 
-                    src="/profile.jpg" 
+                    src="/IMG_6954.jpg" 
                     alt="Tharun S" 
                     className="w-full h-full object-cover grayscale opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-700" 
                     onError={(e) => { 
