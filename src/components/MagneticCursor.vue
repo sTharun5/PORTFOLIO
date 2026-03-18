@@ -5,59 +5,39 @@ import { useMouse, useWindowSize } from '@vueuse/core';
 const { x, y } = useMouse();
 const { width: windowWidth } = useWindowSize();
 
-const cursorX = ref(0);
-const cursorY = ref(0);
-const dotX = ref(0);
-const dotY = ref(0);
-
-const isHovering = ref(false);
-const isClicking = ref(false);
+const DOTS_COUNT = 10;
+const dots = ref(Array.from({ length: DOTS_COUNT }, () => ({ x: 0, y: 0 })));
 
 const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
 
 let rafId: number;
 
 const updateCursor = () => {
-  // Main ring follows with lag (liquid feel)
-  cursorX.value = lerp(cursorX.value, x.value, 0.15);
-  cursorY.value = lerp(cursorY.value, y.value, 0.15);
-  
-  // Center dot follows faster
-  dotX.value = lerp(dotX.value, x.value, 0.3);
-  dotY.value = lerp(dotY.value, y.value, 0.3);
+  // Cascading follow: First dot follows mouse, rest follow previous dot
+  for (let i = 0; i < DOTS_COUNT; i++) {
+    const targetX = i === 0 ? x.value : dots.value[i - 1].x;
+    const targetY = i === 0 ? y.value : dots.value[i - 1].y;
+    
+    // Varying LERP factors create the ribbon stretch/lag
+    const factor = i === 0 ? 0.25 : 0.15 + (i * 0.02);
+    
+    dots.value[i].x = lerp(dots.value[i].x, targetX, factor);
+    dots.value[i].y = lerp(dots.value[i].y, targetY, factor);
+  }
   
   rafId = requestAnimationFrame(updateCursor);
 };
 
-const handleMouseOver = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  if (target.closest('.magnetic-trigger') || target.tagName === 'BUTTON' || target.tagName === 'A') {
-    isHovering.value = true;
-  } else {
-    isHovering.value = false;
-  }
-};
-
-const handleMouseDown = () => isClicking.value = true;
-const handleMouseUp = () => isClicking.value = false;
-
 onMounted(() => {
-  cursorX.value = x.value;
-  cursorY.value = y.value;
-  dotX.value = x.value;
-  dotY.value = y.value;
-  
+  dots.value.forEach(d => {
+    d.x = x.value;
+    d.y = y.value;
+  });
   updateCursor();
-  window.addEventListener('mouseover', handleMouseOver);
-  window.addEventListener('mousedown', handleMouseDown);
-  window.addEventListener('mouseup', handleMouseUp);
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(rafId);
-  window.removeEventListener('mouseover', handleMouseOver);
-  window.removeEventListener('mousedown', handleMouseDown);
-  window.removeEventListener('mouseup', handleMouseUp);
 });
 
 const isMobile = computed(() => windowWidth.value < 768);
@@ -65,25 +45,27 @@ const isMobile = computed(() => windowWidth.value < 768);
 
 <template>
   <div v-if="!isMobile" class="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
-    <!-- Main Outer Ring (Liquid Feel) -->
+    <!-- Trailing Dots -->
     <div 
-      class="absolute top-0 left-0 w-10 h-10 border border-indigo-500/40 rounded-full transition-transform duration-500 ease-out flex items-center justify-center bg-indigo-500/5 backdrop-blur-[2px]"
+      v-for="(dot, i) in dots" 
+      :key="i"
+      class="absolute top-0 left-0 rounded-full bg-indigo-600 shadow-sm"
       :style="{ 
-        transform: `translate3d(${cursorX - 20}px, ${cursorY - 20}px, 0) scale(${isHovering ? 1.6 : 1}) ${isClicking ? 'scale(0.8)' : ''}`,
-        opacity: x === 0 ? 0 : 1
-      }"
-    ></div>
-
-    <!-- Center Dot (Faster Follow) -->
-    <div 
-      class="absolute top-0 left-0 w-1.5 h-1.5 bg-indigo-600 rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)]"
-      :style="{ 
-        transform: `translate3d(${dotX - 3}px, ${dotY - 3}px, 0) scale(${isHovering ? 0 : 1})`,
-        opacity: x === 0 ? 0 : 1
+        transform: `translate3d(${dot.x - (4 - i * 0.3)}px, ${dot.y - (4 - i * 0.3)}px, 0)`,
+        width: `${8 - i * 0.6}px`,
+        height: `${8 - i * 0.6}px`,
+        opacity: (1 - i / DOTS_COUNT) * 0.6,
+        zIndex: DOTS_COUNT - i
       }"
     ></div>
   </div>
 </template>
+
+<style scoped>
+div {
+  will-change: transform, opacity;
+}
+</style>
 
 <style scoped>
 /* Ensure smooth transitions for the scale factor */
