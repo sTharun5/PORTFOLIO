@@ -255,7 +255,7 @@ onUnmounted(() => {
                          v-motion="{ initial: { opacity: 0, scale: 0.9 }, visibleOnce: { opacity: 1, scale: 1, transition: { delay: i * 50 } } }"
                          class="!p-0 border-slate-100/60 flex flex-col items-center justify-center group overflow-visible"
                          padding="p-8">
-                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 mb-5 shadow-inner">
+                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-indigo-200 transition-all duration-500 mb-5 shadow-inner">
                   <component :is="skill.icon" :size="22" />
                 </div>
                 <span class="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors tracking-tight">{{ skill.name }}</span>
@@ -325,7 +325,7 @@ onUnmounted(() => {
           <span class="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-2">History</span>
           <h2 class="text-4xl font-display font-black text-slate-900 tracking-tighter">Academic Journey</h2>
         </div>
-        <TiltCard class="border-slate-100 group transition-all duration-700 relative overflow-visible !p-0" padding="p-12">
+        <TiltCard class="border-slate-100 group transition-all duration-700 relative !p-0" padding="p-12" :isOverflowHidden="false">
           <div class="absolute -top-20 -right-20 w-64 h-64 bg-indigo-50/40 rounded-full blur-[100px] z-0 group-hover:bg-indigo-100/40 transition-colors"></div>
           <div class="flex flex-col md:flex-row gap-12 md:items-center justify-between relative z-10 w-full">
             <div class="flex-1">
