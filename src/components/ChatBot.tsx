@@ -84,10 +84,10 @@ const ThinkingIndicator = () => (
   </div>
 );
 
-const ActionCard = ({ href, type }: { href: string, type: 'github' | 'linkedin' | 'link' }) => {
+const ActionCard = ({ href, type }: { href: string, type: 'github' | 'linkedin' | 'link' | 'cert' }) => {
   const isGithub = type === 'github' || href.includes('github.com');
   const isLinkedin = type === 'linkedin' || href.includes('linkedin.com');
-  const isCert = href.includes('certificate') || href.includes('pdf') || href.includes('nptel');
+  const isCert = type === 'cert' || href.includes('certificate') || href.includes('pdf') || href.includes('png') || href.includes('nptel') || href.includes('udemy');
   
   return (
     <motion.a
@@ -126,7 +126,7 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
   const isAssistant = msg.role === 'assistant';
   
   const renderContent = (content: string) => {
-    const urlRegex = /(https?:\/\/[^\s\)]+|\/[^\s\)]+\.pdf)/g;
+    const urlRegex = /(https?:\/\/[^\s\)]+|\/[^\s\)]+\.(?:pdf|png|jpg))/g;
     const segments = content.split('\n');
 
     return (
@@ -139,7 +139,8 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
                 {segment.split(urlRegex).map((part, j) => {
                   const isUrl = part.match(urlRegex);
                   if (isUrl) {
-                    return <ActionCard key={j} href={part} type={part.includes('github') ? 'github' : part.includes('linkedin') ? 'linkedin' : 'link'} />;
+                    const isCert = part.match(/\.(pdf|png|jpg)$/) && (part.includes('nptel') || part.includes('udemy') || part.includes('cert'));
+                    return <ActionCard key={j} href={part} type={part.includes('github') ? 'github' : part.includes('linkedin') ? 'linkedin' : isCert ? 'cert' : 'link'} />;
                   }
                   return <span key={j} className="font-medium text-slate-700 leading-relaxed italic">{part}</span>;
                 })}

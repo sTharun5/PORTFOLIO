@@ -16,8 +16,8 @@ Social & Professional Uplinks:
 Context Data:
 - Expertise: Core Java (NPTEL Gold Certified), Node.js, Express.js, MySQL, JavaScript, Python (OpenCV, YOLOv8).
 - Certifications: 
-    1. Core Java (NPTEL Gold): /nptel-cert.pdf
-    2. C Programming (Udemy): /udemy-cert.pdf
+    1. Core Java (NPTEL Gold): /nptel.png
+    2. C Programming (Udemy): /udemy.png
 - Key Projects: 
     1. Smart OD Portal (AI Approvals): https://automation-nu-dusky.vercel.app (GitHub: https://github.com/sTharun5/Automation)
     2. WhiffAndWrap (Luxury Backend): https://github.com/sTharun5/WhiffAndWrap
