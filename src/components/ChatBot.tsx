@@ -234,11 +234,9 @@ export const ChatBot = () => {
                 <div className="flex items-center gap-4 sm:gap-6">
                   <div className="relative">
                     <motion.div 
-                      animate={{ border: ['1px solid rgba(255,255,255,0.1)', '1px solid rgba(99,102,241,0.5)', '1px solid rgba(255,255,255,0.1)'] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-white/5 flex items-center justify-center backdrop-blur-2xl border border-white/10 shadow-2xl relative z-10"
+                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-white/5 flex items-center justify-center backdrop-blur-2xl border border-white/20 shadow-2xl relative z-10"
                     >
-                      <Command size={24} className="sm:size-8 text-white drop-shadow-glow" />
+                      <span className="text-2xl sm:text-4xl font-black text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">V</span>
                     </motion.div>
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-indigo-500 rounded-full border-2 sm:border-4 border-slate-900 shadow-lg z-20" />
                   </div>
@@ -326,7 +324,7 @@ export const ChatBot = () => {
             aria-label="Toggle AI Vortex"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1.2s] ease-in-out" />
-            <Command size={32} className="sm:size-40 group-hover:scale-110 transition-transform duration-500" />
+            <span className="text-3xl sm:text-4xl font-black text-white group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">V</span>
             
             <motion.div 
               animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
