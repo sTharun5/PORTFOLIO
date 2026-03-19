@@ -57,6 +57,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ content: aiResponse });
   } catch (error: any) {
     console.error('Groq API Error:', error);
-    return NextResponse.json({ error: 'Failed to fetch response from Groq' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Failed to fetch response from Groq',
+      details: error.message || 'Unknown error',
+      status: error.status || 500
+    }, { status: 500 });
   }
+
 }

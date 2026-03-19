@@ -48,10 +48,12 @@ export const ChatBot = () => {
       if (data.content) {
         setMessages(prev => [...prev, { role: 'ai', content: data.content }]);
       } else if (data.error) {
-        setMessages(prev => [...prev, { role: 'ai', content: `API Error: ${data.error}` }]);
+        const detailStr = data.details ? ` (${data.details})` : '';
+        setMessages(prev => [...prev, { role: 'ai', content: `API Error: ${data.error}${detailStr}` }]);
       } else {
         setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. Please try again later!" }]);
       }
+
 
     } catch (error) {
       setMessages(prev => [...prev, { role: 'ai', content: "Oops! Something went wrong. Check your connection." }]);
