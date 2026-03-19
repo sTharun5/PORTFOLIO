@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
-import { AntiGravityBackground } from "@/components/AntiGravityBackground";
-import { MagneticCursor } from "@/components/MagneticCursor";
-import { ChatBot } from "@/components/ChatBot";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-slate-50 text-slate-600 antialiased selection:bg-indigo-100 selection:text-indigo-900`}>
-        <MagneticCursor />
-        <AntiGravityBackground />
+      <body className={`${inter.className} bg-slate-50 text-slate-600 antialiased selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden`}>
+        {/* Ambient glowing nebulas (Restored from Legacy) */}
+        <div className="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        <div className="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
         
         <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
@@ -30,9 +28,7 @@ export default function RootLayout({
             {children}
           </div>
         </div>
-        <ChatBot />
       </body>
-
     </html>
   );
 }

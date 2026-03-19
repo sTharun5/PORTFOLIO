@@ -11,23 +11,23 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.1,
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.95, y: 30 },
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     transition: {
-      type: 'spring',
-      damping: 20,
+      duration: 0.5,
     },
   },
 };
+
 
 
 export const ProjectsSection = () => {

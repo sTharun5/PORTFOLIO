@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+
 import { GraduationCap, Code2 } from 'lucide-react';
 import { TiltCard } from './TiltCard';
 
@@ -9,12 +10,13 @@ export const EducationSection = () => {
   return (
     <motion.section 
       id="education" 
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, type: 'spring', damping: 25 }}
+      transition={{ duration: 0.6 }}
       className="mt-12"
     >
+
       <div className="flex flex-col gap-2 mb-10">
         <span className="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-2">History</span>
         <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Academic Journey</h2>
@@ -49,12 +51,13 @@ export const CredentialsSection = ({ certs }: { certs: any[] }) => {
   return (
     <motion.section 
       id="credentials" 
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, type: 'spring', damping: 25 }}
+      transition={{ duration: 0.6 }}
       className="mt-12 mb-32"
     >
+
       <div className="flex flex-col gap-2 mb-10">
         <span className="text-rose-600 text-xs font-black uppercase tracking-[0.3em] mb-2">Verified</span>
         <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Official Credentials</h2>

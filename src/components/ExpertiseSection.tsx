@@ -11,7 +11,7 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      duration: 0.6,
     },
   },
 };
@@ -22,12 +22,11 @@ const itemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring',
-      damping: 25,
-      stiffness: 100,
+      duration: 0.5,
     },
   },
 };
+
 
 export const ExpertiseSection = () => {
   return (
