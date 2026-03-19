@@ -55,7 +55,7 @@ export const CredentialsSection = ({ certs }: { certs: any[] }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="mt-12 mb-32"
+      className="mt-12 mb-10"
     >
 
       <div className="flex flex-col gap-2 mb-10">

@@ -28,7 +28,7 @@ export default function Home() {
       <CredentialsSection certs={CERTS} />
       
       {/* Footer / Final Note */}
-      <footer className="py-20 text-center border-t border-slate-100/50">
+      <footer className="py-12 text-center border-t border-slate-100/50">
         <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
           Designed with Precision & Performance | 2026
         </p>
