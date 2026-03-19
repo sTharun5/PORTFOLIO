@@ -32,7 +32,7 @@ const itemVariants: Variants = {
 
 export const HeroSection = () => {
   return (
-    <section id="hero" className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center min-h-[60vh] relative">
+    <section id="hero" className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center min-h-[50vh] relative">
       {/* Identity Text */}
       <motion.div 
         variants={containerVariants}
@@ -60,7 +60,7 @@ export const HeroSection = () => {
         
         <motion.p 
           variants={itemVariants} 
-          className="text-xl md:text-2xl text-slate-500 max-w-2xl leading-relaxed mb-12 font-medium"
+          className="text-xl md:text-2xl text-slate-500 max-w-2xl leading-relaxed mb-8 font-medium"
         >
           I&apos;m <strong className="text-slate-900">Tharun S</strong>, a Final Year AI & DS student specialized in designing resilient server architectures and high-performance data pipelines.
         </motion.p>

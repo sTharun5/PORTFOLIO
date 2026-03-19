@@ -9,7 +9,7 @@ import { CERTS } from '@/lib/data';
 
 export default function Home() {
   return (
-    <main className="relative z-10 max-w-7xl mx-auto px-6 py-4 lg:py-8 flex flex-col gap-32">
+    <main className="relative z-10 max-w-7xl mx-auto px-6 py-4 lg:py-8 flex flex-col gap-20">
       {/* Scroll-based layout reveals handled in individual sections */}
       
       {/* Hero Section */}

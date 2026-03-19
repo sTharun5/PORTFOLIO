@@ -31,14 +31,14 @@ const itemVariants: Variants = {
 
 export const ExpertiseSection = () => {
   return (
-    <section id="expertise" className="max-w-7xl mx-auto px-6 py-20 sm:py-32">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-stretch">
+    <section id="expertise" className="max-w-7xl mx-auto px-6 py-10 sm:py-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         <div className="lg:col-span-8 flex flex-col h-full">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-col gap-2 mb-10 sm:mb-12"
+            className="flex flex-col gap-2 mb-8 sm:mb-10"
           >
             <motion.span variants={itemVariants} className="text-indigo-600 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] mb-2">Capabilities</motion.span>
             <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">Technical Expertise</motion.h2>
@@ -49,7 +49,7 @@ export const ExpertiseSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-10"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-8"
           >
             {PRO_SKILLS.map((skill) => (
               <motion.div key={skill.name} variants={itemVariants}>
@@ -71,7 +71,7 @@ export const ExpertiseSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-4"
           >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100/50">
@@ -82,7 +82,7 @@ export const ExpertiseSection = () => {
             
             <motion.div 
               variants={containerVariants}
-              className="flex flex-wrap gap-2 sm:gap-3"
+              className="flex flex-wrap gap-2 sm:gap-2.5"
             >
               {PERSONAL_TRAITS.map((trait) => (
                 <motion.span 
@@ -106,10 +106,10 @@ export const ExpertiseSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, type: 'spring', damping: 20 }}
-          className="lg:col-span-4 block h-full group"
+          className="lg:col-span-4 block group"
           aria-label="Visit LeetCode Profile"
         >
-          <TiltCard className="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20 h-full" padding="p-8 sm:p-10">
+          <TiltCard className="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20" padding="p-8 sm:p-10">
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] sm:rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-6 sm:mb-8 shadow-2xl shadow-orange-200 group-hover:scale-110 transition-transform duration-700">
               <Code2 className="text-white" size={40} />
             </div>

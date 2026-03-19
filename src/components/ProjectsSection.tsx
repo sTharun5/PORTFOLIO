@@ -32,13 +32,13 @@ const itemVariants: Variants = {
 
 export const ProjectsSection = () => {
   return (
-    <section id="projects" className="mt-12">
+    <section id="projects" className="mt-4">
       <motion.div 
         initial={{ opacity: 0, x: -30 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="flex items-center gap-4 mb-10"
+        className="flex items-center gap-4 mb-8"
       >
         <div className="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-500">
           <Rocket size={24} />
@@ -57,7 +57,7 @@ export const ProjectsSection = () => {
           <motion.div key={project.title} variants={itemVariants} className="h-full">
             <TiltCard 
               className="flex flex-col group justify-between hover:border-indigo-200 transition-all duration-500 !p-0 border-slate-100 shadow-sm h-full"
-              padding="p-10"
+              padding="p-8 sm:p-10"
             >
               <div className="relative">
                 <div className="flex items-center justify-between mb-6">
