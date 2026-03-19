@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { AntiGravityBackground } from "@/components/AntiGravityBackground";
 import { MagneticCursor } from "@/components/MagneticCursor";
+import { ChatBot } from "@/components/ChatBot";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <div className="flex-grow">
             {children}
           </div>
+          <ChatBot />
         </div>
       </body>
     </html>
