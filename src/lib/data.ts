@@ -60,12 +60,12 @@ export const CERTS = [
   {
     title: 'Core Java (97%)',
     issuer: 'NPTEL Elite Gold',
-    url: '/nptel.png',
+    url: 'https://portfolio-stharun5s-projects.vercel.app/nptel.png',
   },
   {
     title: 'C Programming Core',
     issuer: 'Udemy Verified',
-    url: '/udemy.png',
+    url: 'https://portfolio-stharun5s-projects.vercel.app/udemy.png',
   }
 ];
 
