@@ -19,6 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-slate-50 text-slate-600 antialiased selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden`}>
+        {/* v1.0.2 - Force Redeploy */}
+
         {/* Ambient glowing nebulas (Restored from Legacy) */}
         <div className="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
         <div className="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
