@@ -215,63 +215,56 @@ export const ChatBot = () => {
   };
 
   return (
-    <div className="fixed bottom-10 right-10 z-[9999] flex flex-col items-end pointer-events-auto font-sans">
+    <div className="fixed inset-0 z-[9999] pointer-events-none font-sans">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30, filter: 'blur(15px)' }}
-            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 0.95, y: 30, filter: 'blur(15px)' }}
+            initial={{ opacity: 0, scale: 0.95, filter: 'blur(20px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.95, filter: 'blur(20px)' }}
             transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-            className="mb-6 w-[calc(100vw-40px)] sm:w-[440px] h-[650px] max-h-[85vh] flex flex-col rounded-[2.8rem] shadow-[0_40px_100px_rgba(0,0,0,0.2)] border border-white/60 overflow-hidden backdrop-blur-3xl bg-white/85"
+            className="absolute inset-0 flex flex-col pointer-events-auto bg-white/85 backdrop-blur-3xl"
           >
-            {/* Ultra Premium Header */}
-            <div className="relative p-8 bg-slate-900 text-white overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full -mr-32 -mt-32 blur-3xl animate-pulse" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 rounded-full -ml-24 -mb-24 blur-3xl" />
+            {/* Ultra Premium Full-Screen Header */}
+            <div className="relative p-6 sm:p-10 bg-slate-900 text-white overflow-hidden shrink-0">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/20 rounded-full -mr-48 -mt-48 blur-[100px] animate-pulse" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full -ml-32 -mb-32 blur-[80px]" />
               
-              <div className="relative flex items-center justify-between">
-                <div className="flex items-center gap-5">
+              <div className="relative flex items-center justify-between max-w-5xl mx-auto w-full">
+                <div className="flex items-center gap-4 sm:gap-6">
                   <div className="relative">
                     <motion.div 
                       animate={{ border: ['1px solid rgba(255,255,255,0.1)', '1px solid rgba(99,102,241,0.5)', '1px solid rgba(255,255,255,0.1)'] }}
                       transition={{ duration: 3, repeat: Infinity }}
-                      className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center backdrop-blur-2xl border border-white/10 shadow-2xl relative z-10"
+                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-white/5 flex items-center justify-center backdrop-blur-2xl border border-white/10 shadow-2xl relative z-10"
                     >
-                      <Command size={32} className="text-white drop-shadow-glow" />
+                      <Command size={24} className="sm:size-8 text-white drop-shadow-glow" />
                     </motion.div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-indigo-500 rounded-full border-4 border-slate-900 shadow-lg z-20 flex items-center justify-center overflow-hidden">
-                      <motion.div 
-                        animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
-                        transition={{ repeat: Infinity, duration: 2 }}
-                        className="w-full h-full bg-white/50"
-                      />
-                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-indigo-500 rounded-full border-2 sm:border-4 border-slate-900 shadow-lg z-20" />
                   </div>
                   <div>
-                    <h3 className="font-black text-xl tracking-tight flex items-center gap-2">
+                    <h3 className="font-black text-lg sm:text-2xl tracking-tight flex items-center gap-2">
                       Vortex 
                       <Sparkles size={16} className="text-indigo-400 animate-pulse" />
                     </h3>
-
-                    <p className="text-[10px] opacity-50 uppercase tracking-[0.4em] font-black">Neural Architecture</p>
+                    <p className="text-[8px] sm:text-[10px] opacity-50 uppercase tracking-[0.4em] font-black">Technical Strategist</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="w-12 h-12 flex items-center justify-center hover:bg-white/10 rounded-[1.2rem] transition-all border border-transparent hover:border-white/10 group"
+                  className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center hover:bg-white/10 rounded-xl sm:rounded-2xl transition-all border border-transparent hover:border-white/10 group"
                 >
-                  <X size={24} className="group-hover:rotate-90 transition-transform duration-500" />
+                  <X size={24} className="sm:size-32 group-hover:rotate-90 transition-transform duration-500" />
                 </button>
               </div>
             </div>
 
-            {/* Content Pipeline */}
+            {/* Optimized Content Pipeline */}
             <div 
               ref={scrollRef}
-              className="flex-grow p-8 overflow-y-auto scroll-smooth custom-scrollbar bg-gradient-to-b from-transparent to-slate-100/20"
+              className="flex-grow overflow-y-auto scroll-smooth custom-scrollbar bg-gradient-to-b from-transparent to-slate-100/20"
             >
-              <div className="flex flex-col">
+              <div className="max-w-4xl mx-auto px-4 sm:px-10 py-10 flex flex-col min-h-full">
                 {messages.map((msg, i) => (
                   <MessageBubble key={i} msg={msg} index={i} />
                 ))}
@@ -288,65 +281,64 @@ export const ChatBot = () => {
               </div>
             </div>
 
-            {/* Neural Input Interface */}
-            <div className="p-8 pb-10 pt-2 bg-white/60 backdrop-blur-2xl">
-              <div className="relative group">
+            {/* Neural Input Interface - Anchored to Bottom */}
+            <div className="p-4 sm:p-10 bg-white/60 backdrop-blur-2xl border-t border-slate-100 shrink-0">
+              <div className="max-w-4xl mx-auto relative group">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask Vortex about Tharun..."
-
-                  className="w-full bg-white border-2 border-slate-100 text-slate-800 px-8 py-5 rounded-[2rem] pr-20 focus:outline-none focus:ring-[12px] focus:ring-indigo-500/5 focus:border-indigo-500 focus:bg-white transition-all placeholder:text-slate-300 text-sm font-bold shadow-sm"
+                  placeholder="Ask Vortex about Tharun's Core Java skills..."
+                  className="w-full bg-white border-2 border-slate-100 text-slate-800 px-6 sm:px-10 py-4 sm:py-6 rounded-[1.5rem] sm:rounded-[2.5rem] pr-16 sm:pr-24 focus:outline-none focus:ring-[12px] focus:ring-indigo-500/5 focus:border-indigo-500 transition-all placeholder:text-slate-300 text-sm sm:text-lg font-bold shadow-sm"
                 />
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={handleSend}
                   disabled={!input.trim() || isLoading}
-                  className="absolute right-3 top-3 w-12 h-12 rounded-[1.2rem] bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 disabled:opacity-20 disabled:grayscale transition-all shadow-xl shadow-indigo-600/30"
+                  className="absolute right-2.5 sm:right-3 top-2.5 sm:top-3 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 disabled:opacity-20 disabled:grayscale transition-all shadow-xl shadow-indigo-600/30"
                 >
-                  <Send size={20} />
+                  <Send size={20} className="sm:size-24" />
                 </motion.button>
               </div>
-              <div className="flex items-center justify-center gap-3 mt-6 opacity-30">
-                <div className="h-[1px] flex-grow bg-slate-400/30" />
-                <span className="text-[9px] font-black uppercase tracking-[0.3em]">Synapse V1.0 - Groq Neural</span>
-                <div className="h-[1px] flex-grow bg-slate-400/30" />
+              <div className="flex items-center justify-center gap-3 mt-4 sm:mt-8 opacity-20">
+                <div className="h-[1px] flex-grow bg-slate-400" />
+                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.4em]">Vortex v2.0 - Full Frame Neural</span>
+                <div className="h-[1px] flex-grow bg-slate-400" />
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Dimensional Launcher */}
-      <motion.button
-        whileHover={{ scale: 1.05, rotate: 5, y: -5 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className={cn(
-          "w-20 h-20 rounded-[2.2rem] flex items-center justify-center shadow-[0_25px_60px_rgba(79,70,229,0.4)] transition-all duration-700 border-2 group relative overflow-hidden backdrop-blur-xl",
-          isOpen 
-            ? "bg-slate-900 text-white border-slate-700 rotate-90" 
-            : "bg-indigo-600 text-white border-white/20 ring-12 ring-indigo-500/5"
-        )}
-        style={{ pointerEvents: 'auto' }}
-        aria-label="Toggle AI Synapse"
-      >
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1.2s] ease-in-out" />
-        {isOpen ? <X size={40} /> : <Command size={40} className="group-hover:scale-110 transition-transform duration-500" />}
-        
-        {!isOpen && (
-          <motion.div 
-            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="absolute -top-1 -right-1 w-6 h-6 bg-indigo-400 rounded-full border-4 border-indigo-600 z-10 flex items-center justify-center"
+      {/* Dimensional Launcher - Positioned bottom right */}
+      {!isOpen && (
+        <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 pointer-events-auto">
+          <motion.button
+            whileHover={{ scale: 1.05, rotate: 5, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsOpen(!isOpen)}
+            className={cn(
+              "w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2.2rem] flex items-center justify-center shadow-[0_25px_60px_rgba(79,70,229,0.4)] transition-all duration-700 border-2 group relative overflow-hidden backdrop-blur-xl",
+              "bg-indigo-600 text-white border-white/20 ring-12 ring-indigo-500/5 px-0"
+            )}
+            aria-label="Toggle AI Vortex"
           >
-             <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-          </motion.div>
-        )}
-      </motion.button>
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1.2s] ease-in-out" />
+            <Command size={32} className="sm:size-40 group-hover:scale-110 transition-transform duration-500" />
+            
+            <motion.div 
+              animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-indigo-400 rounded-full border-2 sm:border-4 border-indigo-600 z-10 flex items-center justify-center"
+            >
+               <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+            </motion.div>
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 };
+
