@@ -27,11 +27,20 @@ User Context: ${JSON.stringify({ projects: PROJECTS, skills: NAV_ITEMS })}
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json({ error: 'GROQ_API_KEY is missing in environment variables' }, { status: 500 });
+    }
+
     const groq = new Groq({
-      apiKey: process.env.GROQ_API_KEY || 'dummy_key_for_build',
+      apiKey: process.env.GROQ_API_KEY,
     });
 
     const { messages } = await req.json();
+    
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 });
+    }
+
 
     const completion = await groq.chat.completions.create({
       messages: [

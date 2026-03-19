@@ -47,9 +47,12 @@ export const ChatBot = () => {
       const data = await response.json();
       if (data.content) {
         setMessages(prev => [...prev, { role: 'ai', content: data.content }]);
+      } else if (data.error) {
+        setMessages(prev => [...prev, { role: 'ai', content: `API Error: ${data.error}` }]);
       } else {
         setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. Please try again later!" }]);
       }
+
     } catch (error) {
       setMessages(prev => [...prev, { role: 'ai', content: "Oops! Something went wrong. Check your connection." }]);
     } finally {
