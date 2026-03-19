@@ -126,7 +126,7 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
   const isAssistant = msg.role === 'assistant';
   
   const renderContent = (content: string) => {
-    const urlRegex = /(https?:\/\/[^\s\)]+)/g;
+    const urlRegex = /(https?:\/\/[^\s\)]+|\/[^\s\)]+\.pdf)/g;
     const segments = content.split('\n');
 
     return (
@@ -136,13 +136,13 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
           if (hasUrl) {
             return (
               <div key={i} className="space-y-2">
-                {segment.split(urlRegex).map((part, j) => (
-                  part.match(urlRegex) ? (
-                    <ActionCard key={j} href={part} type={part.includes('github') ? 'github' : part.includes('linkedin') ? 'linkedin' : 'link'} />
-                  ) : (
-                    <span key={j} className="font-medium text-slate-700 leading-relaxed italic">{part}</span>
-                  )
-                ))}
+                {segment.split(urlRegex).map((part, j) => {
+                  const isUrl = part.match(urlRegex);
+                  if (isUrl) {
+                    return <ActionCard key={j} href={part} type={part.includes('github') ? 'github' : part.includes('linkedin') ? 'linkedin' : 'link'} />;
+                  }
+                  return <span key={j} className="font-medium text-slate-700 leading-relaxed italic">{part}</span>;
+                })}
               </div>
             );
           }
