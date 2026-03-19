@@ -30,17 +30,17 @@ const itemVariants: Variants = {
 
 export const ExpertiseSection = () => {
   return (
-    <section id="expertise" className="max-w-7xl mx-auto py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-stretch">
+    <section id="expertise" className="max-w-7xl mx-auto px-6 py-20 sm:py-32">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-stretch">
         <div className="lg:col-span-8 flex flex-col h-full">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-col gap-2 mb-12"
+            className="flex flex-col gap-2 mb-10 sm:mb-12"
           >
-            <motion.span variants={itemVariants} className="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-2">Capabilities</motion.span>
-            <motion.h2 variants={itemVariants} className="text-5xl font-black text-slate-900 tracking-tighter">Technical Expertise</motion.h2>
+            <motion.span variants={itemVariants} className="text-indigo-600 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] mb-2">Capabilities</motion.span>
+            <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">Technical Expertise</motion.h2>
           </motion.div>
           
           <motion.div 
@@ -48,18 +48,18 @@ export const ExpertiseSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow"
           >
             {PRO_SKILLS.map((skill) => (
               <motion.div key={skill.name} variants={itemVariants}>
                 <TiltCard 
                   className="!p-0 border-slate-100/60 flex flex-col items-center justify-center group overflow-visible h-full"
-                  padding="p-8"
+                  padding="p-6 sm:p-8"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-indigo-200 transition-all duration-500 mb-5 shadow-inner">
-                    <skill.icon size={22} />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-indigo-200 transition-all duration-500 mb-4 sm:mb-5 shadow-inner">
+                    <skill.icon size={20} />
                   </div>
-                  <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors tracking-tight text-center">{skill.name}</span>
+                  <span className="font-bold text-slate-700 text-xs sm:text-sm group-hover:text-indigo-600 transition-colors tracking-tight text-center">{skill.name}</span>
                 </TiltCard>
               </motion.div>
             ))}
@@ -70,20 +70,20 @@ export const ExpertiseSection = () => {
           href="https://leetcode.com/u/user3651Q/" 
           target="_blank" 
           rel="noopener noreferrer"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, type: 'spring', damping: 20 }}
           className="lg:col-span-4 block h-full group"
           aria-label="Visit LeetCode Profile"
         >
-          <TiltCard className="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20 h-full" padding="p-10">
-            <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-8 shadow-2xl shadow-orange-200 group-hover:scale-110 transition-transform duration-700">
-              <Code2 className="text-white" size={48} />
+          <TiltCard className="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20 h-full" padding="p-8 sm:p-10">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] sm:rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-6 sm:mb-8 shadow-2xl shadow-orange-200 group-hover:scale-110 transition-transform duration-700">
+              <Code2 className="text-white" size={40} />
             </div>
-            <h2 className="text-7xl font-black text-slate-900 mb-2 tracking-tighter">300+</h2>
-            <p className="text-orange-600 font-black uppercase tracking-[0.2em] text-[10px] mb-6">Problems Solved</p>
-            <div className="mt-8 flex items-center gap-3 text-orange-600 font-black text-[10px] uppercase tracking-widest bg-white shadow-xl shadow-orange-100/50 px-8 py-4 rounded-2xl border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-all">
+            <h2 className="text-6xl sm:text-7xl font-black text-slate-900 mb-2 tracking-tighter">300+</h2>
+            <p className="text-orange-600 font-black uppercase tracking-[0.2em] text-[8px] sm:text-[10px] mb-6">Problems Solved</p>
+            <div className="mt-6 sm:mt-8 flex items-center gap-3 text-orange-600 font-black text-[10px] uppercase tracking-widest bg-white shadow-xl shadow-orange-100/50 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-all">
               LeetCode Profile <ExternalLink size={14} />
             </div>
           </TiltCard>

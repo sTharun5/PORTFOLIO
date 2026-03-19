@@ -1,5 +1,5 @@
-import { 
-  Workflow, Server, Braces, Database, FileCode, Binary, Cpu, Terminal 
+import {
+  Workflow, Server, Braces, Database, FileCode, Binary, Cpu, Terminal
 } from 'lucide-react';
 
 export const NAV_ITEMS = [
@@ -58,7 +58,7 @@ export const PROJECTS = [
 
 export const CERTS = [
   {
-    title: 'Java Architecture (97%)',
+    title: 'Core Java (97%)',
     issuer: 'NPTEL Elite Gold',
     url: 'https://archive.nptel.ac.in/content/noc/NOC25/SEM1/Ecertificates/106/noc25-cs57/Course/NPTEL25CS57S114900069304436474.pdf',
   },
