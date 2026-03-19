@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   MessageSquare, X, Send, Bot, User, 
   Sparkles, Github, Linkedin, ExternalLink, 
-  ArrowUpRight, Command, Zap
+  ArrowUpRight, Command, Zap, GraduationCap
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -87,6 +87,7 @@ const ThinkingIndicator = () => (
 const ActionCard = ({ href, type }: { href: string, type: 'github' | 'linkedin' | 'link' }) => {
   const isGithub = type === 'github' || href.includes('github.com');
   const isLinkedin = type === 'linkedin' || href.includes('linkedin.com');
+  const isCert = href.includes('certificate') || href.includes('pdf') || href.includes('nptel');
   
   return (
     <motion.a
@@ -100,16 +101,16 @@ const ActionCard = ({ href, type }: { href: string, type: 'github' | 'linkedin' 
       <div className="flex items-center gap-3">
         <div className={cn(
           "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
-          isGithub ? "bg-slate-900 text-white" : "bg-indigo-100 text-indigo-600"
+          isGithub ? "bg-slate-900 text-white" : isCert ? "bg-rose-100 text-rose-600" : "bg-indigo-100 text-indigo-600"
         )}>
-          {isGithub ? <Github size={20} /> : isLinkedin ? <Linkedin size={20} /> : <ExternalLink size={20} />}
+          {isGithub ? <Github size={20} /> : isLinkedin ? <Linkedin size={20} /> : isCert ? <GraduationCap size={20} /> : <ExternalLink size={20} />}
         </div>
         <div className="flex flex-col">
           <span className="text-[10px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">
-            {isGithub ? 'Repository' : isLinkedin ? 'Connect' : 'Resource'}
+            {isGithub ? 'Repository' : isLinkedin ? 'Connect' : isCert ? 'Official Credential' : 'Resource'}
           </span>
           <span className="text-sm font-bold text-slate-800">
-            {isGithub ? 'GitHub Profile' : isLinkedin ? 'LinkedIn' : 'View Project'}
+            {isGithub ? 'GitHub Profile' : isLinkedin ? 'LinkedIn' : isCert ? 'View Certificate' : 'View Project'}
           </span>
         </div>
       </div>
