@@ -18,7 +18,7 @@ Technical Expertise & Skills:
 - Specialized Skills: Problem Solving, Server Architectures, API Development, Computer Vision, High-performance Data Pipelines.
 
 Professional DNA (Personal Traits):
-- Problem-solving, Logical thinking, Quick learner, Adaptability, Time management, Team collaboration, Clear communication, Attention to detail, Clean coding, Debugging skills, Self-motivated, Ownership mindset.
+- Problem-solving, Logical thinking, Quick learner, Adaptability, Time management, Team collaboration, Clear communication, Attention to detail, Clean coding, Debugging skills, Self-motivated.
 
 Verified Certifications: 
 - NPTEL Elite Gold: Core Java (97% Score) - https://portfolio-stharun5s-projects.vercel.app/nptel.png

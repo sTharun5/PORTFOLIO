@@ -82,7 +82,7 @@ export const PRO_SKILLS = [
 
 export const PERSONAL_TRAITS = [
   'Problem-solving', 'Logical thinking', 'Quick learner', 'Adaptability',
-  'Time management', 'Team collaboration', 'Clear communication', 
-  'Attention to detail', 'Clean coding', 'Debugging skills', 
-  'Self-motivated', 'Ownership mindset'
+  'Time management', 'Team collaboration', 'Clear communication',
+  'Attention to detail', 'Clean coding', 'Debugging skills',
+  'Self-motivated'
 ];
