@@ -15,7 +15,7 @@ export const PROJECTS = [
     url: 'https://automation-nu-dusky.vercel.app',
     github: 'https://github.com/sTharun5/Automation',
     description: 'Zero-touch PDF parsing OCR engine with an intelligent fraud detection pipeline.',
-    stack: ['react.js', 'Node.js', 'PostgreSQL', 'Prisma']
+    stack: ['react.js', 'Node.js', 'MySQL', 'Prisma']
   },
   {
     title: 'WhiffAndWrap Architecture',
