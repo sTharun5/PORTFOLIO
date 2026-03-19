@@ -6,16 +6,18 @@ import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Message {
-  role: 'user' | 'ai';
+  role: 'user' | 'assistant';
   content: string;
 }
+
 
 export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'ai', content: "Hi! I'm AntiGravity AI (Powered by Groq). Ask me anything about Tharun's projects, skills, or experience!" }
+    { role: 'assistant', content: "Hi! I'm AntiGravity AI (Powered by Groq). Ask me anything about Tharun's projects, skills, or experience!" }
   ]);
+
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -46,18 +48,21 @@ export const ChatBot = () => {
 
       const data = await response.json();
       if (data.content) {
-        setMessages(prev => [...prev, { role: 'ai', content: data.content }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
       } else if (data.error) {
+
         const detailStr = data.details ? ` (${data.details})` : '';
-        setMessages(prev => [...prev, { role: 'ai', content: `API Error: ${data.error}${detailStr}` }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: `API Error: ${data.error}${detailStr}` }]);
       } else {
-        setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. Please try again later!" }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: "I'm having trouble connecting right now. Please try again later!" }]);
       }
 
 
+
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'ai', content: "Oops! Something went wrong. Check your connection." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Oops! Something went wrong. Check your connection." }]);
     } finally {
+
       setIsLoading(false);
     }
   };
@@ -110,11 +115,12 @@ export const ChatBot = () => {
                   )}
                 >
                   <div className="flex items-center gap-2 mb-2 opacity-50">
-                    {msg.role === 'ai' ? <Bot size={12} /> : <User size={12} />}
+                    {msg.role === 'assistant' ? <Bot size={12} /> : <User size={12} />}
                     <span className="text-[9px] font-black uppercase tracking-widest">
-                      {msg.role === 'ai' ? 'Assistant' : 'You'}
+                      {msg.role === 'assistant' ? 'Assistant' : 'You'}
                     </span>
                   </div>
+
                   <div className="font-medium">{msg.content}</div>
                 </motion.div>
               ))}
