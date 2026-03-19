@@ -77,6 +77,7 @@ export const PRO_SKILLS = [
   { name: 'Java Core', icon: FileCode },
   { name: 'C Language', icon: Binary },
   { name: 'JavaScript', icon: Cpu },
+  { name: 'Git / Vercel', icon: Terminal },
 ];
 
 export const PERSONAL_TRAITS = [

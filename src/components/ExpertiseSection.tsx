@@ -49,7 +49,7 @@ export const ExpertiseSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-16"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-10"
           >
             {PRO_SKILLS.map((skill) => (
               <motion.div key={skill.name} variants={itemVariants}>
@@ -89,7 +89,7 @@ export const ExpertiseSection = () => {
                   key={trait} 
                   variants={itemVariants}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-4 py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-indigo-100 hover:text-indigo-600 transition-all cursor-default"
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-indigo-100 hover:text-indigo-600 transition-all cursor-default"
                 >
                   {trait}
                 </motion.span>
