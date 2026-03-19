@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { TiltCard } from './TiltCard';
-import { PRO_SKILLS } from '@/lib/data';
-import { Code2, ExternalLink } from 'lucide-react';
+import { PRO_SKILLS, PERSONAL_TRAITS } from '@/lib/data';
+import { Code2, ExternalLink, Dna } from 'lucide-react';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -12,6 +12,7 @@ const containerVariants: Variants = {
     opacity: 1,
     transition: {
       duration: 0.6,
+      staggerChildren: 0.05
     },
   },
 };
@@ -48,7 +49,7 @@ export const ExpertiseSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-16"
           >
             {PRO_SKILLS.map((skill) => (
               <motion.div key={skill.name} variants={itemVariants}>
@@ -63,6 +64,37 @@ export const ExpertiseSection = () => {
                 </TiltCard>
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* Professional DNA Section */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-col gap-6"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100/50">
+                <Dna size={16} className="animate-pulse" />
+              </div>
+              <h3 className="text-lg font-black text-slate-900 tracking-tight uppercase">Professional DNA</h3>
+            </div>
+            
+            <motion.div 
+              variants={containerVariants}
+              className="flex flex-wrap gap-2 sm:gap-3"
+            >
+              {PERSONAL_TRAITS.map((trait) => (
+                <motion.span 
+                  key={trait} 
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="px-4 py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-indigo-100 hover:text-indigo-600 transition-all cursor-default"
+                >
+                  {trait}
+                </motion.span>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
         

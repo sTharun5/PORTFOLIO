@@ -78,3 +78,10 @@ export const PRO_SKILLS = [
   { name: 'C Language', icon: Binary },
   { name: 'JavaScript', icon: Cpu },
 ];
+
+export const PERSONAL_TRAITS = [
+  'Problem-solving', 'Logical thinking', 'Quick learner', 'Adaptability',
+  'Time management', 'Team collaboration', 'Clear communication', 
+  'Attention to detail', 'Clean coding', 'Debugging skills', 
+  'Self-motivated', 'Ownership mindset'
+];
