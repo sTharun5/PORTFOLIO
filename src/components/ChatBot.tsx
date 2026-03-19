@@ -14,6 +14,37 @@ interface Message {
   content: string;
 }
 
+const VortexLogo = ({ className, glow = true }: { className?: string, glow?: boolean }) => (
+  <div className={cn("relative flex items-center justify-center", className)}>
+    {glow && (
+      <motion.div 
+        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute inset-0 bg-indigo-500 rounded-full blur-xl"
+      />
+    )}
+    <svg viewBox="0 0 100 100" className="w-full h-full relative z-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <motion.path
+        d="M25 30 L50 75 L75 30"
+        stroke="currentColor"
+        strokeWidth="12"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+      />
+      <motion.circle 
+        cx="50" cy="75" r="6" 
+        fill="currentColor"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      />
+    </svg>
+  </div>
+);
+
 const ThinkingIndicator = () => (
   <div className="flex flex-col gap-2 px-6 py-4 bg-white/40 backdrop-blur-xl rounded-[2rem] rounded-tl-none border border-white/60 w-fit shadow-sm">
     <div className="flex items-center gap-2 mb-2 opacity-40">
@@ -233,11 +264,7 @@ export const ChatBot = () => {
               <div className="relative flex items-center justify-between max-w-5xl mx-auto w-full">
                 <div className="flex items-center gap-4 sm:gap-6">
                   <div className="relative">
-                    <motion.div 
-                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-white/5 flex items-center justify-center backdrop-blur-2xl border border-white/20 shadow-2xl relative z-10"
-                    >
-                      <span className="text-2xl sm:text-4xl font-black text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">V</span>
-                    </motion.div>
+                    <VortexLogo className="w-12 h-12 sm:w-16 sm:h-16 text-indigo-400" />
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-indigo-500 rounded-full border-2 sm:border-4 border-slate-900 shadow-lg z-20" />
                   </div>
                   <div>
@@ -324,7 +351,7 @@ export const ChatBot = () => {
             aria-label="Toggle AI Vortex"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1.2s] ease-in-out" />
-            <span className="text-3xl sm:text-4xl font-black text-white group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">V</span>
+            <VortexLogo className="w-8 h-8 sm:w-10 sm:h-10 text-white" glow={false} />
             
             <motion.div 
               animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
