@@ -22,7 +22,7 @@ export const PROJECTS = [
     tagline: 'Luxury Backend Pipeline',
     github: 'https://github.com/sTharun5/WhiffAndWrap',
     description: 'Resilient data models for complex inventory and secure payment logic.',
-    stack: ['TypeScript', 'Node.js', 'APIs']
+    stack: ['JavaScript', 'Node.js', 'APIs']
   },
   {
     title: 'Currency Exchange Engine',
@@ -77,5 +77,4 @@ export const PRO_SKILLS = [
   { name: 'Java Core', icon: FileCode },
   { name: 'C Language', icon: Binary },
   { name: 'JavaScript', icon: Cpu },
-  { name: 'TypeScript', icon: Terminal },
 ];

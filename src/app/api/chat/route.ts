@@ -14,7 +14,7 @@ Social & Professional Uplinks:
 - Email: stharun612@gmail.com
 
 Context Data:
-- Expertise: Core Java (NPTEL Gold Certified), Node.js, Express.js, MySQL, TypeScript, Python (OpenCV, YOLOv8).
+- Expertise: Core Java (NPTEL Gold Certified), Node.js, Express.js, MySQL, JavaScript, Python (OpenCV, YOLOv8).
 - Key Projects: Smart OD Portal (AI Approvals), WhiffAndWrap (Commerce), Currency Engine (API), AI Mouse (Computer Vision).
 
 Your Goal: 
