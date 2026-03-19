@@ -17,14 +17,7 @@ export const ChatBot = () => {
     { role: 'ai', content: "Hi! I'm AntiGravity AI (Powered by Groq). Ask me anything about Tharun's projects, skills, or experience!" }
   ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    console.log("ChatBot: Component mounting...");
-    setMounted(true);
-  }, []);
-
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -60,16 +53,8 @@ export const ChatBot = () => {
     }
   };
 
-  if (!mounted) {
-    console.log("ChatBot: Not mounted yet, skipping render.");
-    return null;
-  }
-  
-  console.log("ChatBot: Rendering UI...");
-
-
   return (
-    <div className="fixed bottom-10 right-10 z-[9999] flex flex-col items-end">
+    <div className="fixed bottom-10 right-10 z-[9999] flex flex-col items-end pointer-events-auto">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -85,13 +70,13 @@ export const ChatBot = () => {
                   <Bot size={28} />
                 </div>
                 <div>
-                  <h3 className="font-black text-sm tracking-tight">AntiGravity AI</h3>
-                  <p className="text-[10px] opacity-80 uppercase tracking-[0.2em] font-black">Groq Powered</p>
+                  <h3 className="font-black text-sm tracking-tight text-white">AntiGravity AI</h3>
+                  <p className="text-[10px] opacity-80 uppercase tracking-[0.2em] font-black text-white">Groq Powered</p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-white/20 rounded-xl transition-colors"
+                className="p-2 hover:bg-white/20 rounded-xl transition-colors text-white"
                 aria-label="Close Chat"
               >
                 <X size={24} />
@@ -141,7 +126,7 @@ export const ChatBot = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-5 pr-14 text-sm focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all font-medium"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-5 pr-14 text-sm focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all font-medium text-slate-800"
                 />
                 <button 
                   onClick={handleSend}
@@ -164,8 +149,9 @@ export const ChatBot = () => {
           "w-16 h-16 rounded-[2rem] flex items-center justify-center shadow-2xl transition-all duration-500 border-2",
           isOpen 
             ? "bg-slate-900 text-white border-slate-800 rotate-90" 
-            : "bg-indigo-600 text-white border-indigo-500 shadow-indigo-500/40"
+            : "bg-indigo-600 text-white border-white shadow-indigo-500/40 ring-4 ring-indigo-500/20"
         )}
+        style={{ pointerEvents: 'auto' }}
         aria-label="Toggle AI Assistant"
       >
         {isOpen ? <X size={32} strokeWidth={2.5} /> : <MessageSquare size={32} strokeWidth={2.5} />}
