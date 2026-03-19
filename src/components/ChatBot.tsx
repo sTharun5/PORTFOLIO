@@ -122,7 +122,7 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
   const isAssistant = msg.role === 'assistant';
   
   const renderContent = (content: string) => {
-    const urlRegex = /(https?:\/\/[^\s\),.!?]+)/g;
+    const urlRegex = /(https?:\/\/[^\s\)]+)/g;
     const segments = content.split('\n');
 
     return (
