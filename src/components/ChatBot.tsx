@@ -20,6 +20,10 @@ export const ChatBot = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.error("DEBUG: ChatBot successfully mounted on client.");
+  }, []);
+
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
@@ -146,11 +150,12 @@ export const ChatBot = () => {
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-16 h-16 rounded-[2rem] flex items-center justify-center shadow-2xl transition-all duration-500 border-2",
+          "w-16 h-16 rounded-[2rem] flex items-center justify-center shadow-2xl transition-all duration-500 border-2 animate-pulse",
           isOpen 
             ? "bg-slate-900 text-white border-slate-800 rotate-90" 
-            : "bg-indigo-600 text-white border-white shadow-indigo-500/40 ring-4 ring-indigo-500/20"
+            : "bg-indigo-600 text-white border-white shadow-indigo-500/80 ring-4 ring-indigo-500/40"
         )}
+
         style={{ pointerEvents: 'auto' }}
         aria-label="Toggle AI Assistant"
       >
