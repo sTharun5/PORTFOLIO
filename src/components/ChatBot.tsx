@@ -96,7 +96,10 @@ const ActionCard = ({ href, type }: { href: string, type: 'github' | 'linkedin' 
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center justify-between p-4 mt-3 bg-white/60 backdrop-blur-lg border border-white/80 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-indigo-500/10 hover:border-indigo-200 transition-all group no-underline"
+      className={cn(
+        "flex items-center justify-between p-4 mt-3 backdrop-blur-lg border rounded-2xl transition-all group no-underline shadow-[0_4px_15px_rgba(0,0,0,0.03)]",
+        isCert ? "bg-rose-50/80 border-rose-200 hover:border-rose-400 hover:shadow-rose-500/10 animate-pulse-subtle" : "bg-white/60 border-white/80 hover:border-indigo-200 hover:shadow-indigo-500/10"
+      )}
     >
       <div className="flex items-center gap-3">
         <div className={cn(
