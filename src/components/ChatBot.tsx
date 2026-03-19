@@ -21,8 +21,10 @@ export const ChatBot = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.log("ChatBot: Component mounting...");
     setMounted(true);
   }, []);
+
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -58,7 +60,13 @@ export const ChatBot = () => {
     }
   };
 
-  if (!mounted) return null;
+  if (!mounted) {
+    console.log("ChatBot: Not mounted yet, skipping render.");
+    return null;
+  }
+  
+  console.log("ChatBot: Rendering UI...");
+
 
   return (
     <div className="fixed bottom-10 right-10 z-[9999] flex flex-col items-end">

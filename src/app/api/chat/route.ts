@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 import { PROJECTS, NAV_ITEMS } from '@/lib/data';
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
 
 
 const SYSTEM_PROMPT = `
@@ -30,6 +27,10 @@ User Context: ${JSON.stringify({ projects: PROJECTS, skills: NAV_ITEMS })}
 
 export async function POST(req: NextRequest) {
   try {
+    const groq = new Groq({
+      apiKey: process.env.GROQ_API_KEY || 'dummy_key_for_build',
+    });
+
     const { messages } = await req.json();
 
     const completion = await groq.chat.completions.create({
