@@ -18,8 +18,9 @@ const ThinkingIndicator = () => (
   <div className="flex flex-col gap-2 px-6 py-4 bg-white/40 backdrop-blur-xl rounded-[2rem] rounded-tl-none border border-white/60 w-fit shadow-sm">
     <div className="flex items-center gap-2 mb-2 opacity-40">
       <Bot size={12} className="animate-pulse" />
-      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Aether is processing</span>
+      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Vortex is synchronizing</span>
     </div>
+
     <div className="flex gap-2">
       <motion.div
         animate={{ 
@@ -147,7 +148,8 @@ const MessageBubble = ({ msg, index }: { msg: Message; index: number }) => {
         )}>
           {isAssistant ? <Zap size={10} fill="currentColor" /> : <User size={10} />}
         </div>
-        <span>{isAssistant ? 'Aether Intelligence' : 'Visitor Context'}</span>
+        <span>{isAssistant ? 'Vortex Intelligence' : 'Visitor Context'}</span>
+
       </div>
       
       <div className={cn(
@@ -166,8 +168,9 @@ export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: "System Online. I am **Aether**, an advanced intelligence layer optimized for Tharun's portfolio. How may I synchronize with your inquiry today?" }
+    { role: 'assistant', content: "Greetings. I am **Vortex**, your technical guide to Tharun's engineering landscape. From **Java Architecture** to **AI-driven Automation**, I'm here to provide deep insights into his expertise. \n\nHow can I help you navigate his work today?" }
   ]);
+
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -246,9 +249,10 @@ export const ChatBot = () => {
                   </div>
                   <div>
                     <h3 className="font-black text-xl tracking-tight flex items-center gap-2">
-                      Aether 
+                      Vortex 
                       <Sparkles size={16} className="text-indigo-400 animate-pulse" />
                     </h3>
+
                     <p className="text-[10px] opacity-50 uppercase tracking-[0.4em] font-black">Neural Architecture</p>
                   </div>
                 </div>
@@ -291,7 +295,8 @@ export const ChatBot = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask Aether about Tharun..."
+                  placeholder="Ask Vortex about Tharun..."
+
                   className="w-full bg-white border-2 border-slate-100 text-slate-800 px-8 py-5 rounded-[2rem] pr-20 focus:outline-none focus:ring-[12px] focus:ring-indigo-500/5 focus:border-indigo-500 focus:bg-white transition-all placeholder:text-slate-300 text-sm font-bold shadow-sm"
                 />
                 <motion.button
