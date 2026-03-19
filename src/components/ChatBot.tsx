@@ -168,7 +168,8 @@ export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: "Greetings. I am **Vortex**, your technical guide to Tharun's engineering landscape. From **Java Architecture** to **AI-driven Automation**, I'm here to provide deep insights into his expertise. \n\nHow can I help you navigate his work today?" }
+    { role: 'assistant', content: "Greetings. I am **Vortex**, your technical guide to Tharun's engineering landscape. From **Core Java** to **AI-driven Automation**, I'm here to provide deep insights into his expertise. \n\nHow can I help you navigate his work today?" }
+
   ]);
 
   const [isLoading, setIsLoading] = useState(false);
