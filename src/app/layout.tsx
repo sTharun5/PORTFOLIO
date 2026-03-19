@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { AntiGravityBackground } from "@/components/AntiGravityBackground";
+import { MagneticCursor } from "@/components/MagneticCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-slate-50 text-slate-600 antialiased`}>
+      <body className={`${inter.className} bg-slate-50 text-slate-600 antialiased selection:bg-indigo-100 selection:text-indigo-900`}>
+        <MagneticCursor />
         <AntiGravityBackground />
-        <div className="relative z-10">
+        
+        <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
-          {children}
+          <div className="flex-grow">
+            {children}
+          </div>
         </div>
       </body>
     </html>
