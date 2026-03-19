@@ -32,7 +32,7 @@ const itemVariants: Variants = {
 
 export const HeroSection = () => {
   return (
-    <section id="hero" className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-4 min-h-[80vh] relative">
+    <section id="hero" className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center min-h-[60vh] relative">
       {/* Identity Text */}
       <motion.div 
         variants={containerVariants}
