@@ -17,13 +17,18 @@ export const ChatBot = () => {
     { role: 'ai', content: "Hi! I'm AntiGravity AI. Ask me anything about Tharun's projects, skills, or experience!" }
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isOpen]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -53,86 +58,89 @@ export const ChatBot = () => {
     }
   };
 
+  if (!mounted) return null;
+
   return (
-    <div className="fixed bottom-6 right-6 z-[100]">
+    <div className="fixed bottom-10 right-10 z-[9999] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden backdrop-blur-xl bg-white/90"
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="mb-6 w-[calc(100vw-40px)] sm:w-[400px] h-[500px] max-h-[70vh] bg-white rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-100 flex flex-col overflow-hidden backdrop-blur-xl bg-white/95"
           >
             {/* Header */}
-            <div className="p-5 bg-indigo-600 text-white flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-                  <Bot size={24} />
+            <div className="p-6 bg-indigo-600 text-white flex items-center justify-between shadow-lg">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-md">
+                  <Bot size={28} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm">AntiGravity AI</h3>
-                  <p className="text-[10px] opacity-80 uppercase tracking-widest font-bold">Portfolio Assistant</p>
+                  <h3 className="font-black text-sm tracking-tight">AntiGravity AI</h3>
+                  <p className="text-[10px] opacity-80 uppercase tracking-[0.2em] font-black">Virtual Assistant</p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/20 rounded-xl transition-colors"
+                aria-label="Close Chat"
               >
-                <X size={20} />
+                <X size={24} />
               </button>
             </div>
 
             {/* Messages */}
             <div 
               ref={scrollRef}
-              className="flex-1 overflow-y-auto p-5 flex flex-col gap-4 scrollbar-hide"
+              className="flex-1 overflow-y-auto p-6 flex flex-col gap-5 scrollbar-hide"
             >
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                   className={cn(
-                    "max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed",
+                    "max-w-[85%] p-5 rounded-[1.5rem] text-sm leading-relaxed shadow-sm",
                     msg.role === 'user' 
-                      ? "bg-slate-100 text-slate-700 self-end rounded-tr-none" 
+                      ? "bg-slate-900 text-white self-end rounded-tr-none" 
                       : "bg-indigo-50 text-indigo-900 self-start rounded-tl-none border border-indigo-100"
                   )}
                 >
-                  <div className="flex items-center gap-2 mb-1.5">
-                    {msg.role === 'ai' ? <Bot size={12} className="text-indigo-600" /> : <User size={12} className="text-slate-500" />}
-                    <span className="text-[10px] font-black uppercase tracking-widest opacity-50">
+                  <div className="flex items-center gap-2 mb-2 opacity-50">
+                    {msg.role === 'ai' ? <Bot size={12} /> : <User size={12} />}
+                    <span className="text-[9px] font-black uppercase tracking-widest">
                       {msg.role === 'ai' ? 'Assistant' : 'You'}
                     </span>
                   </div>
-                  {msg.content}
+                  <div className="font-medium">{msg.content}</div>
                 </motion.div>
               ))}
               {isLoading && (
-                <div className="bg-indigo-50 text-indigo-900 self-start p-4 rounded-2xl rounded-tl-none border border-indigo-100 flex items-center gap-2">
-                  <Loader2 className="animate-spin" size={16} />
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-60">Thinking...</span>
+                <div className="bg-indigo-50 text-indigo-900 self-start p-5 rounded-[1.5rem] rounded-tl-none border border-indigo-100 flex items-center gap-3">
+                  <Loader2 className="animate-spin text-indigo-600" size={18} />
+                  <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Architecting Response...</span>
                 </div>
               )}
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-slate-100 bg-slate-50/50">
-              <div className="relative flex items-center">
+            <div className="p-6 border-t border-slate-100 bg-white">
+              <div className="relative flex items-center gap-3">
                 <input
                   type="text"
-                  placeholder="Ask about projects, skills..."
+                  placeholder="Ask me anything..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  className="w-full bg-white border border-slate-200 rounded-2xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-5 pr-14 text-sm focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all font-medium"
                 />
                 <button 
                   onClick={handleSend}
                   disabled={isLoading || !input.trim()}
-                  className="absolute right-2 p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                  className="absolute right-2 p-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-lg shadow-indigo-200"
                 >
-                  <Send size={18} />
+                  <Send size={20} />
                 </button>
               </div>
             </div>
@@ -141,15 +149,18 @@ export const ChatBot = () => {
       </AnimatePresence>
 
       <motion.button
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-16 h-16 rounded-3xl flex items-center justify-center shadow-2xl transition-all duration-300",
-          isOpen ? "bg-slate-900 text-white" : "bg-indigo-600 text-white"
+          "w-16 h-16 rounded-[2rem] flex items-center justify-center shadow-2xl transition-all duration-500 border-2",
+          isOpen 
+            ? "bg-slate-900 text-white border-slate-800 rotate-90" 
+            : "bg-indigo-600 text-white border-indigo-500 shadow-indigo-500/40"
         )}
+        aria-label="Toggle AI Assistant"
       >
-        {isOpen ? <X size={28} /> : <MessageSquare size={28} />}
+        {isOpen ? <X size={32} strokeWidth={2.5} /> : <MessageSquare size={32} strokeWidth={2.5} />}
       </motion.button>
     </div>
   );
