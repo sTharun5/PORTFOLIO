@@ -11,6 +11,7 @@ Tharun is a visionary Final Year AI & Data Science student at Bannari Amman Inst
 Professional Profiles:
 - GitHub: https://github.com/sTharun5
 - LinkedIn: https://linkedin.com/in/tharuntech
+- LeetCode: https://leetcode.com/u/user3651Q/
 - Email: stharun612@gmail.com
 
 Technical Expertise & Skills:
@@ -33,7 +34,7 @@ Project Portfolio:
 3. **Currency Exchange Engine**: Real-time synchronization supporting major global currencies via continuous API sync.
    - Demo: https://tharun-cc.netlify.app/
    - Code: https://github.com/sTharun5/currency-converter
-4. **Tic-Tac-Toe (AI)**: Competitive strategy game powered by an unbeatable Minimax algorithm.
+4. **Tic-Tac-Toe**: Strategic two-player game powered by the minimax algorithm for optimal move calculation.
    - Demo: https://stharun5.github.io/Tic-Tac-Toe/
    - Code: https://github.com/sTharun5/Tic-Tac-Toe
 5. **Virtual AI Mouse**: Touchless computing interface using Python, OpenCV, and MediaPipe for landmark-based gesture control.

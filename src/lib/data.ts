@@ -34,10 +34,10 @@ export const PROJECTS = [
   },
   {
     title: 'Tic-Tac-Toe',
-    tagline: 'Minimax Algorithm',
+    tagline: 'Classic Strategy Game',
     url: 'https://tic-tac-toe-tic-tac-toe-flax.vercel.app/',
     github: 'https://github.com/sTharun5/Tic-Tac-Toe',
-    description: 'Competitive two-player strategy game powered by an unbeatable Minimax AI algorithm.',
+    description: 'Strategic two-player game implementing the minimax algorithm for optimal move calculation.',
     stack: ['HTML', 'CSS', 'JavaScript']
   },
   {
