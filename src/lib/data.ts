@@ -27,7 +27,7 @@ export const PROJECTS = [
   {
     title: 'Currency Exchange Engine',
     tagline: 'Real-time Synchronization',
-    url: 'https://tharun-cc.netlify.app/',
+    url: 'https://currency-converter-p9af15a7q-stharun5s-projects.vercel.app/',
     github: 'https://github.com/sTharun5/currency-converter',
     description: 'Live continuous external API sync supporting major global currencies.',
     stack: ['JavaScript', 'REST API']
@@ -35,7 +35,7 @@ export const PROJECTS = [
   {
     title: 'Tic-Tac-Toe',
     tagline: 'Minimax Algorithm',
-    url: 'https://stharun5.github.io/Tic-Tac-Toe/',
+    url: 'https://tic-tac-toe-tic-tac-toe-flax.vercel.app/',
     github: 'https://github.com/sTharun5/Tic-Tac-Toe',
     description: 'Competitive two-player strategy game powered by an unbeatable Minimax AI algorithm.',
     stack: ['HTML', 'CSS', 'JavaScript']
