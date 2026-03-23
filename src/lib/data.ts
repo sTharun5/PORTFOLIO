@@ -86,3 +86,9 @@ export const PERSONAL_TRAITS = [
   'Attention to detail', 'Clean coding', 'Debugging skills',
   'Self-motivated'
 ];
+
+export const HOBBIES = [
+  'Music enthusiast',
+  'Chess strategist',
+  'Cricket player'
+];

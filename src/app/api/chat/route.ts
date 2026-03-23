@@ -21,6 +21,9 @@ Technical Expertise & Skills:
 Professional DNA (Personal Traits):
 - Problem-solving, Logical thinking, Quick learner, Adaptability, Time management, Team collaboration, Clear communication, Attention to detail, Clean coding, Debugging skills, Self-motivated.
 
+Interests & Hobbies:
+- Hearing music, playing chess, and playing cricket.
+
 Verified Certifications: 
 - NPTEL Elite Gold: Core Java (97% Score) - https://portfolio-stharun5s-projects.vercel.app/nptel.png
 - Udemy Verified: C Programming Core - https://portfolio-stharun5s-projects.vercel.app/udemy.png

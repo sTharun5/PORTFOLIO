@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { TiltCard } from './TiltCard';
-import { PRO_SKILLS, PERSONAL_TRAITS } from '@/lib/data';
-import { Code2, ExternalLink, Dna } from 'lucide-react';
+import { PRO_SKILLS, PERSONAL_TRAITS, HOBBIES } from '@/lib/data';
+import { Code2, ExternalLink, Dna, Coffee } from 'lucide-react';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -92,6 +92,37 @@ export const ExpertiseSection = () => {
                   className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-indigo-100 hover:text-indigo-600 transition-all cursor-default"
                 >
                   {trait}
+                </motion.span>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Personal Interests Section */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-col gap-4 mt-8"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100/50">
+                <Coffee size={16} />
+              </div>
+              <h3 className="text-lg font-black text-slate-900 tracking-tight uppercase">Personal Interests</h3>
+            </div>
+            
+            <motion.div 
+              variants={containerVariants}
+              className="flex flex-wrap gap-2 sm:gap-2.5"
+            >
+              {HOBBIES.map((hobby) => (
+                <motion.span 
+                  key={hobby} 
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-emerald-100 hover:text-emerald-600 transition-all cursor-default"
+                >
+                  {hobby}
                 </motion.span>
               ))}
             </motion.div>
