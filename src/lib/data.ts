@@ -89,6 +89,6 @@ export const PERSONAL_TRAITS = [
 
 export const HOBBIES = [
   'Music enthusiast',
-  'Chess strategist',
-  'Cricket player'
+  'Chess enthusiast',
+  'Cricket enthusiast'
 ];
