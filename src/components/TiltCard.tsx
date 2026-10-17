@@ -65,7 +65,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         transformStyle: 'preserve-3d',
       }}
       className={cn(
-        'relative w-full h-full rounded-[2.5rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-200 ease-out z-10',
+        'relative w-full h-full rounded-[2.5rem] bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-200 ease-out z-10 hover:border-indigo-500/40',
         isOverflowHidden ? 'overflow-hidden' : '',
         className
       )}

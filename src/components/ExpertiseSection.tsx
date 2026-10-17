@@ -1,156 +1,192 @@
 'use client';
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { TiltCard } from './TiltCard';
-import { PRO_SKILLS, PERSONAL_TRAITS, HOBBIES } from '@/lib/data';
-import { Code2, ExternalLink, Dna, Coffee } from 'lucide-react';
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.05
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
+import { SKILL_CATEGORIES, PROFESSIONAL_TRAITS, LEADERSHIP, PERSONAL_INFO } from '@/lib/data';
+import { Code2, ExternalLink, Dna, Award, Users } from 'lucide-react';
 
 export const ExpertiseSection = () => {
   return (
-    <section id="expertise" className="max-w-7xl mx-auto px-6 py-10 sm:py-16">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <div className="lg:col-span-8 flex flex-col h-full">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-col gap-2 mb-8 sm:mb-10"
-          >
-            <motion.span variants={itemVariants} className="text-indigo-600 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] mb-2">Capabilities</motion.span>
-            <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">Technical Expertise</motion.h2>
-          </motion.div>
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 flex-grow mb-8"
-          >
-            {PRO_SKILLS.map((skill) => (
-              <motion.div key={skill.name} variants={itemVariants}>
-                <TiltCard 
-                  className="!p-0 border-slate-100/60 flex flex-col items-center justify-center group overflow-visible h-full"
-                  padding="p-6 sm:p-8"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-indigo-200 transition-all duration-500 mb-4 sm:mb-5 shadow-inner">
-                    <skill.icon size={20} />
+    <section id="skills" className="max-w-7xl mx-auto px-6 py-14">
+      {/* Section Header */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col gap-2 mb-10"
+      >
+        <span className="text-indigo-400 text-xs font-mono uppercase tracking-[0.3em]">
+          Technical Arsenal
+        </span>
+        <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          Specialized Skill Matrix
+        </h2>
+        <p className="text-slate-400 text-sm sm:text-base max-w-2xl">
+          A targeted blend of enterprise database engineering, autonomous GenAI protocols, cloud data stores, and algorithmic foundations.
+        </p>
+      </motion.div>
+
+      {/* 4 Skill Categories Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        {SKILL_CATEGORIES.map((cat, idx) => {
+          const Icon = cat.icon;
+          return (
+            <TiltCard 
+              key={cat.title}
+              className="border-slate-800/80 bg-slate-900/60 hover:border-indigo-500/40 transition-all !p-0 shadow-lg"
+              padding="p-6 sm:p-8"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-11 h-11 rounded-xl bg-slate-950/80 border ${cat.borderColor} flex items-center justify-center ${cat.accentColor} shadow-inner`}>
+                    <Icon size={22} />
                   </div>
-                  <span className="font-bold text-slate-700 text-xs sm:text-sm group-hover:text-indigo-600 transition-colors tracking-tight text-center">{skill.name}</span>
-                </TiltCard>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Professional DNA Section */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col gap-4"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100/50">
-                <Dna size={16} className="animate-pulse" />
+                  <div>
+                    <h3 className="font-bold text-white text-lg tracking-tight">
+                      {cat.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 font-mono">
+                      Domain 0{idx + 1}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-lg font-black text-slate-900 tracking-tight uppercase">Professional DNA</h3>
-            </div>
-            
-            <motion.div 
-              variants={containerVariants}
-              className="flex flex-wrap gap-2 sm:gap-2.5"
-            >
-              {PERSONAL_TRAITS.map((trait) => (
-                <motion.span 
-                  key={trait} 
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-indigo-100 hover:text-indigo-600 transition-all cursor-default"
-                >
-                  {trait}
-                </motion.span>
-              ))}
-            </motion.div>
-          </motion.div>
 
-          {/* Personal Interests Section */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col gap-4 mt-8"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100/50">
-                <Coffee size={16} />
+              <p className="text-xs text-slate-400 mb-5 leading-relaxed font-sans">
+                {cat.description}
+              </p>
+
+              {/* Skills Pills */}
+              <div className="flex flex-wrap gap-2">
+                {cat.skills.map((skill) => (
+                  <div 
+                    key={skill.name}
+                    className="px-3 py-1.5 rounded-lg bg-slate-950/90 border border-slate-800/90 hover:border-slate-700 flex items-center gap-2 group transition-all"
+                  >
+                    <span className="text-xs font-mono font-medium text-slate-200">
+                      {skill.name}
+                    </span>
+                    <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                      {skill.level}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-black text-slate-900 tracking-tight uppercase">Personal Interests</h3>
-            </div>
-            
-            <motion.div 
-              variants={containerVariants}
-              className="flex flex-wrap gap-2 sm:gap-2.5"
-            >
-              {HOBBIES.map((hobby) => (
-                <motion.span 
-                  key={hobby} 
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-100 text-slate-600 text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-sm hover:shadow-md hover:border-emerald-100 hover:text-emerald-600 transition-all cursor-default"
-                >
-                  {hobby}
-                </motion.span>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
+            </TiltCard>
+          );
+        })}
+      </div>
+
+      {/* Bottom Highlights: LeetCode + Leadership + Traits */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        <motion.a 
-          href="https://leetcode.com/u/user3651Q/" 
-          target="_blank" 
+        {/* LeetCode Spotlight */}
+        <motion.a
+          href={PERSONAL_INFO.leetcode}
+          target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, type: 'spring', damping: 20 }}
           className="lg:col-span-4 block group"
           aria-label="Visit LeetCode Profile"
         >
-          <TiltCard className="flex flex-col items-center justify-center text-center !p-0 border-orange-100/50 bg-gradient-to-b from-white to-orange-50/20" padding="p-8 sm:p-10">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] sm:rounded-[2rem] bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-6 sm:mb-8 shadow-2xl shadow-orange-200 group-hover:scale-110 transition-transform duration-700">
-              <Code2 className="text-white" size={40} />
+          <TiltCard 
+            className="flex flex-col items-center justify-center text-center !p-0 border-amber-500/20 bg-gradient-to-b from-slate-900/90 to-amber-950/15 hover:border-amber-500/40 h-full"
+            padding="p-8"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-4 shadow-xl shadow-amber-600/20 group-hover:scale-105 transition-transform duration-500">
+              <Code2 className="text-white" size={32} />
             </div>
-            <h2 className="text-6xl sm:text-7xl font-black text-slate-900 mb-2 tracking-tighter">300+</h2>
-            <p className="text-orange-600 font-black uppercase tracking-[0.2em] text-[8px] sm:text-[10px] mb-6">Problems Solved</p>
-            <div className="mt-6 sm:mt-8 flex items-center gap-3 text-orange-600 font-black text-[10px] uppercase tracking-widest bg-white shadow-xl shadow-orange-100/50 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-orange-100 group-hover:bg-orange-600 group-hover:text-white transition-all">
-              LeetCode Profile <ExternalLink size={14} />
+            <span className="text-4xl font-black text-white font-mono tracking-tight mb-1">
+              300+
+            </span>
+            <p className="text-amber-400 font-mono uppercase tracking-[0.2em] text-[11px] mb-2 font-bold">
+              LeetCode Problems Solved
+            </p>
+            <p className="text-xs text-slate-400 max-w-xs mb-4">
+              Algorithmic problem-solving in Arrays, Trees, Dynamic Programming, Graphs, and Hash Tables.
+            </p>
+            <div className="flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest bg-slate-950/80 px-4 py-2 rounded-xl border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all">
+              View LeetCode Profile <ExternalLink size={13} />
             </div>
           </TiltCard>
         </motion.a>
+
+        {/* Leadership Spotlight (Java Trainer) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="lg:col-span-4"
+        >
+          <TiltCard 
+            className="flex flex-col justify-between !p-0 border-indigo-500/20 bg-gradient-to-b from-slate-900/90 to-indigo-950/20 hover:border-indigo-500/40 h-full"
+            padding="p-8"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                  <Users size={24} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-400 block font-bold">
+                    Mentorship & Impact
+                  </span>
+                  <h3 className="font-bold text-white text-lg">Java Trainer</h3>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                {LEADERSHIP[0].description}
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
+              <Award size={16} className="text-amber-400 shrink-0" />
+              <span>Certified Top 1% Java Instructor</span>
+            </div>
+          </TiltCard>
+        </motion.div>
+
+        {/* Engineering Traits */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="lg:col-span-4"
+        >
+          <TiltCard 
+            className="flex flex-col justify-between !p-0 border-slate-800/80 bg-slate-900/60 hover:border-slate-700 h-full"
+            padding="p-8"
+          >
+            <div>
+              <div className="flex items-center gap-2.5 mb-4 text-xs font-mono uppercase tracking-wider text-emerald-400">
+                <Dna size={16} /> Engineering Core
+              </div>
+              <h3 className="font-bold text-white text-base mb-3">
+                Architectural Principles
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {PROFESSIONAL_TRAITS.map((trait) => (
+                  <span
+                    key={trait}
+                    className="px-2.5 py-1 rounded-md bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-300"
+                  >
+                    {trait}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-[11px] text-slate-500 font-mono mt-4 pt-3 border-t border-slate-800/60">
+              Clean, modular, fault-tolerant design philosophy.
+            </div>
+          </TiltCard>
+        </motion.div>
+
       </div>
     </section>
   );
