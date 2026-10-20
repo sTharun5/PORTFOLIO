@@ -277,10 +277,15 @@ export const ChatBot = () => {
     setIsLoading(true);
 
     try {
+      const payloadMessages = messages
+        .filter(m => m.content && m.content.trim().length > 0)
+        .map(m => ({ role: m.role, content: m.content }))
+        .concat(userMsg);
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...messages, userMsg] }),
+        body: JSON.stringify({ messages: payloadMessages }),
       });
 
       if (!response.body) {

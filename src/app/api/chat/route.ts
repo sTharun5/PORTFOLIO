@@ -59,6 +59,15 @@ export async function POST(req: NextRequest) {
       'openai/gpt-oss-20b'
     ].filter(Boolean) as string[];
 
+    // Sanitize chat history to strictly adhere to LLM API schema (strip extra fields like citations)
+    const sanitizedChatHistory = messages
+      .filter(m => m && typeof m === 'object' && (m.role === 'user' || m.role === 'assistant'))
+      .map(m => ({
+        role: m.role as 'user' | 'assistant',
+        content: typeof m.content === 'string' ? m.content : ''
+      }))
+      .filter(m => m.content.trim().length > 0);
+
     const stream = new ReadableStream({
       async start(controller) {
         // Step 1: Send retrieved citations first to power the UI badges
@@ -73,7 +82,7 @@ export async function POST(req: NextRequest) {
             const completionStream = await groq.chat.completions.create({
               messages: [
                 { role: 'system', content: systemPrompt },
-                ...messages
+                ...sanitizedChatHistory
               ],
               model,
               temperature: 0.6,
