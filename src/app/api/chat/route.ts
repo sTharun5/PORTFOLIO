@@ -74,17 +74,42 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 });
     }
 
-    const completion = await groq.chat.completions.create({
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...messages
-      ],
-      model: 'llama-3.3-70b-versatile',
-      temperature: 0.6,
-      max_tokens: 600,
-    });
+    const candidateModels = [
+      process.env.GROQ_MODEL,
+      'qwen/qwen3.8-27b',
+      'openai/gpt-oss-120b',
+      'openai/gpt-oss-20b'
+    ].filter(Boolean) as string[];
 
-    const aiResponse = completion.choices[0]?.message?.content || "I'm sorry, I couldn't process that.";
+    let aiResponse = '';
+    let lastError: unknown = null;
+
+    for (const model of candidateModels) {
+      try {
+        const completion = await groq.chat.completions.create({
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...messages
+          ],
+          model,
+          temperature: 0.6,
+          max_tokens: 600,
+        });
+
+        const content = completion.choices[0]?.message?.content;
+        if (content) {
+          aiResponse = content;
+          break;
+        }
+      } catch (err) {
+        lastError = err;
+        console.warn(`Groq model ${model} failed, trying fallback...`, err);
+      }
+    }
+
+    if (!aiResponse) {
+      throw lastError || new Error('No response returned from Groq models');
+    }
 
     return NextResponse.json({ content: aiResponse });
   } catch (error: unknown) {
